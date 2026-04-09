@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Lab6 Compose</title>
+</head>
+<body>
+  <h2>Users</h2>
+  <pre id="users">loading...</pre>
+  <script>
+    fetch('/back')
+      .then((response) => response.json())
+      .then((data) => {
+        document.getElementById('users').textContent = JSON.stringify(data, null, 2);
+      })
+      .catch((error) => {
+        document.getElementById('users').textContent = String(error);
+      });
+  </script>
+</body>
+</html>

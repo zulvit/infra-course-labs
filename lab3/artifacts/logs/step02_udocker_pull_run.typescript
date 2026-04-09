@@ -1,0 +1,21 @@
+Script started on 2026-04-09 02:26:33+03:00 [COMMAND="export PATH=/home/savva/.local/bin:$PATH; cd /home/savva/Desktop/devops/infra-course-labs/lab3/work; udocker pull python:3.11.5-alpine; udocker run python:3.11.5-alpine python --version" <not executed on terminal>]
+Info: udocker command line interface 1.3.17
+Info: searching for udockertools >= 1.2.11
+Info: installing udockertools 1.2.11
+Info: installation of udockertools successful
+Info: downloading layer sha256:f2c663edab45b775b9207bb060510fccf71b407e8650a2459c3205db90de8cb0
+Info: downloading layer sha256:79094e0cad96b6b0e4d5651c38e6f0242021d8ca446b7ae86771c908f09f5c66
+Info: downloading layer sha256:a2c7770dd0b99cea7bc658a1b8532610f1fc0ef61557c683ed779e6c554442b2
+Info: downloading layer sha256:083c1679885df5e7d7c72833ab00be841b5429f67b791ee88a54bc20cd45b537
+Info: downloading layer sha256:9875af95546db78168a6761b7fa205ed1cd0c153cd89356c1512e551c12b2d5c
+Info: downloading layer sha256:96526aa774ef0126ad0fe9e9a95764c5fc37f409ab9e97021e7b4775d82bf6fa
+ 
+ ****************************************************************************** 
+ *                                                                            * 
+ *               STARTING 196c85ea-6de7-3771-bdb9-7d6be52decae                * 
+ *                                                                            * 
+ ****************************************************************************** 
+ executing: python
+Python 3.11.5
+
+Script done on 2026-04-09 02:26:55+03:00 [COMMAND_EXIT_CODE="0"]

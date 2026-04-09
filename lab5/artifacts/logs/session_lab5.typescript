@@ -1,0 +1,188 @@
+Script started on 2026-04-09 02:53:37+03:00 [COMMAND="bash /home/savva/Desktop/devops/infra-course-labs/lab5/work/run.sh" <not executed on terminal>]
++ PS4='$ '
+$ LAB5=/home/savva/Desktop/devops/infra-course-labs/lab5
+$ cleanup
+$ sudo -n docker rm -f lab5-nginx-bind lab5-nginx-volume lab5-writer lab5-reader lab5-first lab5-second lab5-default-first lab5-default-second lab5-host-http
+^@$ sudo -n docker network rm lab5-br
+$ true
+$ sudo -n docker volume rm lab5-html lab5-empty lab5-new
+$ true
+$ trap cleanup EXIT
+$ cd /home/savva/Desktop/devops/infra-course-labs/lab5/work
+$ mkdir -p data
+$ cp index.html data/index.html
+$ sudo -n docker pull nginx:alpine
+alpine: Pulling from library/nginx
+Digest: sha256:645eda1c2477aaa9b879f73909b9222c6f19798dd45be6706268d82a661c6e6d
+Status: Image is up to date for nginx:alpine
+docker.io/library/nginx:alpine
+$ sudo -n docker pull alpine
+Using default tag: latest
+latest: Pulling from library/alpine
+Digest: sha256:25109184c71bdad752c8312a8623239686a9a2071e8825f20acb8f2198c3f659
+Status: Image is up to date for alpine:latest
+docker.io/library/alpine:latest
+$ sudo -n docker pull python:3.11-alpine
+3.11-alpine: Pulling from library/python
+Digest: sha256:f07e2ace46f560f09a6eeec7b4913b80ee99546e749ef82342a419a326620856
+Status: Image is up to date for python:3.11-alpine
+docker.io/library/python:3.11-alpine
+$ sudo -n docker run -d -v /home/savva/Desktop/devops/infra-course-labs/lab5/work/data:/usr/share/nginx/html -p 18088:80 --name lab5-nginx-bind nginx:alpine
+5328fec88db960fe2c424f9afb0f5a18514ef6e6c85c69e61328532204192b75
+$ sleep 3
+$ wget -qO- http://127.0.0.1:18088
+$ tee /home/savva/Desktop/devops/infra-course-labs/lab5/artifacts/logs/bind_mount_response.out
+<html>
+  <body>
+    <h1>lab5 bind mount</h1>
+  </body>
+</html>
+$ sudo -n docker volume create lab5-empty
+lab5-empty
+$ sudo -n docker volume create lab5-new --label test=true
+lab5-new
+$ sudo -n docker volume ls
+DRIVER    VOLUME NAME
+local     lab5-empty
+local     lab5-new
+$ sudo -n docker volume ls -f label=test=true
+DRIVER    VOLUME NAME
+local     lab5-new
+$ sudo -n docker volume prune --filter label=test=true -f
+Total reclaimed space: 0B
+$ sudo -n docker volume create lab5-html
+lab5-html
+$ sudo -n docker run -d -v lab5-html:/usr/share/nginx/html -p 18089:80 --name lab5-nginx-volume nginx:alpine
+1310452be60dd2dd5b40454860629f7e93875dcabe65349bfaff66daf0218bd8
+$ sleep 3
+$ sudo -n sh -lc 'echo "<html><body><h1>lab5 named volume</h1></body></html>" > "$(docker volume inspect lab5-html -f "{{ .Mountpoint }}")/index.html"'
+$ wget -qO- http://127.0.0.1:18089
+$ tee /home/savva/Desktop/devops/infra-course-labs/lab5/artifacts/logs/named_volume_response.out
+<html><body><h1>lab5 named volume</h1></body></html>
+$ sudo -n docker volume inspect lab5-html
+[
+    {
+        "CreatedAt": "2026-04-09T02:53:47+03:00",
+        "Driver": "local",
+        "Labels": null,
+        "Mountpoint": "/var/lib/docker/volumes/lab5-html/_data",
+        "Name": "lab5-html",
+        "Options": null,
+        "Scope": "local"
+    }
+]
+$ sudo -n docker run -d -v lab5-html:/shared --name lab5-reader alpine sleep inf
+73d3ece5be0779d97d9aa3b8e98f657a209095d549adee10b316826ec09813b7
+$ sudo -n docker run --rm -v lab5-html:/shared --name lab5-writer alpine sh -lc 'echo shared-from-writer > /shared/shared.txt'
+$ sudo -n docker exec lab5-reader cat /shared/shared.txt
+$ tee /home/savva/Desktop/devops/infra-course-labs/lab5/artifacts/logs/shared_volume.out
+shared-from-writer
+$ sudo -n docker run -d --name lab5-default-first alpine sleep inf
+08faebb5eda49e5ef5852edec7b1da9bca909ed9b4cc0d000663271da1c3ac72
+$ sudo -n docker run -d --name lab5-default-second alpine sleep inf
+0d26c634b4e2cb98a86e6a5707728ba7ed31daf95266237ada296f279e7d343b
+$ sudo -n docker exec lab5-default-first ping -c 1 lab5-default-second
+ping: bad address 'lab5-default-second'
+$ true
+$ sudo -n docker network create lab5-br --subnet 10.0.0.0/24
+201e9141f5a24ae68754f308d3605f1531f455cb9c2ed50e1a19a7e893a8281b
+$ sudo -n docker network inspect lab5-br
+[
+    {
+        "Name": "lab5-br",
+        "Id": "201e9141f5a24ae68754f308d3605f1531f455cb9c2ed50e1a19a7e893a8281b",
+        "Created": "2026-04-09T02:53:53.234126871+03:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "10.0.0.0/24",
+                    "IPRange": "",
+                    "Gateway": "10.0.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Options": {},
+        "Labels": {},
+        "Containers": {},
+        "Status": {
+            "IPAM": {
+                "Subnets": {
+                    "10.0.0.0/24": {
+                        "IPsInUse": 3,
+                        "DynamicIPsAvailable": 253
+                    }
+                }
+            }
+        }
+    }
+]
+$ sudo -n docker run -d --network lab5-br --name lab5-first alpine sleep inf
+db4c12b1dbfd83e4b784845c68eca1413707f2bdf3862ef03631b2824fe068cd
+$ sudo -n docker run -d --network lab5-br --name lab5-second alpine sleep inf
+a34927750e98b45b07a18c0384c1bc67bc0212e20ca3338fb08cb9b4d1312666
+$ sudo -n docker exec lab5-first ping -c 1 lab5-second
+$ tee /home/savva/Desktop/devops/infra-course-labs/lab5/artifacts/logs/custom_bridge_ping.out
+PING lab5-second (10.0.0.3): 56 data bytes
+64 bytes from 10.0.0.3: seq=0 ttl=64 time=0.050 ms
+
+--- lab5-second ping statistics ---
+1 packets transmitted, 1 packets received, 0% packet loss
+round-trip min/avg/max = 0.050/0.050/0.050 ms
+$ sudo -n docker network connect bridge lab5-first
+$ sudo -n docker network disconnect bridge lab5-first
+$ sudo -n docker run -d --network host --name lab5-host-http python:3.11-alpine python -m http.server 18891
+2b6970369ff446670a144c02513674d41668c46161ea735ffd066dfa7771cbd3
+$ sleep 3
+$ wget -qO- http://127.0.0.1:18891
+$ tee /home/savva/Desktop/devops/infra-course-labs/lab5/artifacts/logs/host_network_response.out
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Directory listing for /</title>
+</head>
+<body>
+<h1>Directory listing for /</h1>
+<hr>
+<ul>
+<li><a href=".dockerenv">.dockerenv</a></li>
+<li><a href="bin/">bin/</a></li>
+<li><a href="dev/">dev/</a></li>
+<li><a href="etc/">etc/</a></li>
+<li><a href="home/">home/</a></li>
+<li><a href="lib/">lib/</a></li>
+<li><a href="media/">media/</a></li>
+<li><a href="mnt/">mnt/</a></li>
+<li><a href="opt/">opt/</a></li>
+<li><a href="proc/">proc/</a></li>
+<li><a href="root/">root/</a></li>
+<li><a href="run/">run/</a></li>
+<li><a href="sbin/">sbin/</a></li>
+<li><a href="srv/">srv/</a></li>
+<li><a href="sys/">sys/</a></li>
+<li><a href="tmp/">tmp/</a></li>
+<li><a href="usr/">usr/</a></li>
+<li><a href="var/">var/</a></li>
+</ul>
+<hr>
+</body>
+</html>
+$ cleanup
+$ sudo -n docker rm -f lab5-nginx-bind lab5-nginx-volume lab5-writer lab5-reader lab5-first lab5-second lab5-default-first lab5-default-second lab5-host-http
+$ sudo -n docker network rm lab5-br
+$ sudo -n docker volume rm lab5-html lab5-empty lab5-new
+
+Script done on 2026-04-09 02:53:59+03:00 [COMMAND_EXIT_CODE="0"]

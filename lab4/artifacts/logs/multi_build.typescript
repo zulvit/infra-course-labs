@@ -1,0 +1,28 @@
+Script started on 2026-04-09 02:37:17+03:00 [COMMAND="export PATH=/home/savva/.local/bin:$PATH; rm -f /home/savva/Desktop/devops/infra-course-labs/lab4/artifacts/logs/multi.tar; udocker run --volume=/home/savva/Desktop/devops/infra-course-labs/lab4:/lab4 --entrypoint="" martizih/kaniko:latest /kaniko/executor --context=/lab4/work/multi --dockerfile=/lab4/work/multi/Dockerfile --destination=local/multi:latest --tar-path=/lab4/artifacts/logs/multi.tar --no-push --force; python3 -c "import json, tarfile; tf=tarfile.open(/home/savva/Desktop/devops/infra-course-labs/lab4/artifacts/logs/multi.tar); manifest=json.load(tf.extractfile(manifest.json)); cfg=json.load(tf.extractfile(manifest[0][Config])); print(json.dumps({Entrypoint: cfg[config].get(Entrypoint), Cmd: cfg[config].get(Cmd)}, indent=2))"" <not executed on terminal>]
+ 
+ ****************************************************************************** 
+ *                                                                            * 
+ *               STARTING d2208865-d172-35c4-bc1c-2feb222eb243                * 
+ *                                                                            * 
+ ****************************************************************************** 
+ executing: executor
+[33mWARN[0m[0000] Kaniko is being run outside of a container. This can have dangerous effects on your system 
+[36mINFO[0m[0000] Resolved base name of build to golang:1.21   
+[36mINFO[0m[0000] Retrieving image manifest golang:1.21        
+[36mINFO[0m[0000] Retrieving image golang:1.21 from registry index.docker.io 
+[36mINFO[0m[0000] credential providers by priority: [env, google, ecr, acr, gitlab] 
+[36mINFO[0m[0002] Retrieving image manifest golang:1.21        
+[36mINFO[0m[0002] Returning cached image manifest              
+[36mINFO[0m[0002] No base image, nothing to extract            
+[36mINFO[0m[0002] Built cross stage deps: map[0:[/out/hello]]  
+[36mINFO[0m[0002] Retrieving image manifest golang:1.21        
+[36mINFO[0m[0002] Returning cached image manifest              
+[36mINFO[0m[0002] Building stage 'golang:1.21' [idx: '0', base-idx: '-1'] 
+[36mINFO[0m[0002] Unpacking rootfs as cmd WORKDIR /src requires it. 
+error building image: error building stage: failed to get filesystem from image: chown /boot: operation not permitted
+  File "<string>", line 1
+    import json, tarfile; tf=tarfile.open(/home/savva/Desktop/devops/infra-course-labs/lab4/artifacts/logs/multi.tar); manifest=json.load(tf.extractfile(manifest.json)); cfg=json.load(tf.extractfile(manifest[0][Config])); print(json.dumps({Entrypoint: cfg[config].get(Entrypoint), Cmd: cfg[config].get(Cmd)}, indent=2))
+                                          ^
+SyntaxError: invalid syntax
+
+Script done on 2026-04-09 02:37:21+03:00 [COMMAND_EXIT_CODE="1"]

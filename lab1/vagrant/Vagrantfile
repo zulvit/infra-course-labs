@@ -1,0 +1,31 @@
+Vagrant.configure("2") do |config|
+  # ubuntu/lunar64 from the original task is EOL; use a current LTS box.
+  config.vm.box = "ubuntu/jammy64"
+
+  config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  config.vm.provision "shell", inline: <<-SHELL
+    set -eux
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get update
+    apt-get install -y golang-go
+
+    cat >/etc/systemd/system/hello-vagrant.service <<'EOF'
+    [Unit]
+    Description=Simple HTTP app for infra-course lab1
+    After=network.target
+
+    [Service]
+    WorkingDirectory=/vagrant
+    ExecStart=/usr/bin/env go run /vagrant/main.go
+    Restart=always
+    RestartSec=3
+
+    [Install]
+    WantedBy=multi-user.target
+    EOF
+
+    systemctl daemon-reload
+    systemctl enable --now hello-vagrant.service
+  SHELL
+end

@@ -1,0 +1,28 @@
+Script started on 2026-04-09 02:36:53+03:00 [COMMAND="export PATH=/home/savva/.local/bin:$PATH; udocker run --volume=/home/savva/Desktop/devops/infra-course-labs/lab4:/lab4 --entrypoint="" martizih/kaniko:latest /kaniko/executor --context=/lab4/work/hello --dockerfile=/lab4/work/hello/Dockerfile --destination=127.0.0.1:5000/hello:0.1 --insecure --insecure-registry=127.0.0.1:5000 --skip-tls-verify --skip-push-permission-check --force; wget -qO- http://127.0.0.1:5000/v2/_catalog; echo; wget -qO- http://127.0.0.1:5000/v2/hello/tags/list" <not executed on terminal>]
+ 
+ ****************************************************************************** 
+ *                                                                            * 
+ *               STARTING b208b2f5-2834-3441-99b1-91a095506047                * 
+ *                                                                            * 
+ ****************************************************************************** 
+ executing: executor
+[33mWARN[0m[0000] Kaniko is being run outside of a container. This can have dangerous effects on your system 
+[36mINFO[0m[0000] Retrieving image manifest busybox:1.36       
+[36mINFO[0m[0000] Retrieving image busybox:1.36 from registry index.docker.io 
+[36mINFO[0m[0000] credential providers by priority: [env, google, ecr, acr, gitlab] 
+[36mINFO[0m[0002] Retrieving image manifest busybox:1.36       
+[36mINFO[0m[0002] Returning cached image manifest              
+[36mINFO[0m[0002] Built cross stage deps: map[]                
+[36mINFO[0m[0002] Retrieving image manifest busybox:1.36       
+[36mINFO[0m[0002] Returning cached image manifest              
+[36mINFO[0m[0002] Building stage 'busybox:1.36' [idx: '0', base-idx: '-1'] 
+[36mINFO[0m[0002] Skipping unpacking as no commands require it. 
+[36mINFO[0m[0002] CMD ["echo", "Hello from hello image"]       
+[36mINFO[0m[0002] credential providers by priority: [env, google, ecr, acr, gitlab] 
+[36mINFO[0m[0002] Pushing image to 127.0.0.1:5000/hello:0.1    
+[36mINFO[0m[0002] Pushed 127.0.0.1:5000/hello@sha256:7ea46a9d31cbc64c0f310c33a4b519bc08b3ef58f75da6308a82f3c47d088671 
+{"repositories":["hello"]}
+
+{"name":"hello","tags":["0.1"]}
+
+Script done on 2026-04-09 02:36:58+03:00 [COMMAND_EXIT_CODE="0"]

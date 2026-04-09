@@ -1,0 +1,43 @@
+Script started on 2026-04-09 02:35:37+03:00 [COMMAND="bash /home/savva/Desktop/devops/infra-course-labs/lab4/work/run.sh" <not executed on terminal>]
++ PS4='$ '
+$ export PATH=/home/savva/.local/bin:/home/savva/.codex/tmp/arg0/codex-arg0ZvhZqb:/usr/local/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/path:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
+$ PATH=/home/savva/.local/bin:/home/savva/.codex/tmp/arg0/codex-arg0ZvhZqb:/usr/local/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/path:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
+$ LAB4=/home/savva/Desktop/devops/infra-course-labs/lab4
+$ cd /home/savva/Desktop/devops/infra-course-labs/lab4/work
+$ kaniko_build /lab4/work/hello /lab4/work/hello/Dockerfile local/hello:latest /lab4/artifacts/logs/hello.tar
+$ local context=/lab4/work/hello
+$ local dockerfile=/lab4/work/hello/Dockerfile
+$ local destination=local/hello:latest
+$ local tarfile=/lab4/artifacts/logs/hello.tar
+$ shift 4
+$ rm -f /lab4/artifacts/logs/hello.tar
+$ udocker run --volume=/home/savva/Desktop/devops/infra-course-labs/lab4:/lab4 --entrypoint= martizih/kaniko:latest /kaniko/executor --context=/lab4/work/hello --dockerfile=/lab4/work/hello/Dockerfile --destination=local/hello:latest --tar-path=/lab4/artifacts/logs/hello.tar --no-push --force
+ 
+ ****************************************************************************** 
+ *                                                                            * 
+ *               STARTING 04e6f823-0aa8-35bd-8631-516680e758ef                * 
+ *                                                                            * 
+ ****************************************************************************** 
+ executing: executor
+[33mWARN[0m[0000] Kaniko is being run outside of a container. This can have dangerous effects on your system 
+[36mINFO[0m[0000] Retrieving image manifest busybox:1.36       
+[36mINFO[0m[0000] Retrieving image busybox:1.36 from registry index.docker.io 
+[36mINFO[0m[0000] credential providers by priority: [env, google, ecr, acr, gitlab] 
+[36mINFO[0m[0001] Retrieving image manifest busybox:1.36       
+[36mINFO[0m[0001] Returning cached image manifest              
+[36mINFO[0m[0001] Built cross stage deps: map[]                
+[36mINFO[0m[0001] Retrieving image manifest busybox:1.36       
+[36mINFO[0m[0001] Returning cached image manifest              
+[36mINFO[0m[0001] Building stage 'busybox:1.36' [idx: '0', base-idx: '-1'] 
+[36mINFO[0m[0001] Skipping unpacking as no commands require it. 
+[36mINFO[0m[0001] CMD ["echo", "Hello from hello image"]       
+[36mINFO[0m[0002] Skipping push to container registry due to --no-push flag 
+$ udocker rmi local/hello:latest
+Info: deleting image: local/hello:latest
+$ udocker import /home/savva/Desktop/devops/infra-course-labs/lab4/artifacts/logs/hello.tar local/hello:latest
+Info: added layer 0f76d61be08d9daa90f6deccd210bb1c49e53e89ecaebaf4882050f866b189a7
+$ udocker run local/hello:latest /bin/sh -lc 'echo Hello from hello image'
+Warning: check container content: d7b967b3-c2e1-33e1-9f87-73e10243944f
+Error: command not found or has no execute bit set:  ['/bin/sh', '-lc', 'echo Hello from hello image']
+
+Script done on 2026-04-09 02:35:41+03:00 [COMMAND_EXIT_CODE="2"]

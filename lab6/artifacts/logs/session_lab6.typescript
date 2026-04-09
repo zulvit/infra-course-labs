@@ -1,0 +1,1029 @@
+Script started on 2026-04-09 02:57:22+03:00 [COMMAND="bash /home/savva/Desktop/devops/infra-course-labs/lab6/work/run.sh" <not executed on terminal>]
++ PS4='$ '
+$ LAB6=/home/savva/Desktop/devops/infra-course-labs/lab6
+$ PROJECT=lab6app
+$ trap cleanup EXIT
+$ cd /home/savva/Desktop/devops/infra-course-labs/lab6/work
+$ cleanup
+$ cd /home/savva/Desktop/devops/infra-course-labs/lab6/work
+$ sudo -n docker compose --project-name lab6app down -v --remove-orphans
+^@$ sudo -n docker compose --project-name lab6app up -d --build
+[33mWARN[0m[0000] Docker Compose is configured to build using Bake, but buildx isn't installed 
+[1A[1B[0G[?25l[+] Building 0.0s (0/1)                                          docker:default
+[?25h[1A[0G[?25l[+] Building 0.2s (1/2)                                          docker:default
+[34m => [back internal] load build definition from Dockerfile                  0.0s
+[0m[34m => => transferring dockerfile: 312B                                       0.0s
+[0m => [back internal] load metadata for docker.io/library/golang:1.23        0.2s
+[?25h[1A[1A[1A[1A[0G[?25l[+] Building 0.3s (1/2)                                          docker:default
+[34m => [back internal] load build definition from Dockerfile                  0.0s
+[0m[34m => => transferring dockerfile: 312B                                       0.0s
+[0m => [back internal] load metadata for docker.io/library/golang:1.23        0.3s
+[?25h[1A[1A[1A[1A[0G[?25l[+] Building 0.5s (1/2)                                          docker:default
+[34m => [back internal] load build definition from Dockerfile                  0.0s
+[0m[34m => => transferring dockerfile: 312B                                       0.0s
+[0m => [back internal] load metadata for docker.io/library/golang:1.23        0.4s
+[?25h[1A[1A[1A[1A[0G[?25l[+] Building 0.7s (1/2)                                          docker:default
+[34m => [back internal] load build definition from Dockerfile                  0.0s
+[0m[34m => => transferring dockerfile: 312B                                       0.0s
+[0m => [back internal] load metadata for docker.io/library/golang:1.23        0.6s
+[?25h[1A[1A[1A[1A[0G[?25l[+] Building 0.7s (2/2)                                          docker:default
+[34m => [back internal] load build definition from Dockerfile                  0.0s
+[0m[34m => => transferring dockerfile: 312B                                       0.0s
+[0m[34m => [back internal] load metadata for docker.io/library/golang:1.23        0.7s
+[0m[?25h[1A[1A[1A[1A[0G[?25l[+] Building 0.8s (7/10)                                         docker:default
+[34m => => transferring context: 2B                                            0.0s
+[0m[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  0.0s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.0s (7/10)                                         docker:default
+[34m => => transferring context: 2B                                            0.0s
+[0m[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  0.1s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.1s (7/10)                                         docker:default
+[34m => => transferring context: 2B                                            0.0s
+[0m[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  0.3s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.3s (7/10)                                         docker:default
+[34m => => transferring context: 2B                                            0.0s
+[0m[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  0.4s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.4s (7/10)                                         docker:default
+[34m => => transferring context: 2B                                            0.0s
+[0m[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  0.6s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.6s (7/10)                                         docker:default
+[34m => => transferring context: 2B                                            0.0s
+[0m[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  0.7s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.7s (7/10)                                         docker:default
+[34m => => transferring context: 2B                                            0.0s
+[0m[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  0.9s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 1.9s (7/10)                                         docker:default
+[34m => => transferring context: 2B                                            0.0s
+[0m[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.1s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 2.0s (7/10)                                         docker:default
+[34m => => transferring context: 2B                                            0.0s
+[0m[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.2s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 2.2s (8/10)                                         docker:default
+[34m => => transferring context: 2B                                            0.0s
+[0m[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 2.3s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  0.1s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 2.5s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  0.3s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 2.6s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  0.4s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 2.8s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  0.6s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 2.9s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  0.8s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 3.1s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  0.9s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 3.2s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  1.1s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 3.4s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  1.2s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 3.5s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  1.3s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 3.7s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  1.5s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 3.8s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  1.6s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 4.0s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  1.8s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 4.1s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  1.9s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 4.3s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  2.1s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 4.4s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  2.2s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 4.6s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  2.4s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 4.7s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  2.5s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 4.9s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  2.7s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 5.0s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  2.8s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 5.2s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  3.0s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 5.3s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  3.1s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 5.5s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  3.3s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 5.6s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  3.5s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 5.8s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  3.6s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 5.9s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  3.7s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 6.1s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  3.9s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 6.2s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  4.1s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 6.4s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  4.2s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 6.5s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  4.4s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 6.7s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  4.5s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 6.8s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  4.6s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 7.0s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  4.8s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 7.1s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  4.9s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 7.3s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  5.1s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 7.4s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  5.2s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 7.6s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  5.4s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 7.7s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  5.6s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 7.9s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  5.7s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 8.0s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  5.8s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 8.2s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  6.0s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 8.3s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  6.2s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 8.5s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  6.3s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 8.7s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  6.5s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 8.8s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  6.6s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 8.9s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  6.7s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 9.1s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  6.9s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 9.2s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  7.0s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 9.4s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  7.2s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 9.5s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  7.3s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 9.7s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  7.5s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 9.8s (8/10)                                         docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  7.6s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 10.0s (8/10)                                        docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  7.8s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 10.1s (8/10)                                        docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  7.9s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 10.3s (8/10)                                        docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  8.1s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 10.4s (8/10)                                        docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  8.2s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 10.6s (8/10)                                        docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  8.4s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 10.7s (8/10)                                        docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  8.5s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 10.9s (8/10)                                        docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  8.7s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 10.9s (9/10)                                        docker:default
+[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m[34m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  8.7s
+[0m[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 11.1s (10/11)                                       docker:default
+[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m[34m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  8.7s
+[0m[34m => [back stage-1 1/1] COPY --from=build /out/app /app                     0.1s
+[0m => [back] exporting to image                                              0.1s
+ => => exporting layers                                                    0.1s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 11.3s (10/11)                                       docker:default
+[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m[34m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  8.7s
+[0m[34m => [back stage-1 1/1] COPY --from=build /out/app /app                     0.1s
+[0m => [back] exporting to image                                              0.3s
+ => => exporting layers                                                    0.3s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 11.4s (10/11)                                       docker:default
+[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m[34m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  8.7s
+[0m[34m => [back stage-1 1/1] COPY --from=build /out/app /app                     0.1s
+[0m => [back] exporting to image                                              0.4s
+[34m => => exporting layers                                                    0.4s
+[0m[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 11.5s (10/11)                                       docker:default
+[34m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  8.7s
+[0m[34m => [back stage-1 1/1] COPY --from=build /out/app /app                     0.1s
+[0m => [back] exporting to image                                              0.5s
+[34m => => exporting layers                                                    0.4s
+[0m[34m => => exporting manifest sha256:c90f97acea77620904d835e85911650214dec4a0  0.0s
+[0m[34m => => exporting config sha256:70dfc5b58d6ca1592c247c96b41e21ffc88e840041  0.0s
+[0m[34m => => exporting attestation manifest sha256:89bdac1c1dc5d625870ffbe927d1  0.0s
+[0m => => exporting manifest list sha256:63b3cf32f48d5e13a364f446c41adba200c  0.0s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 11.7s (10/11)                                       docker:default
+ => [back] exporting to image                                              0.7s
+[34m => => exporting layers                                                    0.4s
+[0m[34m => => exporting manifest sha256:c90f97acea77620904d835e85911650214dec4a0  0.0s
+[0m[34m => => exporting config sha256:70dfc5b58d6ca1592c247c96b41e21ffc88e840041  0.0s
+[0m[34m => => exporting attestation manifest sha256:89bdac1c1dc5d625870ffbe927d1  0.0s
+[0m[34m => => exporting manifest list sha256:63b3cf32f48d5e13a364f446c41adba200c  0.0s
+[0m[34m => => naming to docker.io/library/lab6app-back:latest                     0.0s
+[0m => => unpacking to docker.io/library/lab6app-back:latest                  0.1s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 11.7s (10/11)                                       docker:default
+ => [back] exporting to image                                              0.7s
+[34m => => exporting layers                                                    0.4s
+[0m[34m => => exporting manifest sha256:c90f97acea77620904d835e85911650214dec4a0  0.0s
+[0m[34m => => exporting config sha256:70dfc5b58d6ca1592c247c96b41e21ffc88e840041  0.0s
+[0m[34m => => exporting attestation manifest sha256:89bdac1c1dc5d625870ffbe927d1  0.0s
+[0m[34m => => exporting manifest list sha256:63b3cf32f48d5e13a364f446c41adba200c  0.0s
+[0m[34m => => naming to docker.io/library/lab6app-back:latest                     0.0s
+[0m[34m => => unpacking to docker.io/library/lab6app-back:latest                  0.2s
+[0m[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 11.9s (11/11)                                       docker:default
+[34m => [back] exporting to image                                              0.8s
+[0m[34m => => exporting layers                                                    0.4s
+[0m[34m => => exporting manifest sha256:c90f97acea77620904d835e85911650214dec4a0  0.0s
+[0m[34m => => exporting config sha256:70dfc5b58d6ca1592c247c96b41e21ffc88e840041  0.0s
+[0m[34m => => exporting attestation manifest sha256:89bdac1c1dc5d625870ffbe927d1  0.0s
+[0m[34m => => exporting manifest list sha256:63b3cf32f48d5e13a364f446c41adba200c  0.0s
+[0m[34m => => naming to docker.io/library/lab6app-back:latest                     0.0s
+[0m[34m => => unpacking to docker.io/library/lab6app-back:latest                  0.2s
+[0m[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 11.9s (11/12)                                       docker:default
+[34m => => exporting layers                                                    0.4s
+[0m[34m => => exporting manifest sha256:c90f97acea77620904d835e85911650214dec4a0  0.0s
+[0m[34m => => exporting config sha256:70dfc5b58d6ca1592c247c96b41e21ffc88e840041  0.0s
+[0m[34m => => exporting attestation manifest sha256:89bdac1c1dc5d625870ffbe927d1  0.0s
+[0m[34m => => exporting manifest list sha256:63b3cf32f48d5e13a364f446c41adba200c  0.0s
+[0m[34m => => naming to docker.io/library/lab6app-back:latest                     0.0s
+[0m[34m => => unpacking to docker.io/library/lab6app-back:latest                  0.2s
+[0m => [back] resolving provenance for metadata file                          0.0s
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Building 11.9s (12/12) FINISHED                              docker:default
+[34m => [back internal] load build definition from Dockerfile                  0.0s
+[0m[34m => => transferring dockerfile: 312B                                       0.0s
+[0m[34m => [back internal] load metadata for docker.io/library/golang:1.23        0.7s
+[0m[34m => [back internal] load .dockerignore                                     0.0s
+[0m[34m => => transferring context: 2B                                            0.0s
+[0m[34m => [back build 1/5] FROM docker.io/library/golang:1.23@sha256:60deed95d3  0.1s
+[0m[34m => => resolve docker.io/library/golang:1.23@sha256:60deed95d3888cc5e4d9f  0.0s
+[0m[34m => [back internal] load build context                                     0.0s
+[0m[34m => => transferring context: 54B                                           0.0s
+[0m[34m => CACHED [back build 2/5] WORKDIR /src                                   0.0s
+[0m[34m => CACHED [back build 3/5] COPY main.go go.mod /src/                      0.0s
+[0m[34m => [back build 4/5] RUN go mod download github.com/lib/pq && go mod tidy  1.3s
+[0m[34m => [back build 5/5] RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -  8.7s
+[0m[34m => [back stage-1 1/1] COPY --from=build /out/app /app                     0.1s
+[0m[34m => [back] exporting to image                                              0.8s
+[0m[34m => => exporting layers                                                    0.4s
+[0m[34m => => exporting manifest sha256:c90f97acea77620904d835e85911650214dec4a0  0.0s
+[0m[34m => => exporting config sha256:70dfc5b58d6ca1592c247c96b41e21ffc88e840041  0.0s
+[0m[34m => => exporting attestation manifest sha256:89bdac1c1dc5d625870ffbe927d1  0.0s
+[0m[34m => => exporting manifest list sha256:63b3cf32f48d5e13a364f446c41adba200c  0.0s
+[0m[34m => => naming to docker.io/library/lab6app-back:latest                     0.0s
+[0m[34m => => unpacking to docker.io/library/lab6app-back:latest                  0.2s
+[0m[34m => [back] resolving provenance for metadata file                          0.0s
+[0m[?25h[1A[1B[0G[?25l[+] Running 1/2
+ [32m✔[0m back                [32mBuilt[0m[34m0.0s [0m
+ [33m⠋[0m Network lab6app_db  Creating[34m0.0s [0m
+[?25h[1A[1A[1A[0G[?25l[34m[+] Running 2/3[0m
+ [32m✔[0m back                   [32mBuilt[0m[34m0.0s [0m
+ [32m✔[0m Network lab6app_db     [32mCreated[0m[34m0.1s [0m
+ [33m⠋[0m Network lab6app_front  Creating[34m0.1s [0m
+[?25h[1A[1A[1A[1A[0G[?25l[+] Running 4/5
+ [32m✔[0m back                    [32mBuilt[0m[34m0.0s [0m
+ [32m✔[0m Network lab6app_db      [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Network lab6app_front   [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Volume lab6app_db-data  [32mCreated[0m[34m0.0s [0m
+ [33m⠋[0m Container lab6app-db-1  Creating[34m0.1s [0m
+[?25h[1A[1A[1A[1A[1A[1A[0G[?25l[+] Running 4/5
+ [32m✔[0m back                    [32mBuilt[0m[34m0.0s [0m
+ [32m✔[0m Network lab6app_db      [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Network lab6app_front   [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Volume lab6app_db-data  [32mCreated[0m[34m0.0s [0m
+ [33m⠙[0m Container lab6app-db-1  Creating[34m0.2s [0m
+[?25h[1A[1A[1A[1A[1A[1A[0G[?25l[34m[+] Running 5/6[0m
+ [32m✔[0m back                      [32mBuilt[0m[34m0.0s [0m
+ [32m✔[0m Network lab6app_db        [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Network lab6app_front     [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Volume lab6app_db-data    [32mCreated[0m[34m0.0s [0m
+ [32m✔[0m Container lab6app-db-1    [32mCreated[0m[34m0.2s [0m
+ [33m⠋[0m Container lab6app-back-1  Creating[34m0.1s [0m
+[?25h[1A[1A[1A[1A[1A[1A[1A[0G[?25l[34m[+] Running 6/7[0m
+ [32m✔[0m back                       [32mBuilt[0m[34m0.0s [0m
+ [32m✔[0m Network lab6app_db         [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Network lab6app_front      [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Volume lab6app_db-data     [32mCreated[0m[34m0.0s [0m
+ [32m✔[0m Container lab6app-db-1     [32mCreated[0m[34m0.2s [0m
+ [32m✔[0m Container lab6app-back-1   [32mCreated[0m[34m0.1s [0m
+ [33m⠋[0m Container lab6app-front-1  Creating[34m0.0s [0m
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Running 6/7
+ [32m✔[0m back                       [32mBuilt[0m[34m0.0s [0m
+ [32m✔[0m Network lab6app_db         [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Network lab6app_front      [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Volume lab6app_db-data     [32mCreated[0m[34m0.0s [0m
+ [32m✔[0m Container lab6app-db-1     [32mCreated[0m[34m0.2s [0m
+ [32m✔[0m Container lab6app-back-1   [32mCreated[0m[34m0.1s [0m
+ [33m⠙[0m Container lab6app-front-1  Creating[34m0.1s [0m
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Running 6/7
+ [32m✔[0m back                       [32mBuilt[0m[34m0.0s [0m
+ [32m✔[0m Network lab6app_db         [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Network lab6app_front      [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Volume lab6app_db-data     [32mCreated[0m[34m0.0s [0m
+ [33m⠹[0m Container lab6app-db-1     Starting[34m0.6s [0m
+ [32m✔[0m Container lab6app-back-1   [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Container lab6app-front-1  [32mCreated[0m[34m0.2s [0m
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Running 6/7
+ [32m✔[0m back                       [32mBuilt[0m[34m0.0s [0m
+ [32m✔[0m Network lab6app_db         [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Network lab6app_front      [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Volume lab6app_db-data     [32mCreated[0m[34m0.0s [0m
+ [33m⠸[0m Container lab6app-db-1     Starting[34m0.7s [0m
+ [32m✔[0m Container lab6app-back-1   [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Container lab6app-front-1  [32mCreated[0m[34m0.2s [0m
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Running 6/7
+ [32m✔[0m back                       [32mBuilt[0m[34m0.0s [0m
+ [32m✔[0m Network lab6app_db         [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Network lab6app_front      [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Volume lab6app_db-data     [32mCreated[0m[34m0.0s [0m
+ [33m⠼[0m Container lab6app-db-1     Starting[34m0.8s [0m
+ [32m✔[0m Container lab6app-back-1   [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Container lab6app-front-1  [32mCreated[0m[34m0.2s [0m
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Running 6/7
+ [32m✔[0m back                       [32mBuilt[0m[34m0.0s [0m
+ [32m✔[0m Network lab6app_db         [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Network lab6app_front      [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Volume lab6app_db-data     [32mCreated[0m[34m0.0s [0m
+ [33m⠴[0m Container lab6app-db-1     Starting[34m0.9s [0m
+ [32m✔[0m Container lab6app-back-1   [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Container lab6app-front-1  [32mCreated[0m[34m0.2s [0m
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Running 6/7
+ [32m✔[0m back                       [32mBuilt[0m[34m0.0s [0m
+ [32m✔[0m Network lab6app_db         [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Network lab6app_front      [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Volume lab6app_db-data     [32mCreated[0m[34m0.0s [0m
+ [32m✔[0m Container lab6app-db-1     [32mStarted[0m[34m0.9s [0m
+ [33m⠙[0m Container lab6app-back-1   Starting[34m0.8s [0m
+ [32m✔[0m Container lab6app-front-1  [32mCreated[0m[34m0.2s [0m
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Running 6/7
+ [32m✔[0m back                       [32mBuilt[0m[34m0.0s [0m
+ [32m✔[0m Network lab6app_db         [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Network lab6app_front      [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Volume lab6app_db-data     [32mCreated[0m[34m0.0s [0m
+ [32m✔[0m Container lab6app-db-1     [32mStarted[0m[34m0.9s [0m
+ [33m⠹[0m Container lab6app-back-1   Starting[34m0.9s [0m
+ [32m✔[0m Container lab6app-front-1  [32mCreated[0m[34m0.2s [0m
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Running 6/7
+ [32m✔[0m back                       [32mBuilt[0m[34m0.0s [0m
+ [32m✔[0m Network lab6app_db         [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Network lab6app_front      [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Volume lab6app_db-data     [32mCreated[0m[34m0.0s [0m
+ [32m✔[0m Container lab6app-db-1     [32mStarted[0m[34m0.9s [0m
+ [33m⠸[0m Container lab6app-back-1   Starting[34m1.0s [0m
+ [32m✔[0m Container lab6app-front-1  [32mCreated[0m[34m0.2s [0m
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Running 6/7
+ [32m✔[0m back                       [32mBuilt[0m[34m0.0s [0m
+ [32m✔[0m Network lab6app_db         [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Network lab6app_front      [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Volume lab6app_db-data     [32mCreated[0m[34m0.0s [0m
+ [32m✔[0m Container lab6app-db-1     [32mStarted[0m[34m0.9s [0m
+ [32m✔[0m Container lab6app-back-1   [32mStarted[0m[34m1.0s [0m
+ [33m⠹[0m Container lab6app-front-1  Starting[34m0.9s [0m
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[+] Running 6/7
+ [32m✔[0m back                       [32mBuilt[0m[34m0.0s [0m
+ [32m✔[0m Network lab6app_db         [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Network lab6app_front      [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Volume lab6app_db-data     [32mCreated[0m[34m0.0s [0m
+ [32m✔[0m Container lab6app-db-1     [32mStarted[0m[34m0.9s [0m
+ [32m✔[0m Container lab6app-back-1   [32mStarted[0m[34m1.0s [0m
+ [33m⠸[0m Container lab6app-front-1  Starting[34m1.0s [0m
+[?25h[1A[1A[1A[1A[1A[1A[1A[1A[0G[?25l[34m[+] Running 7/7[0m
+ [32m✔[0m back                       [32mBuilt[0m[34m0.0s [0m
+ [32m✔[0m Network lab6app_db         [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Network lab6app_front      [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Volume lab6app_db-data     [32mCreated[0m[34m0.0s [0m
+ [32m✔[0m Container lab6app-db-1     [32mStarted[0m[34m0.9s [0m
+ [32m✔[0m Container lab6app-back-1   [32mStarted[0m[34m1.0s [0m
+ [32m✔[0m Container lab6app-front-1  [32mStarted[0m[34m1.1s [0m
+[?25h$ sleep 15
+$ sudo -n docker compose --project-name lab6app ls
+NAME                STATUS              CONFIG FILES
+lab6app             running(3)          /home/savva/Desktop/devops/infra-course-labs/lab6/work/compose.yaml
+$ sudo -n docker compose --project-name lab6app ps
+NAME              IMAGE                COMMAND                  SERVICE   CREATED          STATUS          PORTS
+lab6app-back-1    lab6app-back         "/app"                   back      16 seconds ago   Up 15 seconds   8080/tcp
+lab6app-db-1      postgres:16-alpine   "docker-entrypoint.s…"   db        16 seconds ago   Up 16 seconds   5432/tcp
+lab6app-front-1   nginx:1.25-alpine    "/docker-entrypoint.…"   front     16 seconds ago   Up 15 seconds   0.0.0.0:18888->80/tcp, [::]:18888->80/tcp
+$ sudo -n docker compose --project-name lab6app top
+SERVICE  #   UID       PID    PPID   C   STIME  TTY  TIME      CMD
+back     1   root      12074  12051  0   02:57  ?    00:00:00  /app
+db       1   70        11980  11956  0   02:57  ?    00:00:00  postgres
+db       1   70        12237  11980  0   02:57  ?    00:00:00  postgres: checkpointer
+db       1   70        12238  11980  0   02:57  ?    00:00:00  postgres: background writer
+db       1   70        12240  11980  0   02:57  ?    00:00:00  postgres: walwriter
+db       1   70        12241  11980  0   02:57  ?    00:00:00  postgres: autovacuum launcher
+db       1   70        12242  11980  0   02:57  ?    00:00:00  postgres: logical replication launcher
+front    1   root      12143  12119  0   02:57  ?    00:00:00  nginx: master process nginx -g daemon off;
+front    1   message+  12211  12143  0   02:57  ?    00:00:00  nginx: worker process
+front    1   message+  12212  12143  0   02:57  ?    00:00:00  nginx: worker process
+front    1   message+  12213  12143  0   02:57  ?    00:00:00  nginx: worker process
+front    1   message+  12214  12143  0   02:57  ?    00:00:00  nginx: worker process
+front    1   message+  12215  12143  0   02:57  ?    00:00:00  nginx: worker process
+front    1   message+  12216  12143  0   02:57  ?    00:00:00  nginx: worker process
+$ wget -qO- http://127.0.0.1:18888
+$ tee /home/savva/Desktop/devops/infra-course-labs/lab6/artifacts/logs/front_index.out
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Lab6 Compose</title>
+</head>
+<body>
+  <h2>Users</h2>
+  <pre id="users">loading...</pre>
+  <script>
+    fetch('/back')
+      .then((response) => response.json())
+      .then((data) => {
+        document.getElementById('users').textContent = JSON.stringify(data, null, 2);
+      })
+      .catch((error) => {
+        document.getElementById('users').textContent = String(error);
+      });
+  </script>
+</body>
+</html>
+$ wget -qO- http://127.0.0.1:18888/back
+$ tee /home/savva/Desktop/devops/infra-course-labs/lab6/artifacts/logs/back_initial.json
+[{"id":1,"name":"john","email":"john@example.com"},{"id":2,"name":"mary","email":"mary@example.com"}]
+$ sudo -n docker exec lab6app-db-1 psql -U app -d app -c 'insert into users (name, email) values ('\''alex'\'', '\''alex@mail.ru'\'');'
+INSERT 0 1
+$ wget -qO- http://127.0.0.1:18888/back
+$ tee /home/savva/Desktop/devops/infra-course-labs/lab6/artifacts/logs/back_after_insert.json
+[{"id":1,"name":"john","email":"john@example.com"},{"id":2,"name":"mary","email":"mary@example.com"},{"id":3,"name":"alex","email":"alex@mail.ru"}]
+$ sudo -n docker compose --project-name lab6app rm -sf
+[1A[1B[0G[?25l[+] Stopping 0/1
+ [33m⠋[0m Container lab6app-front-1  Stopping[34m0.0s [0m
+[?25h[1A[1A[0G[?25l[+] Stopping 0/1
+ [33m⠙[0m Container lab6app-front-1  Stopping[34m0.1s [0m
+[?25h[1A[1A[0G[?25l[+] Stopping 0/1
+ [33m⠹[0m Container lab6app-front-1  Stopping[34m0.2s [0m
+[?25h[1A[1A[0G[?25l[+] Stopping 0/1
+ [33m⠸[0m Container lab6app-front-1  Stopping[34m0.3s [0m
+[?25h[1A[1A[0G[?25l[34m[+] Stopping 1/2[0m
+ [32m✔[0m Container lab6app-front-1  [32mStopped[0m[34m0.4s [0m
+ [33m⠋[0m Container lab6app-back-1   Stopping[34m0.0s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container lab6app-front-1  [32mStopped[0m[34m0.4s [0m
+ [33m⠙[0m Container lab6app-back-1   Stopping[34m0.1s [0m
+[?25h[1A[1A[1A[0G[?25l[+] Stopping 1/2
+ [32m✔[0m Container lab6app-front-1  [32mStopped[0m[34m0.4s [0m
+ [33m⠹[0m Container lab6app-back-1   Stopping[34m0.3s [0m
+[?25h[1A[1A[1A[0G[?25l[34m[+] Stopping 2/3[0m
+ [32m✔[0m Container lab6app-front-1  [32mStopped[0m[34m0.4s [0m
+ [32m✔[0m Container lab6app-back-1   [32mStopped[0m[34m0.3s [0m
+ [33m⠋[0m Container lab6app-db-1     Stopping[34m0.0s [0m
+[?25h[1A[1A[1A[1A[0G[?25l[+] Stopping 2/3
+ [32m✔[0m Container lab6app-front-1  [32mStopped[0m[34m0.4s [0m
+ [32m✔[0m Container lab6app-back-1   [32mStopped[0m[34m0.3s [0m
+ [33m⠙[0m Container lab6app-db-1     Stopping[34m0.1s [0m
+[?25h[1A[1A[1A[1A[0G[?25l[+] Stopping 2/3
+ [32m✔[0m Container lab6app-front-1  [32mStopped[0m[34m0.4s [0m
+ [32m✔[0m Container lab6app-back-1   [32mStopped[0m[34m0.3s [0m
+ [33m⠹[0m Container lab6app-db-1     Stopping[34m0.2s [0m
+[?25h[1A[1A[1A[1A[0G[?25l[34m[+] Stopping 3/3[0m
+ [32m✔[0m Container lab6app-front-1  [32mStopped[0m[34m0.4s [0m
+ [32m✔[0m Container lab6app-back-1   [32mStopped[0m[34m0.3s [0m
+ [32m✔[0m Container lab6app-db-1     [32mStopped[0m[34m0.3s [0m
+[?25hGoing to remove lab6app-front-1, lab6app-back-1, lab6app-db-1
+[1A[1B[0G[?25l[+] Removing 3/3
+ [32m✔[0m Container lab6app-db-1     [32mRemoved[0m[34m0.1s [0m
+ [32m✔[0m Container lab6app-front-1  [32mRemoved[0m[34m0.1s [0m
+ [32m✔[0m Container lab6app-back-1   [32mRemoved[0m[34m0.1s [0m
+[?25h$ sudo -n docker compose --project-name lab6app up -d
+[1A[1B[0G[?25l[+] Running 0/1
+ [33m⠋[0m Container lab6app-db-1  Creating[34m0.1s [0m
+[?25h[1A[1A[0G[?25l[+] Running 0/1
+ [33m⠙[0m Container lab6app-db-1  Creating[34m0.2s [0m
+[?25h[1A[1A[0G[?25l[34m[+] Running 1/2[0m
+ [32m✔[0m Container lab6app-db-1    [32mCreated[0m[34m0.2s [0m
+ [33m⠋[0m Container lab6app-back-1  Creating[34m0.1s [0m
+[?25h[1A[1A[1A[0G[?25l[34m[+] Running 2/3[0m
+ [32m✔[0m Container lab6app-db-1     [32mCreated[0m[34m0.2s [0m
+ [32m✔[0m Container lab6app-back-1   [32mCreated[0m[34m0.1s [0m
+ [33m⠋[0m Container lab6app-front-1  Creating[34m0.1s [0m
+[?25h[1A[1A[1A[1A[0G[?25l[34m[+] Running 3/3[0m
+ [32m✔[0m Container lab6app-db-1     [32mCreated[0m[34m0.2s [0m
+ [32m✔[0m Container lab6app-back-1   [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Container lab6app-front-1  [32mCreated[0m[34m0.1s [0m
+[?25h[1A[1A[1A[1A[0G[?25l[+] Running 2/3
+ [33m⠹[0m Container lab6app-db-1     Starting[34m0.6s [0m
+ [32m✔[0m Container lab6app-back-1   [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Container lab6app-front-1  [32mCreated[0m[34m0.1s [0m
+[?25h[1A[1A[1A[1A[0G[?25l[+] Running 2/3
+ [33m⠸[0m Container lab6app-db-1     Starting[34m0.7s [0m
+ [32m✔[0m Container lab6app-back-1   [32mCreated[0m[34m0.1s [0m
+ [32m✔[0m Container lab6app-front-1  [32mCreated[0m[34m0.1s [0m
+[?25h[1A[1A[1A[1A[0G[?25l[+] Running 2/3
+ [32m✔[0m Container lab6app-db-1     [32mStarted[0m[34m0.8s [0m
+ [33m⠙[0m Container lab6app-back-1   Starting[34m0.6s [0m
+ [32m✔[0m Container lab6app-front-1  [32mCreated[0m[34m0.1s [0m
+[?25h[1A[1A[1A[1A[0G[?25l[+] Running 2/3
+ [32m✔[0m Container lab6app-db-1     [32mStarted[0m[34m0.8s [0m
+ [33m⠹[0m Container lab6app-back-1   Starting[34m0.7s [0m
+ [32m✔[0m Container lab6app-front-1  [32mCreated[0m[34m0.1s [0m
+[?25h[1A[1A[1A[1A[0G[?25l[+] Running 2/3
+ [32m✔[0m Container lab6app-db-1     [32mStarted[0m[34m0.8s [0m
+ [33m⠸[0m Container lab6app-back-1   Starting[34m0.8s [0m
+ [32m✔[0m Container lab6app-front-1  [32mCreated[0m[34m0.1s [0m
+[?25h[1A[1A[1A[1A[0G[?25l[+] Running 2/3
+ [32m✔[0m Container lab6app-db-1     [32mStarted[0m[34m0.8s [0m
+ [33m⠼[0m Container lab6app-back-1   Starting[34m0.9s [0m
+ [32m✔[0m Container lab6app-front-1  [32mCreated[0m[34m0.1s [0m
+[?25h[1A[1A[1A[1A[0G[?25l[+] Running 2/3
+ [32m✔[0m Container lab6app-db-1     [32mStarted[0m[34m0.8s [0m
+ [32m✔[0m Container lab6app-back-1   [32mStarted[0m[34m0.9s [0m
+ [33m⠙[0m Container lab6app-front-1  Starting[34m0.9s [0m
+[?25h[1A[1A[1A[1A[0G[?25l[+] Running 2/3
+ [32m✔[0m Container lab6app-db-1     [32mStarted[0m[34m0.8s [0m
+ [32m✔[0m Container lab6app-back-1   [32mStarted[0m[34m0.9s [0m
+ [33m⠹[0m Container lab6app-front-1  Starting[34m1.0s [0m
+[?25h[1A[1A[1A[1A[0G[?25l[34m[+] Running 3/3[0m
+ [32m✔[0m Container lab6app-db-1     [32mStarted[0m[34m0.8s [0m
+ [32m✔[0m Container lab6app-back-1   [32mStarted[0m[34m0.9s [0m
+ [32m✔[0m Container lab6app-front-1  [32mStarted[0m[34m1.1s [0m
+[?25h$ sleep 10
+$ wget -qO- http://127.0.0.1:18888/back
+$ tee /home/savva/Desktop/devops/infra-course-labs/lab6/artifacts/logs/back_after_recreate.json
+[{"id":1,"name":"john","email":"john@example.com"},{"id":2,"name":"mary","email":"mary@example.com"},{"id":3,"name":"alex","email":"alex@mail.ru"}]
+$ sudo -n docker exec lab6app-front-1 sh -lc 'wget -T 2 -qO- http://db:5432'
+$ true
+$ cleanup
+$ cd /home/savva/Desktop/devops/infra-course-labs/lab6/work
+$ sudo -n docker compose --project-name lab6app down -v --remove-orphans
+
+Script done on 2026-04-09 02:58:11+03:00 [COMMAND_EXIT_CODE="0"]

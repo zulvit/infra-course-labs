@@ -1,0 +1,26 @@
+Script started on 2026-04-09 02:37:17+03:00 [COMMAND="export PATH=/home/savva/.local/bin:$PATH; rm -f /home/savva/Desktop/devops/infra-course-labs/lab4/artifacts/logs/main.tar; udocker run --volume=/home/savva/Desktop/devops/infra-course-labs/lab4:/lab4 --entrypoint="" martizih/kaniko:latest /kaniko/executor --context=/lab4/work/main --dockerfile=/lab4/work/main/Dockerfile --destination=local/main:latest --tar-path=/lab4/artifacts/logs/main.tar --no-push --force --build-arg FILE=/example.html; python3 -c "import json, tarfile; tf=tarfile.open(/home/savva/Desktop/devops/infra-course-labs/lab4/artifacts/logs/main.tar); manifest=json.load(tf.extractfile(manifest.json)); cfg=json.load(tf.extractfile(manifest[0][Config])); print(json.dumps({Entrypoint: cfg[config].get(Entrypoint), Cmd: cfg[config].get(Cmd), ExposedPorts: cfg[config].get(ExposedPorts), Labels: cfg[config].get(Labels)}, indent=2))"" <not executed on terminal>]
+ 
+ ****************************************************************************** 
+ *                                                                            * 
+ *               STARTING 3a168033-609d-3bef-85e8-fcb73a3eec6b                * 
+ *                                                                            * 
+ ****************************************************************************** 
+ executing: executor
+[33mWARN[0m[0000] Kaniko is being run outside of a container. This can have dangerous effects on your system 
+[36mINFO[0m[0000] Retrieving image manifest python:3.11-alpine 
+[36mINFO[0m[0000] Retrieving image python:3.11-alpine from registry index.docker.io 
+[36mINFO[0m[0000] credential providers by priority: [env, google, ecr, acr, gitlab] 
+[36mINFO[0m[0001] Retrieving image manifest python:3.11-alpine 
+[36mINFO[0m[0001] Returning cached image manifest              
+[36mINFO[0m[0001] Built cross stage deps: map[]                
+[36mINFO[0m[0001] Retrieving image manifest python:3.11-alpine 
+[36mINFO[0m[0001] Returning cached image manifest              
+[36mINFO[0m[0001] Building stage 'python:3.11-alpine' [idx: '0', base-idx: '-1'] 
+[36mINFO[0m[0001] Unpacking rootfs as cmd WORKDIR /app requires it. 
+error building image: error building stage: failed to get filesystem from image: chown /bin: operation not permitted
+  File "<string>", line 1
+    import json, tarfile; tf=tarfile.open(/home/savva/Desktop/devops/infra-course-labs/lab4/artifacts/logs/main.tar); manifest=json.load(tf.extractfile(manifest.json)); cfg=json.load(tf.extractfile(manifest[0][Config])); print(json.dumps({Entrypoint: cfg[config].get(Entrypoint), Cmd: cfg[config].get(Cmd), ExposedPorts: cfg[config].get(ExposedPorts), Labels: cfg[config].get(Labels)}, indent=2))
+                                          ^
+SyntaxError: invalid syntax
+
+Script done on 2026-04-09 02:37:20+03:00 [COMMAND_EXIT_CODE="1"]

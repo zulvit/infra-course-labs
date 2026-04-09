@@ -1,0 +1,9 @@
+Script started on 2026-04-09 02:36:18+03:00 [COMMAND="export PATH=/home/savva/.local/bin:$PATH; udocker pull registry:2; nohup udocker run registry:2 >/home/savva/Desktop/devops/infra-course-labs/lab4/artifacts/logs/registry_probe.out 2>&1 & sleep 8; wget -qO- http://127.0.0.1:5000/v2/" <not executed on terminal>]
+Info: downloading layer sha256:26b2eb03618e749084668eaff68cff8f81dda12d06ac641be7a6398b82a6f25b
+Info: downloading layer sha256:6d464ea18732475d5c3591f1eba3ee96a974808791a5fe103ea1c33199f2eb74
+Info: downloading layer sha256:3493bf46cdec3b8ecbb96c0b1cd7fc5f90964306b7c55a0136dac0beeaa627f9
+Info: downloading layer sha256:8e82f80af0de06ae95429a79d00ae7e98c0f5ded5555a06c024757d81371a742
+Info: downloading layer sha256:bbbdd6c6894b7d41bab22098e3a0fff77de4a231f5b407224ead5b3f26cc4ff3
+Info: downloading layer sha256:44cf07d57ee4424189f012074a59110ee2065adfdde9c7d9826bebdffce0a885
+{}
+Script done on 2026-04-09 02:36:41+03:00 [COMMAND_EXIT_CODE="0"]

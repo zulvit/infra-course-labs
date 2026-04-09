@@ -1,0 +1,14 @@
+Script started on 2026-04-09 02:31:47+03:00 [COMMAND="export PATH=/home/savva/.local/bin:$PATH; cd /home/savva/Desktop/devops/infra-course-labs; udocker pull martizih/kaniko:latest" <not executed on terminal>]
+Info: downloading layer sha256:8c8debd1705330b3292d14b8abcc35734af9556f529c83c70c217204e39186ee
+Info: downloading layer sha256:5ae638e627bab10cf0102683d7feebe831447dcc9d29b7704e67037d9e1e0915
+Info: downloading layer sha256:b9207388d7562db7263ab3caabd883b422f229199b2d7e143f4627fb903d319b
+Info: downloading layer sha256:0b5e9422038f5e73a249df14235eacbfeaa8233f1b82e1fbaa923e83c8a545fe
+Info: downloading layer sha256:2a613e40922cb17b54b213dd9d9194f8c9ea30a546e65e03d887919371fa8499
+Info: downloading layer sha256:e0b90b93d28a5b6d909f4b2c10835c81bac35f0b2bb9652338f4bdd12afb1c66
+Info: downloading layer sha256:17e7d6098c1db9347723fdf52cd41c150442f13910838c559af3814c0cb8e373
+Info: downloading layer sha256:4d33dee78e3b511e1bec16fa5d0d0e04f6f80c33200a0f67cebe226ce0b46395
+Info: downloading layer sha256:a8fd462e6ee6c149a203ea730f29aad088fde98ab788d0ad44ec8212bb05ae32
+Info: downloading layer sha256:9b76179c63c3eaa00a5e916e8c9df04fe0216b4827a619fcb7056ed8213aa477
+Info: downloading layer sha256:941bc93400f2fb1404a74f068ebb4f1f1c594bb5bcac137fb73a739f29386e79
+
+Script done on 2026-04-09 02:32:13+03:00 [COMMAND_EXIT_CODE="0"]

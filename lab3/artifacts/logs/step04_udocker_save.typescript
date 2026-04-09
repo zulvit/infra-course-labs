@@ -1,0 +1,4 @@
+Script started on 2026-04-09 02:30:18+03:00 [COMMAND="export PATH=/home/savva/.local/bin:$PATH; cd /home/savva/Desktop/devops/infra-course-labs/lab3/work; rm -f ../artifacts/logs/python-3.11.5-alpine.tar; udocker save -o ../artifacts/logs/python-3.11.5-alpine.tar python:3.11.5-alpine; ls -lh ../artifacts/logs/python-3.11.5-alpine.tar" <not executed on terminal>]
+-rw-rw-r-- 1 savva savva 19M Apr  9 02:30 ../artifacts/logs/python-3.11.5-alpine.tar
+
+Script done on 2026-04-09 02:30:18+03:00 [COMMAND_EXIT_CODE="0"]
