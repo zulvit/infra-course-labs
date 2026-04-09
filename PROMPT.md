@@ -19,6 +19,36 @@ cd infra-course-labs
 2. Найти лабораторные: каждая в своей папке `lab1`, `lab2`, …
 3. Выполнять их **по одной**, не смешивая контекст разных лаб.
 
+## Текущий статус проекта
+
+- Репозиторий уже подготовлен и содержит материалы по `lab1`-`lab8`.
+- `lab1` подготовлена и частично проверена: собраны [Vagrantfile](/home/savva/Desktop/devops/infra-course-labs/lab1/vagrant/Vagrantfile) и [main.go](/home/savva/Desktop/devops/infra-course-labs/lab1/vagrant/main.go), подтверждена блокировка запуска ВМ из-за `AMD-V is not available (VERR_SVM_NO_SVM)`.
+- `lab2` честно задокументирована как заблокированная тем же ограничением nested virtualization: без рабочей VirtualBox/Vagrant среды нельзя поднять `front/back/db` и собрать боксы.
+- `lab3` выполнена в адаптированном виде через `udocker`: подтверждены `pull/run/create/inspect/save` и HTTP-пример без системного Docker daemon.
+- `lab4` выполнена частично в адаптированном виде через `kaniko` + `udocker`: подтверждены сборка простого образа, локальный registry и push; сложные runtime/build-сценарии заблокированы ограничениями user-space среды.
+- `lab5` выполнена на локальном Docker: подтверждены bind mount, named volumes, shared volume, user-defined bridge и `host` network; multi-host/NFS/IPVLAN часть не воспроизведена из-за отсутствия нескольких ВМ.
+- `lab6` выполнена на локальном Docker Compose v2: подняты `front/back/db`, проверены сети, данные и персистентность тома.
+- `lab7` и `lab8` пока не выполнены: в [lab7/report.md](/home/savva/Desktop/devops/infra-course-labs/lab7/report.md) и [lab8/report.md](/home/savva/Desktop/devops/infra-course-labs/lab8/report.md) только заготовки отчётов.
+
+## Что делать дальше на машине, где доступна виртуалка
+
+- Не начинать с нуля: использовать текущее состояние репозитория как базу и продолжать работу в уже подготовленных каталогах.
+- В первую очередь перепроверить `lab1` на хосте или ВМ с рабочей nested virtualization / VirtualBox:
+  - выполнить `vagrant up`, `vagrant ssh`, `curl localhost:8080`;
+  - если запуск успешен, обновить [lab1/report.md](/home/savva/Desktop/devops/infra-course-labs/lab1/report.md), убрав статус блокировки и добавив реальные проверки.
+- Затем полностью выполнить `lab2` в исходном формате:
+  - поднять базовые ВМ;
+  - собрать и упаковать боксы `front`, `back`, `db`;
+  - поднять итоговый multi-node стенд и проверить доступность `http://localhost:8888`;
+  - обновить [lab2/report.md](/home/savva/Desktop/devops/infra-course-labs/lab2/report.md) с реальными логами запуска.
+- После появления рабочей Vagrant/VM среды вернуться к невоспроизведённым multi-host частям `lab5`, если требуется строгое совпадение с курсом:
+  - NFS;
+  - remote Docker;
+  - `ipvlan` на нескольких ВМ.
+- Выполнить `lab7` по заданию на полноценной VM-топологии из курса и заполнить [lab7/report.md](/home/savva/Desktop/devops/infra-course-labs/lab7/report.md).
+- Выполнить `lab8`, опираясь на инфраструктуру `lab7`, и заполнить [lab8/report.md](/home/savva/Desktop/devops/infra-course-labs/lab8/report.md).
+- Если на новой машине будет доступен полноценный Docker и/или root, при желании можно дополнительно довести `lab3` и `lab4` до более близкого к курсу варианта, но это уже вторично по сравнению с `lab1`, `lab2`, `lab7`, `lab8`.
+
 ---
 
 ## Общие правила
