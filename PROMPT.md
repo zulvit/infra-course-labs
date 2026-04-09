@@ -13,6 +13,8 @@ git clone https://github.com/zulvit/infra-course-labs
 cd infra-course-labs
 ```
 
+Если хост — **Windows**, для шагов методички в стиле Linux (`apt`, `bash`, `docker`, `ansible`) работай в **WSL2** (например Ubuntu): открой `wsl`, клонируй репозиторий внутри дистрибутива и выполняй команды оттуда; **Docker Desktop** с интеграцией WSL удобен для лаб с Docker/Compose; **Vagrant + VirtualBox** надёжнее на физическом ПК или отдельной ВМ с включённой виртуализацией в BIOS (VT-x/AMD-V), избегай «ВМ внутри ВМ» без nested virtualization. В отчётах указывай пути **относительно корня репозитория** (`lab1/vagrant/Vagrantfile`, `lab7/report.md`), не вставляй чужие абсолютные пути вида `/home/username/...`.
+
 ## Задача
 
 1. Получить код репозитория (клонировать или использовать текущий каталог).
@@ -21,33 +23,23 @@ cd infra-course-labs
 
 ## Текущий статус проекта
 
-- Репозиторий уже подготовлен и содержит материалы по `lab1`-`lab8`.
-- `lab1` подготовлена и частично проверена: собраны [Vagrantfile](/home/savva/Desktop/devops/infra-course-labs/lab1/vagrant/Vagrantfile) и [main.go](/home/savva/Desktop/devops/infra-course-labs/lab1/vagrant/main.go), подтверждена блокировка запуска ВМ из-за `AMD-V is not available (VERR_SVM_NO_SVM)`.
-- `lab2` честно задокументирована как заблокированная тем же ограничением nested virtualization: без рабочей VirtualBox/Vagrant среды нельзя поднять `front/back/db` и собрать боксы.
-- `lab3` выполнена в адаптированном виде через `udocker`: подтверждены `pull/run/create/inspect/save` и HTTP-пример без системного Docker daemon.
-- `lab4` выполнена частично в адаптированном виде через `kaniko` + `udocker`: подтверждены сборка простого образа, локальный registry и push; сложные runtime/build-сценарии заблокированы ограничениями user-space среды.
-- `lab5` выполнена на локальном Docker: подтверждены bind mount, named volumes, shared volume, user-defined bridge и `host` network; multi-host/NFS/IPVLAN часть не воспроизведена из-за отсутствия нескольких ВМ.
-- `lab6` выполнена на локальном Docker Compose v2: подняты `front/back/db`, проверены сети, данные и персистентность тома.
-- `lab7` и `lab8` пока не выполнены: в [lab7/report.md](/home/savva/Desktop/devops/infra-course-labs/lab7/report.md) и [lab8/report.md](/home/savva/Desktop/devops/infra-course-labs/lab8/report.md) только заготовки отчётов.
+- Репозиторий уже подготовлен и содержит материалы по `lab1`–`lab8`.
+- `lab1` подготовлена и частично проверена: есть `lab1/vagrant/Vagrantfile` и `lab1/vagrant/main.go`; в среде без nested virtualization зафиксирована блокировка VirtualBox: `AMD-V is not available (VERR_SVM_NO_SVM)`.
+- `lab2` задокументирована как заблокированная тем же ограничением: без рабочего VirtualBox/Vagrant нельзя поднять `front`/`back`/`db` и собрать боксы.
+- `lab3` в одном из прогонов выполнялась в адаптированном виде через `udocker` (обход без полноценного Docker daemon).
+- `lab4` частично через `kaniko` + `udocker`: сборка образа, локальный registry и push; не все runtime-сценарии курса эквивалентны «чистому» Docker.
+- `lab5` на одном хосте с Docker: bind mount, named volumes, общий том, пользовательский bridge и `host` network; multi-host NFS / IPVLAN на нескольких ВМ могли не воспроизводиться.
+- `lab6` на Docker Compose v2: стек `front`/`back`/`db`, сети и персистентность тома — по отчётам прогонов.
+- `lab7` и `lab8` часто остаются с пустыми шаблонами в `lab7/report.md` и `lab8/report.md` — приоритет для следующих запусков агента.
 
 ## Что делать дальше на машине, где доступна виртуалка
 
-- Не начинать с нуля: использовать текущее состояние репозитория как базу и продолжать работу в уже подготовленных каталогах.
-- В первую очередь перепроверить `lab1` на хосте или ВМ с рабочей nested virtualization / VirtualBox:
-  - выполнить `vagrant up`, `vagrant ssh`, `curl localhost:8080`;
-  - если запуск успешен, обновить [lab1/report.md](/home/savva/Desktop/devops/infra-course-labs/lab1/report.md), убрав статус блокировки и добавив реальные проверки.
-- Затем полностью выполнить `lab2` в исходном формате:
-  - поднять базовые ВМ;
-  - собрать и упаковать боксы `front`, `back`, `db`;
-  - поднять итоговый multi-node стенд и проверить доступность `http://localhost:8888`;
-  - обновить [lab2/report.md](/home/savva/Desktop/devops/infra-course-labs/lab2/report.md) с реальными логами запуска.
-- После появления рабочей Vagrant/VM среды вернуться к невоспроизведённым multi-host частям `lab5`, если требуется строгое совпадение с курсом:
-  - NFS;
-  - remote Docker;
-  - `ipvlan` на нескольких ВМ.
-- Выполнить `lab7` по заданию на полноценной VM-топологии из курса и заполнить [lab7/report.md](/home/savva/Desktop/devops/infra-course-labs/lab7/report.md).
-- Выполнить `lab8`, опираясь на инфраструктуру `lab7`, и заполнить [lab8/report.md](/home/savva/Desktop/devops/infra-course-labs/lab8/report.md).
-- Если на новой машине будет доступен полноценный Docker и/или root, при желании можно дополнительно довести `lab3` и `lab4` до более близкого к курсу варианта, но это уже вторично по сравнению с `lab1`, `lab2`, `lab7`, `lab8`.
+- Не начинать с нуля: использовать текущее состояние репозитория как базу и продолжать в уже подготовленных каталогах.
+- Перепроверить `lab1` на хосте или ВМ с рабочей VirtualBox и виртуализацией в BIOS: `vagrant up`, `vagrant ssh`, `curl localhost:8080`; при успехе обновить `lab1/report.md` (снять статус блокировки, добавить проверки).
+- Выполнить `lab2` в формате курса: боксы `front`/`back`/`db`, multi-node стенд, `http://localhost:8888` — отразить в `lab2/report.md`.
+- При необходимости строгого совпадения с курсом довести multi-host части `lab5` (NFS, при необходимости `ipvlan` на нескольких ВМ).
+- Выполнить `lab7` и `lab8`, заполнить `lab7/report.md` и `lab8/report.md`.
+- При полноценном Docker и правах root по желанию выровнять `lab3` и `lab4` под классический сценарий курса (вторично после `lab1`, `lab2`, `lab7`, `lab8`).
 
 ---
 
@@ -88,8 +80,9 @@ cd infra-course-labs
 
 ### 4. Выполнение
 
-- Ориентируйся на **Linux CLI** (`apt`, `docker`, `systemctl`, `vagrant`, и т.д.), если среда это позволяет.
+- Ориентируйся на **Linux CLI** (`apt`, `docker`, `systemctl`, `vagrant`, и т.д.); на Windows используй **WSL2** или эквивалент (см. абзац после блока `git clone` в начале документа).
 - Работай в рамках **папки текущей лабораторной** (`labN/`); не разноси артефакты соседних лаб без необходимости.
+- В `report.md` ссылайся на файлы **от корня репозитория** (`labN/...`), без абсолютных путей чужой машины.
 
 ### 5. Ошибки
 
