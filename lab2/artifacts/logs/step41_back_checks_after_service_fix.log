@@ -1,0 +1,11 @@
+﻿ubuntu-jammy
+[0;1;32m●[0m lab2-back.service - lab2 backend service
+     Loaded: loaded (]8;;file://ubuntu-jammy/etc/systemd/system/lab2-back.service/etc/systemd/system/lab2-back.service]8;;; enabled; vendor preset: enabled)
+     Active: [0;1;32mactive (running)[0m since Fri 2026-04-10 00:47:19 UTC; 24s ago
+   Main PID: 3270 (lab2-back)
+      Tasks: 3 (limit: 1099)
+     Memory: 960.0K
+        CPU: 8ms
+     CGroup: /system.slice/lab2-back.service
+             └─3270 /usr/local/bin/lab2-back
+null

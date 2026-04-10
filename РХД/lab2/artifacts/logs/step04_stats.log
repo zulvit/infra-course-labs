@@ -1,0 +1,15 @@
+﻿SET
+   table_name   | row_count |         last_analyze          
+----------------+-----------+-------------------------------
+ categories     |         8 | 2026-04-10 11:26:08.006673+00
+ customers      |         6 | 2026-04-10 11:26:08.009015+00
+ deliveries     |         0 | 
+ manufacturers  |         8 | 2026-04-10 11:26:08.005511+00
+ price_change   |         0 | 
+ products       |         0 | 
+ purchase_items |         0 | 
+ purchases      |         0 | 
+ stores         |         6 | 2026-04-10 11:26:08.007825+00
+(9 rows)
+
+

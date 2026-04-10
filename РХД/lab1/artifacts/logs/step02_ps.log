@@ -1,0 +1,2 @@
+CONTAINER ID   IMAGE                COMMAND                  CREATED          STATUS                    PORTS                      NAMES
+43b376f88725   postgres:17-alpine   "docker-entrypoint.s…"   20 seconds ago   Up 20 seconds (healthy)   127.0.0.1:5541->5432/tcp   rhd_lab1_postgres

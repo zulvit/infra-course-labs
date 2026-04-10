@@ -1,0 +1,72 @@
+;
+; Archive created at 2026-04-10 11:26:55 UTC
+;     dbname: shop_db
+;     TOC Entries: 61
+;     Compression: gzip
+;     Dump Version: 1.16-0
+;     Format: CUSTOM
+;     Integer: 4 bytes
+;     Offset: 8 bytes
+;     Dumped from database version: 17.9
+;     Dumped by pg_dump version: 17.9
+;
+;
+; Selected TOC Entries:
+;
+6; 2615 16385 SCHEMA - shop shop_admin
+221; 1259 16395 TABLE shop categories shop_admin
+220; 1259 16394 SEQUENCE shop categories_category_id_seq shop_admin
+228; 1259 16442 TABLE shop customers shop_admin
+227; 1259 16441 SEQUENCE shop customers_customer_id_seq shop_admin
+229; 1259 16447 TABLE shop deliveries shop_admin
+219; 1259 16387 TABLE shop manufacturers shop_admin
+218; 1259 16386 SEQUENCE shop manufacturers_manufacturer_id_seq shop_admin
+224; 1259 16420 TABLE shop price_change shop_admin
+223; 1259 16403 TABLE shop products shop_admin
+222; 1259 16402 SEQUENCE shop products_product_id_seq shop_admin
+232; 1259 16482 TABLE shop purchase_items shop_admin
+231; 1259 16464 TABLE shop purchases shop_admin
+230; 1259 16463 SEQUENCE shop purchases_purchase_id_seq shop_admin
+226; 1259 16434 TABLE shop stores shop_admin
+225; 1259 16433 SEQUENCE shop stores_store_id_seq shop_admin
+3501; 0 16395 TABLE DATA shop categories shop_admin
+3508; 0 16442 TABLE DATA shop customers shop_admin
+3509; 0 16447 TABLE DATA shop deliveries shop_admin
+3499; 0 16387 TABLE DATA shop manufacturers shop_admin
+3504; 0 16420 TABLE DATA shop price_change shop_admin
+3503; 0 16403 TABLE DATA shop products shop_admin
+3512; 0 16482 TABLE DATA shop purchase_items shop_admin
+3511; 0 16464 TABLE DATA shop purchases shop_admin
+3506; 0 16434 TABLE DATA shop stores shop_admin
+3519; 0 0 SEQUENCE SET shop categories_category_id_seq shop_admin
+3520; 0 0 SEQUENCE SET shop customers_customer_id_seq shop_admin
+3521; 0 0 SEQUENCE SET shop manufacturers_manufacturer_id_seq shop_admin
+3522; 0 0 SEQUENCE SET shop products_product_id_seq shop_admin
+3523; 0 0 SEQUENCE SET shop purchases_purchase_id_seq shop_admin
+3524; 0 0 SEQUENCE SET shop stores_store_id_seq shop_admin
+3320; 2606 16399 CONSTRAINT shop categories categories_pkey shop_admin
+3335; 2606 16446 CONSTRAINT shop customers customers_pkey shop_admin
+3316; 2606 16391 CONSTRAINT shop manufacturers manufacturers_pkey shop_admin
+3337; 2606 16452 CONSTRAINT shop deliveries pk_deliveries shop_admin
+3329; 2606 16426 CONSTRAINT shop price_change pk_price_change shop_admin
+3343; 2606 16488 CONSTRAINT shop purchase_items pk_purchase_items shop_admin
+3326; 2606 16407 CONSTRAINT shop products products_pkey shop_admin
+3341; 2606 16469 CONSTRAINT shop purchases purchases_pkey shop_admin
+3331; 2606 16438 CONSTRAINT shop stores stores_pkey shop_admin
+3322; 2606 16401 CONSTRAINT shop categories uq_category_name shop_admin
+3318; 2606 16393 CONSTRAINT shop manufacturers uq_manufacturer_name shop_admin
+3333; 2606 16440 CONSTRAINT shop stores uq_store_name shop_admin
+3327; 1259 16432 INDEX shop idx_price_change_product_ts shop_admin
+3323; 1259 16418 INDEX shop idx_products_category shop_admin
+3324; 1259 16419 INDEX shop idx_products_manufacturer shop_admin
+3338; 1259 16480 INDEX shop idx_purchases_customer shop_admin
+3339; 1259 16481 INDEX shop idx_purchases_date shop_admin
+3347; 2606 16458 FK CONSTRAINT shop deliveries fk_delivery_product shop_admin
+3348; 2606 16453 FK CONSTRAINT shop deliveries fk_delivery_store shop_admin
+3351; 2606 16494 FK CONSTRAINT shop purchase_items fk_item_product shop_admin
+3352; 2606 16489 FK CONSTRAINT shop purchase_items fk_item_purchase shop_admin
+3346; 2606 16427 FK CONSTRAINT shop price_change fk_price_change_product shop_admin
+3344; 2606 16408 FK CONSTRAINT shop products fk_product_category shop_admin
+3345; 2606 16413 FK CONSTRAINT shop products fk_product_manufacturer shop_admin
+3349; 2606 16475 FK CONSTRAINT shop purchases fk_purchase_customer shop_admin
+3350; 2606 16470 FK CONSTRAINT shop purchases fk_purchase_store shop_admin

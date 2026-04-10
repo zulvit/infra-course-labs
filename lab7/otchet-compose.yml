@@ -1,0 +1,218 @@
+﻿version: 1
+
+document:
+  output: "./build/lab7-report.docx"
+  toc: true
+  title_page:
+    template: rut
+    params:
+      discipline: "РЅС„СЂР°СЃС‚СЂСѓРєС‚СѓСЂРЅРѕРµ РїСЂРѕРіСЂР°РјРјРЅРѕРµ РѕР±РµСЃРїРµС‡РµРЅРёРµ"
+      work_number: "в„– 7"
+      work_title: "Р‘Р°Р·РѕРІРѕРµ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ Ansible"
+      student: "Купленик С. С."
+      group: "УВП-171"
+      teacher: "Старший преподаватель кафедры ЦТУТП Заманов Е. А."
+      year: "2026"
+
+content:
+  - type: heading
+    text: "Р¦РµР»СЊ СЂР°Р±РѕС‚С‹"
+    level: 1
+    structural: true
+
+  - type: paragraph
+    text: >
+      Р¦РµР»СЊ СЂР°Р±РѕС‚С‹ - РѕСЃРІРѕРёС‚СЊ inventory, ad-hoc РєРѕРјР°РЅРґС‹ Рё playbook РЅР° СЃС‚РµРЅРґРµ РёР· С‚СЂС‘С… Р’Рњ bastion, node1, node2,
+      РІРєР»СЋС‡Р°СЏ РїСЂРѕРІРµСЂРєСѓ РёРґРµРјРїРѕС‚РµРЅС‚РЅРѕСЃС‚Рё Рё СѓСЃР»РѕРІРЅС‹С… Р·Р°РґР°С‡.
+
+  - type: paragraph
+    text: >
+      РљРѕРЅС„РёРіСѓСЂР°С†РёСЏ СЃРµС‚Рё Vagrant Р°РґР°РїС‚РёСЂРѕРІР°РЅР°: СЃС‚Р°С‚РёС‡РµСЃРєРёРµ Р°РґСЂРµСЃР° 192.168.57.0/24, РґР»СЏ РµРґРёРЅРѕРіРѕ РєР»СЋС‡Р° РЅР° bastion
+      Р·Р°РґР°РЅ config.ssh.insert_key = false.
+
+  - type: heading
+    text: "РҐРѕРґ СЂР°Р±РѕС‚С‹"
+    level: 1
+    structural: true
+
+  - type: heading
+    text: "РЎСЂРµРґР° РІС‹РїРѕР»РЅРµРЅРёСЏ Рё СЂР°СЃРїРѕР»РѕР¶РµРЅРёРµ С„Р°Р№Р»РѕРІ"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РҐРѕСЃС‚ Windows, VirtualBox, Vagrant. РЎС‚РµРЅРґ lab7/vagrant: С‚СЂРё Р’Рњ (bastion, node1, node2), СЃС‚Р°С‚РёС‡РµСЃРєР°СЏ
+      СЃРµС‚СЊ 192.168.57.0/24, inventory Рё playbook РІ РєР°С‚Р°Р»РѕРіРµ lab7/vagrant РЅР° С…РѕСЃС‚Рµ (РІ РіРѕСЃС‚Рµ bastion РґРѕСЃС‚СѓРїРЅС‹ РєР°Рє /vagrant).
+      РќР° bastion СѓСЃС‚Р°РЅРѕРІР»РµРЅ Ansible; РєРѕРјР°РЅРґС‹ РІС‹РїРѕР»РЅСЏР»РёСЃСЊ РёР· РіРѕСЃС‚СЏ bastion РїРѕСЃР»Рµ vagrant up.
+
+  - type: heading
+    text: "РџРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ РґРµР№СЃС‚РІРёР№ Рё РєРѕРјР°РЅРґС‹"
+    level: 2
+    structural: false
+
+  - type: list
+    style: numeric
+    items:
+      - "РќР° С…РѕСЃС‚Рµ: РїРµСЂРµР№С‚Рё РІ lab7/vagrant, РІС‹РїРѕР»РЅРёС‚СЊ vagrant up (РїСЂРё РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚Рё vagrant provision)."
+      - "Р—Р°Р№С‚Рё РЅР° bastion: vagrant ssh bastion."
+      - "РџСЂРѕРІРµСЂРёС‚СЊ СЃРІСЏР·РЅРѕСЃС‚СЊ: ansible -i /vagrant/hosts -m ping all."
+      - "РџСЂРёРјРµРЅРёС‚СЊ playbook: ansible-playbook -i /vagrant/hosts /vagrant/playbook.yaml."
+      - "РџРѕРІС‚РѕСЂРёС‚СЊ playbook РґР»СЏ РїСЂРѕРІРµСЂРєРё РёРґРµРјРїРѕС‚РµРЅС‚РЅРѕСЃС‚Рё (changed=0 РЅР° Р·Р°РґР°С‡Р°С…)."
+      - "РЎ bastion РёР»Рё С…РѕСЃС‚Р° (РµСЃР»Рё РјР°СЂС€СЂСѓС‚РёР·Р°С†РёСЏ Рё DNS РЅР°СЃС‚СЂРѕРµРЅС‹): curl -s node1.local | grep title; curl node1.local/node1only."
+
+  - type: heading
+    text: "Р”РѕСЃС‚СѓРїРЅРѕСЃС‚СЊ СѓР·Р»РѕРІ (ansible ping)"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      Р—Р°РїСѓСЃРє СЃ bastion: ansible -i /vagrant/hosts -m ping all. РќРёР¶Рµ СЃСѓС‚СЊ РѕС‚РІРµС‚Р° РїРѕ РєР°Р¶РґРѕРјСѓ С…РѕСЃС‚Сѓ
+      (С†РІРµС‚РѕРІС‹Рµ РєРѕРґС‹ С‚РµСЂРјРёРЅР°Р»Р° СѓР±СЂР°РЅС‹; С„РѕСЂРјР°С‚ В«СЃС‚СЂРµР»РєР°В» РїРѕСЃР»Рµ SUCCESS РІ РѕСЂРёРіРёРЅР°Р»Рµ РЅРµ РїРѕРІС‚РѕСЂСЏРµС‚СЃСЏ).
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      bastion.local | SUCCESS
+
+          "ping": "pong"
+
+      node2.local | SUCCESS
+
+          "ping": "pong"
+
+      node1.local | SUCCESS
+
+          "ping": "pong"
+
+  - type: heading
+    text: "РџРѕРІС‚РѕСЂРЅС‹Р№ Р·Р°РїСѓСЃРє playbook"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      ansible-playbook -i /vagrant/hosts /vagrant/playbook.yaml (РІС‚РѕСЂРѕР№ РїСЂРѕРіРѕРЅ РґР»СЏ РїСЂРѕРІРµСЂРєРё changed=0).
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ (С„СЂР°РіРјРµРЅС‚)"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      PLAY [nodes] *******************************************************************
+
+      TASK [nginx package] ***********************************************************
+
+      ok: [node1.local]
+
+      ok: [node2.local]
+
+      TASK [nginx config] ************************************************************
+
+      ok: [node1.local]
+
+      ok: [node2.local]
+
+      TASK [index.html template] *****************************************************
+
+      ok: [node2.local]
+
+      ok: [node1.local]
+
+      TASK [node1 only file] *********************************************************
+
+      skipping: [node2.local]
+
+      ok: [node1.local]
+
+      TASK [loop demo files] *********************************************************
+
+      ok: [node1.local]   (item test1)
+
+      ok: [node2.local]   (item test1)
+
+      ok: [node2.local]   (item test2)
+
+      ok: [node1.local]   (item test2)
+
+      ok: [node2.local]   (item test3)
+
+      ok: [node1.local]   (item test3)
+
+      PLAY RECAP *********************************************************************
+
+      node1.local                : ok=5    changed=0    unreachable=0    failed=0    skipped=0
+
+      node2.local                : ok=4    changed=0    unreachable=0    failed=0    skipped=1
+
+  - type: heading
+    text: "РџСЂРѕРІРµСЂРєР° HTML РЅР° node1"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РљРѕРјР°РЅРґР°: curl -s node1.local | grep title
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      <title>hello from node1.local</title>
+
+  - type: heading
+    text: "РЈСЃР»РѕРІРЅР°СЏ СЃС‚СЂР°РЅРёС†Р° only-on-node1"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РљРѕРјР°РЅРґР°: curl node1.local/node1only
+
+  - type: heading
+    text: "РўРµР»Рѕ РѕС‚РІРµС‚Р°"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      node1 only
+
+  - type: heading
+    text: "РЎРІРѕРґРЅР°СЏ С‚Р°Р±Р»РёС†Р° РєРѕРјР°РЅРґ"
+    level: 2
+    structural: false
+
+  - type: table
+    caption: "Р­С‚Р°РїС‹ Рё СЂР°Р·РјРµС‰РµРЅРёРµ РІС‹РІРѕРґР° РІ РѕС‚С‡С‘С‚Рµ"
+    headers:
+      - "Р­С‚Р°Рї"
+      - "РљРѕРјР°РЅРґР°"
+      - "Р’С‹РІРѕРґ РІ РѕС‚С‡С‘С‚Рµ"
+    rows:
+      - ["Ping", "ansible -i вЂ¦ -m ping all", "РџРѕРґСЂР°Р·РґРµР» В«Р”РѕСЃС‚СѓРїРЅРѕСЃС‚СЊ СѓР·Р»РѕРІВ»"]
+      - ["Playbook 2-Р№ СЂР°Р·", "ansible-playbook -i вЂ¦ playbook.yaml", "РџРѕРґСЂР°Р·РґРµР» В«РџРѕРІС‚РѕСЂРЅС‹Р№ Р·Р°РїСѓСЃРє playbookВ»"]
+      - ["Р—Р°РіРѕР»РѕРІРѕРє СЃС‚СЂР°РЅРёС†С‹", "curl -s node1.local | grep title", "РџРѕРґСЂР°Р·РґРµР» В«РџСЂРѕРІРµСЂРєР° HTML РЅР° node1В»"]
+      - ["node1 only", "curl node1.local/node1only", "РџРѕРґСЂР°Р·РґРµР» В«РЈСЃР»РѕРІРЅР°СЏ СЃС‚СЂР°РЅРёС†Р°В»"]
+
+  - type: heading
+    text: "Р—Р°РєР»СЋС‡РµРЅРёРµ"
+    level: 1
+    structural: true
+
+  - type: paragraph
+    text: >
+      РЎС‚РµРЅРґ РёР· С‚СЂС‘С… Р’Рњ РЅР°СЃС‚СЂРѕРµРЅ, Ansible ad-hoc Рё playbook РѕС‚СЂР°Р±РѕС‚Р°Р»Рё; РїРѕРІС‚РѕСЂРЅС‹Р№ Р·Р°РїСѓСЃРє РЅРµ РІРЅС‘СЃ РёР·РјРµРЅРµРЅРёР№
+      (РёРґРµРјРїРѕС‚РµРЅС‚РЅРѕСЃС‚СЊ). HTTP-РїСЂРѕРІРµСЂРєРё РїРѕРґС‚РІРµСЂРґРёР»Рё С€Р°Р±Р»РѕРЅ РЅР° node1 Рё СѓСЃР»РѕРІРЅС‹Р№ РєРѕРЅС‚РµРЅС‚. Р¦РµР»СЊ СЂР°Р±РѕС‚С‹ РґРѕСЃС‚РёРіРЅСѓС‚Р°.
+
+

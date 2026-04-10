@@ -1,0 +1,47 @@
+[
+    {
+        "Id": "sha256:1d19882c571f977b24b13d301d0cc78e99252a202f6a24882ca8ef1a58ef13e1",
+        "RepoTags": [
+            "lab4/multi:0.1"
+        ],
+        "RepoDigests": [
+            "lab4/multi@sha256:1d19882c571f977b24b13d301d0cc78e99252a202f6a24882ca8ef1a58ef13e1"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-04-10T08:51:01.580442747Z",
+        "Config": {
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Entrypoint": [
+                "/hello"
+            ],
+            "WorkingDir": "/"
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 1115118,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:6905c66b16915e107b5642a5866076f87a5dbab7fc45bb799fc59714bae4e615"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-04-10T08:51:02.344042254Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:1d19882c571f977b24b13d301d0cc78e99252a202f6a24882ca8ef1a58ef13e1",
+            "size": 855
+        },
+        "Identity": {
+            "Build": [
+                {
+                    "Ref": "yxh91tpqh1ncmm0aep15j44fx",
+                    "CreatedAt": "2026-04-10T08:51:02.435043529Z"
+                }
+            ]
+        }
+    }
+]

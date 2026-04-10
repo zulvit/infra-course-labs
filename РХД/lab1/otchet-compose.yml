@@ -1,0 +1,98 @@
+﻿version: 1
+
+document:
+  output: "./build/lab1-report.docx"
+  toc: true
+  title_page:
+    template: rut
+    params:
+      discipline: "Инфраструктурное программное обеспечение"
+      work_number: "№ 1"
+      work_title: "РХД. Развёртывание структуры БД магазина в PostgreSQL"
+      student: "Купленик С. С."
+      group: "УВП-171"
+      teacher: "Старший преподаватель кафедры ЦТУТП Заманов Е. А."
+      year: "2026"
+
+content:
+  - type: heading
+    text: "Цель работы"
+    level: 1
+    structural: true
+
+  - type: paragraph
+    text: >
+      Цель лабораторной работы состояла в развёртывании PostgreSQL в контейнере Docker и создании структуры базы данных магазина с помощью DDL-скрипта.
+      Требовалось подготовить схему shop, описать таблицы предметной области, задать ключи, ограничения целостности и проверить,
+      что структура корректно создаётся при инициализации контейнера.
+
+  - type: paragraph
+    text: >
+      Практическая часть выполнялась на Windows-хосте с Docker Desktop. Для изоляции окружения использован отдельный стенд docker compose,
+      а SQL-скрипт инициализации был подключён через каталог init и автоматически выполнен при первом старте контейнера PostgreSQL.
+
+  - type: heading
+    text: "Ход работы"
+    level: 1
+    structural: true
+
+  - type: heading
+    text: "Подготовка стенда и схемы"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      Для работы был подготовлен контейнер PostgreSQL 16, в переменных окружения заданы имя базы данных, пользователь и пароль администратора.
+      В SQL-скрипте определена схема shop и создан набор таблиц manufacturers, categories, products, stores, customers, purchases,
+      purchase_items, deliveries, price_change. Для таблиц заданы первичные и внешние ключи, ограничения UNIQUE и проверки на корректность значений.
+
+  - type: list
+    style: numeric
+    items:
+      - "Подготовлен docker compose стенд с контейнером PostgreSQL."
+      - "В каталог инициализации добавлен DDL-скрипт со схемой shop."
+      - "Контейнер запущен в фоновом режиме и выполнил начальную инициализацию базы данных."
+      - "После запуска выполнена проверка списка таблиц в системном каталоге pg_tables."
+      - "После завершения проверки стенд был остановлен и удалён."
+
+  - type: table
+    caption: "Основные этапы выполнения лабораторной работы"
+    headers:
+      - "Этап"
+      - "Команда"
+      - "Результат"
+    rows:
+      - ["Запуск стенда", "docker compose up -d", "Контейнер PostgreSQL был создан и инициализирован; SQL-скрипт схемы выполнился автоматически."]
+      - ["Проверка структуры схемы", "docker exec postgres_lab1 psql -U shop_admin -d shop_db -c \"SET search_path TO shop; SELECT schemaname, tablename FROM pg_tables WHERE schemaname='shop' ORDER BY tablename;\"", "Список таблиц подтвердил наличие девяти отношений в схеме shop: categories, customers, deliveries, manufacturers, price_change, products, purchase_items, purchases, stores."]
+      - ["Завершение работы", "docker compose down -v", "Контейнер и связанные тома были удалены после проверки результата."]
+
+  - type: heading
+    text: "Проверка созданной структуры"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      Проверка состава схемы показала, что в базе данных действительно присутствуют все ожидаемые таблицы. Фрагмент ответа PostgreSQL:
+      schemaname | tablename; shop | categories; shop | customers; shop | deliveries; shop | manufacturers; shop | price_change;
+      shop | products; shop | purchase_items; shop | purchases; shop | stores. Число строк в ответе составило 9.
+
+  - type: paragraph
+    text: >
+      Полученный результат подтверждает, что контейнер корректно выполнил инициализацию, а структура предметной области магазина была развёрнута без ошибок.
+      Наличие всех таблиц также означает, что схема shop создана и стала доступна для последующих лабораторных работ с загрузкой данных и резервным копированием.
+
+  - type: heading
+    text: "Заключение"
+    level: 1
+    structural: true
+
+  - type: paragraph
+    text: >
+      В ходе лабораторной работы был подготовлен и проверен DDL-скрипт для развёртывания структуры базы данных магазина в PostgreSQL.
+      Контейнер успешно инициализировал схему shop, а запрос к системному каталогу подтвердил наличие всех девяти таблиц предметной области.
+      Цель работы достигнута: структура БД создана и готова к дальнейшему наполнению данными.
+
+
+

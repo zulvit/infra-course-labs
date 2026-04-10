@@ -1,0 +1,2 @@
+# command-line-arguments
+./main.go:20:14: invalid operation: b1 == b2 (struct containing []bool cannot be compared)

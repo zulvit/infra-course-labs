@@ -1,0 +1,9 @@
+﻿SET
+docker.exe : ERROR:  cannot execute INSERT in a read-only transaction
+At line:16 char:12
++ $output5 = & docker exec -e PGPASSWORD=shop_password_2026 postgres_sl ...
++            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (ERROR:  cannot ...nly transaction:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+

@@ -1,2 +1,16 @@
-# Локальная утилита отчётов (клонируется отдельно, не в репозиторий курса)
+# Local helper project
 otchet-compose/
+
+# Vagrant runtime state
+.vagrant/
+**/.vagrant/
+
+# Temporary packaged boxes
+*.box
+
+# Copied Vagrant private keys
+key
+**/key
+
+# Local Python venv (генерация отчётов и пр.)
+.venv-otchet/

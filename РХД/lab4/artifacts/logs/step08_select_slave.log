@@ -1,0 +1,9 @@
+﻿SET
+ manufacturer_id |   manufacturer_name    
+-----------------+------------------------
+               5 | Test Vendor
+               4 | Lenovo Group
+               3 | Sony Group Corporation
+(3 rows)
+
+

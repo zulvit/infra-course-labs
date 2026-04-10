@@ -1,0 +1,99 @@
+The files belonging to this database system will be owned by user "postgres".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.utf8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+fixing permissions on existing directory /var/lib/postgresql/data ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default "max_connections" ... 100
+selecting default "shared_buffers" ... 128MB
+selecting default time zone ... UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+sh: locale: not found
+2026-04-10 11:27:23.824 UTC [36] WARNING:  no usable system locales were found
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+
+Success. You can now start the database server using:
+
+    pg_ctl -D /var/lib/postgresql/data -l logfile start
+
+initdb: warning: enabling "trust" authentication for local connections
+initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+waiting for server to start....2026-04-10 11:27:24.510 GMT [42] LOG:  starting PostgreSQL 17.9 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+2026-04-10 11:27:24.512 GMT [42] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-04-10 11:27:24.521 GMT [45] LOG:  database system was shut down at 2026-04-10 11:27:24 GMT
+2026-04-10 11:27:24.529 GMT [42] LOG:  database system is ready to accept connections
+ done
+server started
+CREATE DATABASE
+
+
+/usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/01_schema.sql
+CREATE SCHEMA
+SET
+BEGIN
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE TABLE
+COMMIT
+
+
+/usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/02_load_csv.sql
+SET
+COPY 4
+COPY 4
+COPY 3
+COPY 3
+ANALYZE
+ANALYZE
+ANALYZE
+ANALYZE
+
+
+/usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/03_setup_replication.sh
+DO
+ pg_create_physical_replication_slot 
+-------------------------------------
+ (replication_slot_slave1,0/14ED218)
+(1 row)
+
+
+waiting for server to shut down...2026-04-10 11:27:24.786 GMT [42] LOG:  received fast shutdown request
+.2026-04-10 11:27:24.788 GMT [42] LOG:  aborting any active transactions
+2026-04-10 11:27:24.790 GMT [42] LOG:  background worker "logical replication launcher" (PID 48) exited with exit code 1
+2026-04-10 11:27:24.790 GMT [43] LOG:  shutting down
+2026-04-10 11:27:24.792 GMT [43] LOG:  checkpoint starting: shutdown immediate
+2026-04-10 11:27:24.914 GMT [43] LOG:  checkpoint complete: wrote 970 buffers (5.9%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.022 s, sync=0.096 s, total=0.125 s; sync files=337, longest=0.002 s, average=0.001 s; distance=4435 kB, estimate=4435 kB; lsn=0/19421A0, redo lsn=0/19421A0
+2026-04-10 11:27:24.924 GMT [42] LOG:  database system is shut down
+ done
+server stopped
+
+PostgreSQL init process complete; ready for start up.
+
+2026-04-10 11:27:25.009 GMT [1] LOG:  starting PostgreSQL 17.9 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+2026-04-10 11:27:25.009 GMT [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2026-04-10 11:27:25.009 GMT [1] LOG:  listening on IPv6 address "::", port 5432
+2026-04-10 11:27:25.013 GMT [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-04-10 11:27:25.019 GMT [65] LOG:  database system was shut down at 2026-04-10 11:27:24 GMT
+2026-04-10 11:27:25.028 GMT [1] LOG:  database system is ready to accept connections
+2026-04-10 11:27:29.204 GMT [63] LOG:  checkpoint starting: immediate force wait
+2026-04-10 11:27:29.247 GMT [63] LOG:  checkpoint complete: wrote 4 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.004 s, total=0.043 s; sync files=3, longest=0.002 s, average=0.002 s; distance=6903 kB, estimate=6903 kB; lsn=0/2000080, redo lsn=0/2000028

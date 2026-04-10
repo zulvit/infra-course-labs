@@ -1,0 +1,2 @@
+CONTAINER ID   IMAGE           COMMAND                  CREATED              STATUS              PORTS                                         NAMES
+e93fdd7d888c   lab4/main:0.1   "uvicorn main:app --…"   About a minute ago   Up About a minute   0.0.0.0:8888->8888/tcp, [::]:8888->8888/tcp   lab4-main

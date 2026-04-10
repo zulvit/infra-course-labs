@@ -1,0 +1,21 @@
+---
+- hosts: all
+  become: true
+  collections:
+    - nginxinc.nginx_core
+  roles:
+    - name: nginxinc.nginx_core.nginx
+    - name: nginx_config
+      nginx_config_http_template_enable: true
+      nginx_config_http_template:
+        - config:
+            servers:
+              - core:
+                  listen:
+                    - port: 80
+                  server_name: localhost
+                locations:
+                  - location: /
+                    core:
+                      root: /usr/share/nginx/html
+                      index: index.html

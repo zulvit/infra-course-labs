@@ -1,0 +1,43 @@
+Obtaining file:///work/otchet-compose
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Collecting python-docx>=1.1.0 (from otchet-compose==0.1.0)
+  Downloading python_docx-1.2.0-py3-none-any.whl.metadata (2.0 kB)
+Collecting PyYAML>=6.0.1 (from otchet-compose==0.1.0)
+  Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+Collecting lxml>=3.1.0 (from python-docx>=1.1.0->otchet-compose==0.1.0)
+  Downloading lxml-6.0.3-cp312-cp312-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl.metadata (3.8 kB)
+Collecting typing_extensions>=4.9.0 (from python-docx>=1.1.0->otchet-compose==0.1.0)
+  Downloading typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+Downloading python_docx-1.2.0-py3-none-any.whl (252 kB)
+Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 807.9/807.9 kB 9.8 MB/s eta 0:00:00
+Downloading lxml-6.0.3-cp312-cp312-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl (5.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.2/5.2 MB 13.7 MB/s eta 0:00:00
+Downloading typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+Building wheels for collected packages: otchet-compose
+  Building editable for otchet-compose (pyproject.toml): started
+  Building editable for otchet-compose (pyproject.toml): finished with status 'done'
+  Created wheel for otchet-compose: filename=otchet_compose-0.1.0-0.editable-py3-none-any.whl size=4992 sha256=d184d8eb3c8484622e23febc180f2e252c7a7df5d61a014096340a9ee52f2c26
+  Stored in directory: /tmp/pip-ephem-wheel-cache-q6xeqc58/wheels/b1/e7/25/5a2f3743de82810dbcea8a8b9373dc90fe58e5dad8e527af6d
+Successfully built otchet-compose
+Installing collected packages: typing_extensions, PyYAML, lxml, python-docx, otchet-compose
+Successfully installed PyYAML-6.0.3 lxml-6.0.3 otchet-compose-0.1.0 python-docx-1.2.0 typing_extensions-4.15.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+
+[notice] A new release of pip is available: 25.0.1 -> 26.0.1
+[notice] To update, run: pip install --upgrade pip
+Отчёт сохранён: /work/lab1/build/lab1-report.docx
+Отчёт сохранён: /work/lab2/build/lab2-report.docx
+Отчёт сохранён: /work/lab3/build/lab3-report.docx
+Отчёт сохранён: /work/lab4/build/lab4-report.docx
+Отчёт сохранён: /work/lab5/build/lab5-report.docx
+Отчёт сохранён: /work/lab6/build/lab6-report.docx
+Отчёт сохранён: /work/lab7/build/lab7-report.docx
+Отчёт сохранён: /work/lab8/build/lab8-report.docx

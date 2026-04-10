@@ -1,0 +1,14 @@
+﻿ schemaname |   tablename    
+------------+----------------
+ shop       | categories
+ shop       | customers
+ shop       | deliveries
+ shop       | manufacturers
+ shop       | price_change
+ shop       | products
+ shop       | purchase_items
+ shop       | purchases
+ shop       | stores
+(9 rows)
+
+

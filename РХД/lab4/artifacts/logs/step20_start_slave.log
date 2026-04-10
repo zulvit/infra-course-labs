@@ -1,0 +1,4 @@
+ Container postgres_master Waiting 
+ Container postgres_master Healthy 
+ Container postgres_slave Starting 
+ Container postgres_slave Started 

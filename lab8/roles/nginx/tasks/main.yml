@@ -1,0 +1,22 @@
+---
+- name: nginx package
+  ansible.builtin.package:
+    name: nginx
+    state: present
+
+- name: nginx config
+  ansible.builtin.copy:
+    src: "{{ nginx_config_file }}"
+    dest: /etc/nginx/sites-enabled/default
+    owner: root
+    group: root
+    mode: "0644"
+  notify: nginx restart
+
+- name: "index.html to {{ nginx_html_dir }}"
+  ansible.builtin.template:
+    src: "{{ nginx_template_file }}"
+    dest: "{{ nginx_html_dir }}/index.html"
+    owner: root
+    group: root
+    mode: "0644"

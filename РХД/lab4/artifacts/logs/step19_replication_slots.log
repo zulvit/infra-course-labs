@@ -1,0 +1,6 @@
+﻿        slot_name        | active | retained_wal 
+-------------------------+--------+--------------
+ replication_slot_slave1 | f      | 233 kB
+(1 row)
+
+

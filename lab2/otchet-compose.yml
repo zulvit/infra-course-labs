@@ -1,0 +1,374 @@
+﻿version: 1
+
+document:
+  output: "./build/lab2-report.docx"
+  toc: true
+  title_page:
+    template: rut
+    params:
+      discipline: "РЅС„СЂР°СЃС‚СЂСѓРєС‚СѓСЂРЅРѕРµ РїСЂРѕРіСЂР°РјРјРЅРѕРµ РѕР±РµСЃРїРµС‡РµРЅРёРµ"
+      work_number: "в„– 2"
+      work_title: "РњРЅРѕРіРѕРјР°С€РёРЅРЅС‹Р№ СЃС‚РµРЅРґ Vagrant"
+      student: "Купленик С. С."
+      group: "УВП-171"
+      teacher: "Старший преподаватель кафедры ЦТУТП Заманов Е. А."
+      year: "2026"
+
+content:
+  - type: heading
+    text: "Р¦РµР»СЊ СЂР°Р±РѕС‚С‹"
+    level: 1
+    structural: true
+
+  - type: paragraph
+    text: >
+      Р¦РµР»СЊ СЂР°Р±РѕС‚С‹ - СЃРѕР·РґР°РЅРёРµ РјРЅРѕРіРѕРјР°С€РёРЅРЅРѕРіРѕ СЃС‚РµРЅРґР° Vagrant РёР· С‚СЂС‘С… РІРёСЂС‚СѓР°Р»СЊРЅС‹С… РјР°С€РёРЅ front, back Рё db,
+      РїРѕРґРіРѕС‚РѕРІРєР° СЃРѕР±СЃС‚РІРµРЅРЅС‹С… box-РѕР±СЂР°Р·РѕРІ РґР»СЏ РєР°Р¶РґРѕРіРѕ СѓР·Р»Р° Рё РїСЂРѕРІРµСЂРєР° С†РµРїРѕС‡РєРё front-back-db СЃ РґР°РЅРЅС‹РјРё
+      РёР· PostgreSQL РЅР° РІРµР±-СЃС‚СЂР°РЅРёС†Рµ.
+
+  - type: paragraph
+    text: >
+      РЎРѕР±СЂР°РЅС‹ РѕС‚РґРµР»СЊРЅС‹Рµ box-РѕР±СЂР°Р·С‹ front, back Рё db, Р·Р°С‚РµРј РЅР° РёС… РѕСЃРЅРѕРІРµ РїРѕРґРЅСЏС‚ РѕР±С‰РёР№ СЃС‚РµРЅРґ.
+      Р”Р»СЏ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё СЃРѕ СЃСЂРµРґРѕР№ РёСЃРїРѕР»СЊР·РѕРІР°РЅС‹ Ubuntu Jammy Рё РѕР±РЅРѕРІР»С‘РЅРЅС‹Р№ СЃС‚РµРє Go РЅР° СѓР·Р»Рµ back.
+
+  - type: heading
+    text: "РҐРѕРґ СЂР°Р±РѕС‚С‹"
+    level: 1
+    structural: true
+
+  - type: heading
+    text: "РЎСЂРµРґР° РІС‹РїРѕР»РЅРµРЅРёСЏ Рё СЂР°СЃРїРѕР»РѕР¶РµРЅРёРµ С„Р°Р№Р»РѕРІ"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РҐРѕСЃС‚ Windows, VirtualBox Рё Vagrant. Р’ lab2/build/db, lab2/build/back Рё lab2/build/front
+      РїРѕРґРЅРёРјР°Р»РёСЃСЊ РѕРґРЅРѕС‚РёРїРЅС‹Рµ Р’Рњ РґР»СЏ СѓСЃС‚Р°РЅРѕРІРєРё РџРћ Рё РїРѕСЃР»РµРґСѓСЋС‰РµР№ СѓРїР°РєРѕРІРєРё РІ Р»РѕРєР°Р»СЊРЅС‹Рµ box (vagrant package).
+      Р“РѕС‚РѕРІС‹Рµ РѕР±СЂР°Р·С‹ РґРѕР±Р°РІР»СЏР»РёСЃСЊ РІ Р»РѕРєР°Р»СЊРЅСѓСЋ Р±Р°Р·Сѓ (vagrant box add). С‚РѕРіРѕРІС‹Р№ РјРЅРѕРіРѕРјР°С€РёРЅРЅС‹Р№ СЃС‚РµРЅРґ
+      РѕРїРёСЃР°РЅ РІ lab2/vagrant (Vagrantfile СЃ СѓР·Р»Р°РјРё db, back, front Рё СЃРµС‚СЊСЋ host-only).
+
+  - type: heading
+    text: "РџРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ РґРµР№СЃС‚РІРёР№ Рё РєРѕРјР°РЅРґС‹"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РЈРїСЂРѕС‰С‘РЅРЅР°СЏ С…СЂРѕРЅРѕР»РѕРіРёСЏ (СЂР°Р±РѕС‡РёРµ РєР°С‚Р°Р»РѕРіРё СѓС‚РѕС‡РЅСЏС‚СЊ РїРѕ С„Р°РєС‚РёС‡РµСЃРєРёРј РїСѓС‚СЏРј РІ СЂРµРїРѕР·РёС‚РѕСЂРёРё).
+
+  - type: list
+    style: numeric
+    items:
+      - "РЎРѕР±СЂР°С‚СЊ РѕР±СЂР°Р· db: РїРµСЂРµР№С‚Рё РІ lab2/build/db, vagrant up, РїСЂРё РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚Рё РґРѕРЅР°СЃС‚СЂРѕРёС‚СЊ РіРѕСЃС‚СЏ, vagrant package --output ../../artifacts/db.box, vagrant box add --name db ../../artifacts/db.box."
+      - "РђРЅР°Р»РѕРіРёС‡РЅРѕ СЃРѕР±СЂР°С‚СЊ Рё Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊ box back Рё front РёР· lab2/build/back Рё lab2/build/front."
+      - "РџРµСЂРµР№С‚Рё РІ lab2/vagrant, РІС‹РїРѕР»РЅРёС‚СЊ vagrant up (РѕРґРЅРѕРІСЂРµРјРµРЅРЅС‹Р№ РїРѕРґСЉС‘Рј db, back, front)."
+      - "РџСЂРѕРІРµСЂРёС‚СЊ back: vagrant ssh back -c \"hostname && systemctl status lab2-back.service --no-pager && curl -s http://127.0.0.1\"."
+      - "Р’СЃС‚Р°РІРёС‚СЊ С‚РµСЃС‚РѕРІС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ РІ PostgreSQL: СЃ С…РѕСЃС‚Р° ssh РЅР° db (РїРѕСЂС‚ Рё РєР»СЋС‡ РёР· РІС‹РІРѕРґР° vagrant), РІС‹РїРѕР»РЅРёС‚СЊ psql СЃ СЃРєСЂРёРїС‚РѕРј insert_users.sql РІ /vagrant."
+      - "РџСЂРѕРІРµСЂРёС‚СЊ API СЃ С…РѕСЃС‚Р°: curl.exe -s http://127.0.0.1:8889 Рё СЃС‚СЂР°РЅРёС†Сѓ front: curl.exe -s http://127.0.0.1:8888."
+      - "Р—Р°РІРµСЂС€РёС‚СЊ СЂР°Р±РѕС‚Сѓ: РёР· lab2/vagrant РІС‹РїРѕР»РЅРёС‚СЊ vagrant destroy -f."
+
+  - type: heading
+    text: "Р›РѕРєР°Р»СЊРЅС‹Рµ box-РѕР±СЂР°Р·С‹"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РџРѕСЃР»Рµ vagrant package Рё vagrant box add РґР»СЏ РєР°Р¶РґРѕРіРѕ СѓР·Р»Р° РїСЂРѕРІРµСЂРµРЅР° Р»РѕРєР°Р»СЊРЅР°СЏ Р±Р°Р·Р° РѕР±СЂР°Р·РѕРІ
+      РєРѕРјР°РЅРґРѕР№ vagrant box list.
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      back           (virtualbox, 0, (amd64))
+
+      db             (virtualbox, 0, (amd64))
+
+      front          (virtualbox, 0, (amd64))
+
+      ubuntu/jammy64 (virtualbox, 20241002.0.0)
+
+  - type: heading
+    text: "Р—Р°РїСѓСЃРє СЃС‚РµРЅРґР° (vagrant up)"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РљР°С‚Р°Р»РѕРі lab2/vagrant. РљРѕРјР°РЅРґР° vagrant up РїРѕРґРЅРёРјР°РµС‚ С‚СЂРё Р’Рњ РїСЂРѕРІР°Р№РґРµСЂРѕРј virtualbox.
+      РќРёР¶Рµ РїСЂРёРІРµРґС‘РЅ РЅР°С‡Р°Р»Рѕ РІС‹РІРѕРґР° (СѓР·РµР» db: NAT Рё host-only, РїСЂРѕР±СЂРѕСЃ SSH, РјРѕРЅС‚РёСЂРѕРІР°РЅРёРµ /vagrant,
+      provision СЃ psql Рё Р·Р°РїРёСЃСЏРјРё РІ /etc/hosts).
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ (С„СЂР°РіРјРµРЅС‚ РЅР°С‡Р°Р»Р°)"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      Bringing machine 'db' up with 'virtualbox' provider...
+
+      Bringing machine 'front' up with 'virtualbox' provider...
+
+      Bringing machine 'back' up with 'virtualbox' provider...
+
+      db: Importing base box 'db'...
+
+      db: Matching MAC address for NAT networking...
+
+      db: Setting the name of the VM: lab2_db_1775781242935_64255
+
+      db: Fixed port collision for 22 (РѕР¶РёРґР°Р»СЃСЏ С…РѕСЃС‚-РїРѕСЂС‚ 2222). РќР°Р·РЅР°С‡РµРЅ РїРѕСЂС‚ 2202.
+
+      db: Clearing any previously set network interfaces...
+
+      db: Preparing network interfaces based on configuration...
+
+          db: Adapter 1: nat
+
+          db: Adapter 2: hostonly
+
+      db: Forwarding ports...
+
+          db: 22 СЃ РіРѕСЃС‚СЏ РЅР° РїРѕСЂС‚ С…РѕСЃС‚Р° 2202 (adapter 1)
+
+      db: Running 'pre-boot' VM customizations...
+
+      db: Booting VM...
+
+      db: Waiting for machine to boot. This may take a few minutes...
+
+          db: SSH address: 127.0.0.1:2202
+
+          db: SSH username: vagrant
+
+          db: SSH auth method: private key
+
+      db: Machine booted and ready!
+
+      db: Checking for guest additions in VM...
+
+      db: Mounting shared folders...
+
+          db: C:/Users/savva/OneDrive/Documents/Go Projects/devops/lab2 to /vagrant
+
+      db: Running provisioner: shell...
+
+          db: Running: inline script
+
+          db: ++ sudo -u postgres psql -f /vagrant/users.sql
+
+          db: CREATE DATABASE
+
+          db: CREATE ROLE
+
+          db: You are now connected to database "app" as user "postgres".
+
+          db: CREATE TABLE
+
+      (РґР°Р»СЊРЅРµР№С€РёР№ РІС‹РІРѕРґ Р·Р°РїСѓСЃРєР° front Рё back РѕРїСѓС‰РµРЅ РєР°Рє РѕР±СЉС‘РјРЅС‹Р№, РїРѕ СЃРјС‹СЃР»Сѓ Р°РЅР°Р»РѕРіРёС‡РµРЅ.)
+
+  - type: heading
+    text: "РџСЂРѕРІРµСЂРєР° back РґРѕ РІСЃС‚Р°РІРєРё РґР°РЅРЅС‹С…"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РљРѕРјР°РЅРґР° РЅР° СѓР·Р»Рµ back: hostname, systemctl status lab2-back.service --no-pager, curl Рє Р»РѕРєР°Р»СЊРЅРѕРјСѓ API.
+      РЈРїСЂР°РІР»СЏСЋС‰РёРµ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚Рё С‚РµСЂРјРёРЅР°Р»Р° РІ С‚РµРєСЃС‚Рµ РЅРёР¶Рµ СѓР±СЂР°РЅС‹.
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      ubuntu-jammy
+
+      в—Џ lab2-back.service - lab2 backend service
+
+           Loaded: loaded (/etc/systemd/system/lab2-back.service; enabled; vendor preset: enabled)
+
+           Active: active (running) since Fri 2026-04-10 00:47:19 UTC; 24s ago
+
+         Main PID: 3270 (lab2-back)
+
+      null
+
+  - type: heading
+    text: "Р—Р°РїРѕР»РЅРµРЅРёРµ С‚Р°Р±Р»РёС†С‹ users"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РЎ С…РѕСЃС‚Р° РІС‹РїРѕР»РЅРµРЅ ssh РЅР° СѓР·РµР» db (РєР»СЋС‡, РїРѕСЂС‚ РїСЂРѕР±СЂРѕСЃР°), Р·Р°С‚РµРј psql СЃ С„Р°Р№Р»РѕРј insert_users.sql.
+      Р’ РєРѕРЅСЃРѕР»Рё Windows С‡Р°СЃС‚СЊ СЃР»СѓР¶РµР±РЅС‹С… РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёР№ SSH РѕРїСѓС‰РµРЅР°; РЅРёР¶Рµ С‚РѕР»СЊРєРѕ СЂРµР·СѓР»СЊС‚Р°С‚ SELECT.
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ (С‚Р°Р±Р»РёС†Р° users)"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      id | name  |       email
+
+      ----+-------+-------------------
+
+      1 | Alice | alice@example.com
+
+      2 | Bob   | bob@example.com
+
+      (2 rows)
+
+  - type: heading
+    text: "РџСЂРѕРІРµСЂРєР° API back СЃ С…РѕСЃС‚Р°"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РљРѕРјР°РЅРґР°: curl.exe -s http://127.0.0.1:8889
+
+  - type: heading
+    text: "РўРµР»Рѕ РѕС‚РІРµС‚Р°"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      [{"id":1,"name":"Alice","email":"alice@example.com"},{"id":2,"name":"Bob","email":"bob@example.com"}]
+
+  - type: heading
+    text: "РЎС‚СЂР°РЅРёС†Р° front"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РљРѕРјР°РЅРґР°: curl.exe -s http://127.0.0.1:8888 (HTML, РѕС‚РґР°РІР°РµРјС‹Р№ СѓР·Р»РѕРј front).
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      <!DOCTYPE html>
+
+      <html>
+
+      <body>
+
+      <h2>Users table:</h2>
+
+      <p id="users"></p>
+
+      <script>
+
+      var req = function() {
+
+        var http = new XMLHttpRequest();
+
+        http.onload = function() {
+
+          const users = JSON.parse(this.responseText);
+
+          let text = "<table border='1'>";
+
+          for (let x in users) {
+
+            text += "<tr><td>" + users[x].name + "</td>";
+
+            text += "<td>" + users[x].email + "</td></tr>";
+
+          }
+
+          text += "</table>";
+
+          document.getElementById("users").innerHTML = text;
+
+        }
+
+        http.open("GET", "http://localhost:8889");
+
+        http.send();
+
+      }
+
+      setInterval(req, 1000);
+
+      </script>
+
+      </body>
+
+      </html>
+
+  - type: heading
+    text: "РЎРІРѕРґРЅР°СЏ С‚Р°Р±Р»РёС†Р° РєРѕРјР°РЅРґ"
+    level: 2
+    structural: false
+
+  - type: table
+    caption: "Р­С‚Р°РїС‹ Рё СЂР°Р·РјРµС‰РµРЅРёРµ РІС‹РІРѕРґР° РІ РѕС‚С‡С‘С‚Рµ"
+    headers:
+      - "Р­С‚Р°Рї"
+      - "РљРѕРјР°РЅРґР° (lab2/vagrant, РµСЃР»Рё РЅРµ СѓРєР°Р·Р°РЅРѕ РёРЅРѕРµ)"
+      - "Р’С‹РІРѕРґ РІ РѕС‚С‡С‘С‚Рµ"
+    rows:
+      - ["РЎРїРёСЃРѕРє box", "vagrant box list", "РџРѕРґСЂР°Р·РґРµР» В«Р›РѕРєР°Р»СЊРЅС‹Рµ box-РѕР±СЂР°Р·С‹В», Р±Р»РѕРє В«Р’С‹РІРѕРґВ»"]
+      - ["РџРѕРґСЉС‘Рј СЃС‚РµРЅРґР°", "vagrant up", "РџРѕРґСЂР°Р·РґРµР» В«Р—Р°РїСѓСЃРє СЃС‚РµРЅРґР°В», Р±Р»РѕРє В«Р’С‹РІРѕРґ (С„СЂР°РіРјРµРЅС‚ РЅР°С‡Р°Р»Р°)В»"]
+      - ["РЎРѕСЃС‚РѕСЏРЅРёРµ back", "vagrant ssh back -c \"hostname && systemctl status ... && curl ...\"", "РџРѕРґСЂР°Р·РґРµР» В«РџСЂРѕРІРµСЂРєР° back РґРѕ РІСЃС‚Р°РІРєРё РґР°РЅРЅС‹С…В»"]
+      - ["Р”Р°РЅРЅС‹Рµ РІ Р‘Р”", "ssh вЂ¦ psql вЂ¦ -f insert_users.sql; SELECT вЂ¦", "РџРѕРґСЂР°Р·РґРµР» В«Р—Р°РїРѕР»РЅРµРЅРёРµ С‚Р°Р±Р»РёС†С‹ usersВ»"]
+      - ["JSON API", "curl.exe -s http://127.0.0.1:8889", "РџРѕРґСЂР°Р·РґРµР» В«РџСЂРѕРІРµСЂРєР° API backВ», Р±Р»РѕРє В«РўРµР»Рѕ РѕС‚РІРµС‚Р°В»"]
+      - ["Front HTML", "curl.exe -s http://127.0.0.1:8888", "РџРѕРґСЂР°Р·РґРµР» В«РЎС‚СЂР°РЅРёС†Р° frontВ»"]
+
+  - type: heading
+    text: "Р—Р°РІРµСЂС€РµРЅРёРµ СЂР°Р±РѕС‚С‹"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РљРѕРјР°РЅРґР° vagrant destroy -f. Р’С‹РІРѕРґ (Р±РµР· РїСЂРµС„РёРєСЃРѕРІ РїСЂРѕРІР°Р№РґРµСЂР° РІ РѕСЂРёРіРёРЅР°Р»Рµ):
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      back: Forcing shutdown of VM...
+
+      back: Destroying VM and associated drives...
+
+      front: Forcing shutdown of VM...
+
+      front: Destroying VM and associated drives...
+
+      db: Forcing shutdown of VM...
+
+      db: Destroying VM and associated drives...
+
+  - type: heading
+    text: "Р—Р°РєР»СЋС‡РµРЅРёРµ"
+    level: 1
+    structural: true
+
+  - type: paragraph
+    text: >
+      РџРѕРґРіРѕС‚РѕРІР»РµРЅС‹ box-РѕР±СЂР°Р·С‹ front, back Рё db, СЂР°Р·РІС‘СЂРЅСѓС‚ РјРЅРѕРіРѕРјР°С€РёРЅРЅС‹Р№ СЃС‚РµРЅРґ Vagrant.
+      Backend-СЃРµСЂРІРёСЃ СЂР°Р±РѕС‚Р°Р», РґР°РЅРЅС‹Рµ РІ PostgreSQL РІСЃС‚Р°РІР»РµРЅС‹ Рё РїРѕР»СѓС‡РµРЅС‹ РїРѕ С†РµРїРѕС‡РєРµ РґРѕ front.
+      Р¦РµР»СЊ СЂР°Р±РѕС‚С‹ РґРѕСЃС‚РёРіРЅСѓС‚Р°; РїРѕСЃР»Рµ РїСЂРѕРІРµСЂРѕРє СЃС‚РµРЅРґ СѓРЅРёС‡С‚РѕР¶РµРЅ.
+
+

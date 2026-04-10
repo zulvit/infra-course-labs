@@ -1,0 +1,527 @@
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+01
+About us
+Our services
+03
+Go ч.2
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Указатель
+var x int
+pntr := &x
+fmt.Println(pntr) // 0xc00001c080
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Указатель
+var x int
+pntr := &x
+x = 64
+fmt.Println(*pntr) // 64
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Указатель
+*pntr = 31
+fmt.Println(*pntr) // 31
+fmt.Println(x) // 31
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Указатель
+var pntr1 *int // типизированный указатель, отслеживается GC
+var pntr2 uintptr // числовое значение адреса, НЕ отслеживается GC
+fmt.Println(pntr1) // <nil>
+fmt.Println(pntr2) // 0
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Указатель
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+nil safety
+var p *int
+// *p = 42 // PANIC - invalid memory address or nil pointer dereference
+// Безопасный доступ:
+if p != nil {
+fmt.Println(*p)
+}
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Функция new() 
+var intValue int
+p1 := &intValue   // способ 1 объявление + взятие адреса
+p2 := new(int)    // способ 2 new() - эквивалентно
+fmt.Println(p1)   // 0xc00001c080
+fmt.Println(p2)   // 0xc00001c088
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Массив
+var array [3]int
+var defArr [3]string = [3]string{"one", "two", "three"}
+nums := [5]int{} // [0, 0, 0, 0, 0]
+var nums [5]int // [0, 0, 0, 0, 0]
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Массив
+nums := [1]int{1,2} // array index 1 out of bounds [0:1]
+nums := [3]int{1, 2, 3}
+fmt.Println(nums[1]) // 2
+nums[2] = 33
+fmt.Println(nums) // [1, 2, 33]
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Массив
+var a = [3]int{1, 2, 3}
+b := [3]int{1, 2, 3}
+c := [...]int{1, 2, 3}
+d := [3]int{1: 12}
+fmt.Println(a) // [1 2 3]
+fmt.Println(b) // [1 2 3]
+fmt.Println(c) // [1 2 3]
+fmt.Println(d) // [0 12 0]
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Массив
+a := [3]int{}
+b := [2]int{}
+// (a) [2]int и (b) [3]int - разные типы
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Массив
+x := [5]int{
+98,
+93,
+77,
+82,
+83,
+}
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Массив
+words := [2]string{}
+words[2] // invalid array index 2 (out of bounds for 2-element array)
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Массив
+package main
+import (
+"fmt"
+)
+func main() {
+a := [3]int{1,2,3}
+modifyArr(a)
+fmt.Println(a) // 1, 2, 3
+}
+func modifyArr(nums [3]int) {
+nums[0] = 35
+}
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Массив
+fmt.Println(len([5]int{1,2,3})) // 5
+fmt.Println(len([10]int{})) // 10
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Массив
+grades := [5]int{98, 93, 77, 82, 83}
+for i, v := range grades {
+fmt.Printf("grades[%d] = %d\n", i, v)
+}
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Слайс/Срез
+var nums = []int{1,2,3}
+nums := []int{1,2,3}
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Слайс/Срез
+type slice struct {
+array unsafe.Pointer // указатель на backing array
+len int // текущая длина (кол-во элементов)
+cap int // вместимость (размер backing array)
+}
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Слайс/Срез
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Слайс/Срез
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Слайс/Срез
+var s []int
+fmt.Println(len(s)) // 0
+fmt.Println(cap(s)) // 0
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Слайс/Срез
+nums := []int{1,2,3}
+nums[2] // 3
+nums[0] = 10 // [10, 2, 3]
+// с помощью оператора : можно получить элементы от нижней до верхней границы
+nums[1:3] // [2, 3]
+nums[:2] // [10, 2]
+nums[2:] // [3]
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Слайс/Срез
+s := []string{"e", "l", "e", "m", "e", "n", "t"}
+s1 := s[:4]
+s2 := s[1:6]
+fmt.Println(s1, s2) // [e l e m] [l e m e n]
+s1[1] = "L"
+fmt.Println(s, s2) // [e L e m e n t] [L e m e n]
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Слайс/Срез
+words := []string{"hello"}
+words = append(words, "world") // ["hello", "world"]
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Слайс/Срез
+s := []int{1, 2, 3}
+p := []int{4, 5, 6}
+s = append(s, p...)
+fmt.Print(s) //[1 2 3 4 5 6]
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Слайс/Срез и функция make()
+// len = 5. Массив сразу будет заполнен 5-ю нулевыми значениями
+nums := make([]int, 5, 5) // [0, 0, 0, 0, 0]
+// len = 0, но cap = 5. Массив будет пустым, однако заполнение слайса через append будет 
+// эффективным, потому что в памяти уже выделен массив нужной длины
+nums := make([]int, 0, 5) // []
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Слайс/Срез
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Слайс/Срез
+package main
+import (
+"fmt"
+)
+func main() {
+nums := []int{1, 2, 3, 4, 5}
+modifySlice(nums)
+fmt.Println(nums) // [1 2 10 4 5]
+}
+func modifySlice(nums []int) {
+nums[2] = 10 // элемент будет и в исходном слайсе
+nums = append(nums, 6) // элемент не добавится в исходный слайс
+}
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Слайсы и цикл for
+nums := make([]int, 0, 10)
+// начиная с 0; пока i меньше 10; инкрементим i после каждого шага
+for i := 0; i < 10; i++ {
+nums = append(nums, i)
+}
+fmt.Println(nums) // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Слайс/Срез
+names := []string{"John", "Harold", "Vince"}
+// i — это индекс, name — это значение на текущем шаге цикла
+for i, name := range names {
+fmt.Println("Hello ", name, " at index ", i)
+}
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Функции
+func multiply(x int, y int) int {
+return x * y
+}
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Функции
+package math
+// публичная функция, можно вызвать извне как math.Multiply(5,7)
+func Multiply(x int, y int) int {
+...
+}
+// приватная функция, извне не вызвать
+func divide(x int, y int) int {
+...
+}
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Функции
+package math
+import "errors"
+func divide(x, y int) (int, error) {
+if y == 0 {
+return 0, errors.New("cannot divide on zero")
+}
+return x / y, nil
+}
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Функции
+func multiply(x, y int) (res int) {
+res = x * y
+return
+}
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Функции
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Функции
+import "fmt"
+func myPrint(msg string) {
+// пакет.функция
+fmt.Println(msg)
+}
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Копирование слайсов
+nums := []int{1,2,3,4,5}
+// важно инициализировать слайс той же длины
+numsCp := make([]int, len(nums))
+copy(numsCp, nums)
+fmt.Println(numsCp) // [1,2,3,4,5]
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Копирование слайсов
+nums := []int{1,2,3,4,5}
+numsCp := nums
+// исходный слайс nums тоже будет изменен
+numsCp[0] = 10
+fmt.Println(nums) // [10,2,3,4,5]
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Копирование слайсов
+nums := []int{1, 2, 3, 4, 5}
+// создали слайс с длиной 0
+numsCp := make([]int, 0)
+// при копировании в пустой слайс ничего не произойдет
+copy(numsCp, nums)
+fmt.Println(numsCp) // []
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Сортировка слайсов
+nums := []int{2,1,6,5,3,4}
+sort.Slice(nums, func(i, j int) bool {
+return nums[i] < nums[j]
+})
+fmt.Println(nums) // [1 2 3 4 5 6]
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Сортировка слайсов
+func Print(arg interface{}) {
+fmt.Println(arg)
+}
+func main() {
+Print("hello!")
+Print(123)
+Print([]int{1,5,10})
+}
+hello!
+123
+[1 5 10]
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Сортировка слайсов
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Сортировка слайсов
+nums := []int{2,1,6,5,3,4}
+sort.SliceStable(nums, func(i, j int) bool {
+return nums[i] < nums[j]
+})
+fmt.Println(nums) // [1 2 3 4 5 6]
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Сортировка слайсов
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Map
+// создание пустой мапы
+var m map[int]string
+// сокращенное создание пустой мапы
+m := map[int]string{}
+// рекомендуемое создание с обозначением 
+размера
+m := make(map[int]string, 10)
+// создание мапы с элементами
+m := map[int]string{1: "hello", 2: "world"}
+// добавление элемента
+m[3] = "!" // map[1:hello, 2:world, 3:!]
+// чтение элемента
+word := m[1] // "hello"
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Map
+existedIDs := map[int64]bool{1: true, 2: true}
+idExists, elementExists := existedIDs[2] // true, true
+idExists, elementExists := existedIDs[225] // false, false
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Map
+engToRus := map[string]string{"hello":"привет", "world":"мир"}
+delete(engToRus, "world")
+fmt.Println(engToRus) // map[hello:привет]
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Map
+package main
+import (
+"fmt"
+)
+func main() {
+m := map[int]string{1: "hello", 2: "world"}
+modifyMap(m)
+fmt.Println(m) // вывод: map[1:changed 2:world 200:added]
+}
+func modifyMap(m map[int]string) {
+m[200] = "added"
+m[1] = "changed"
+}
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Обход мап
+idToName := map[int64]string{1: "Alex", 2: "Dan", 3: "George"}
+// первый аргумент — ключ, второй — значение
+for id, name := range idToName {
+fmt.Println("id: ", id, "name: ", name)
+}
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Обход мап
+numExistence := make(map[int]bool, 0)
+// записали по порядку числа от 0 до 9
+for i := 0; i < 10; i++ {
+numExistence[i] = true
+}
+// обходим мапу и выводим ключи
+for num := range numExistence {
+fmt.Println(num)
+}
+8
+1
+2
+3
+6
+7
+9
+0
+4
+5
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Руны
+package main
+import (
+"fmt"
+)
+func main() {
+emoji := []rune("привет😀")
+for i := 0; i < len(emoji); i++ {
+fmt.Println(emoji[i], string(emoji[i])) // выводим код символа и его строковое представление
+}
+}
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Руны
+s := "hey😉"
+rs := []rune([]byte(s)) // cannot convert ([]byte)(s) (type []byte) to type []rune
+bs := []byte([]rune(s)]) // cannot convert ([]rune)(s) (type []rune) to type []byte
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Руны
+package main
+import (
+"fmt"
+)
+func main() {
+emoji := []rune("cool😀")
+for _, ch := range emoji {
+fmt.Println(ch, string(ch)) // выводим код символа и его строковое представление
+}
+}
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Оператор ...
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Вариативные функции
+package main
+import (
+"fmt"
+)
+func main() {
+// кол-во аргументов может быть любым
+PrintNums(1, 2, 3)
+}
+func PrintNums(nums ...int) {
+for _, n := range nums {
+fmt.Println(n)
+}
+}
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Вариативные функции
+nums1 := []int{1,2,3,4,5}
+nums2 := []int{6,7,8,9,10}
+res := append(nums1, nums2...) //[1 2 3 4 5 6 7 8 9 10]
+Go
+2024. Открытые курсы кафедры «ЦТУТП».
+Введение
+Будут вопросы? Не стесняйтесь!

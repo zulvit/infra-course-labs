@@ -1,0 +1,114 @@
+﻿version: 1
+
+document:
+  output: "./build/lab4-report.docx"
+  toc: true
+  title_page:
+    template: rut
+    params:
+      discipline: "Инфраструктурное программное обеспечение"
+      work_number: "№ 4"
+      work_title: "РХД. Физическая репликация PostgreSQL и переключение роли узлов"
+      student: "Купленик С. С."
+      group: "УВП-171"
+      teacher: "Старший преподаватель кафедры ЦТУТП Заманов Е. А."
+      year: "2026"
+
+content:
+  - type: heading
+    text: "Цель работы"
+    level: 1
+    structural: true
+
+  - type: paragraph
+    text: >
+      Цель лабораторной работы состояла в развёртывании физической репликации PostgreSQL по схеме master-slave и проверке поведения реплики
+      в основных эксплуатационных сценариях. Требовалось настроить пользователя репликации, physical replication slot, выполнить pg_basebackup,
+      проверить потоковую репликацию, режим только для чтения, отставание реплики и promote резервного узла.
+
+  - type: paragraph
+    text: >
+      Практическая часть выполнялась в Docker-окружении с двумя контейнерами PostgreSQL 16: postgres_master и postgres_slave.
+      На мастер-узле были настроены wal_level, max_wal_senders и max_replication_slots, а на реплике организовано автоматическое получение базовой копии
+      и подключение к мастеру при старте.
+
+  - type: heading
+    text: "Ход работы"
+    level: 1
+    structural: true
+
+  - type: heading
+    text: "Базовая настройка потоковой репликации"
+    level: 2
+    structural: false
+
+  - type: list
+    style: numeric
+    items:
+      - "Подготовлены конфигурации master и slave, включая postgresql.conf и pg_hba.conf."
+      - "Создан пользователь репликации и physical replication slot на мастер-узле."
+      - "На slave выполнен pg_basebackup и запущено подключение к master."
+      - "Проверено состояние репликации через pg_stat_replication."
+      - "Подтверждена доставка записи с master на slave и невозможность записи напрямую в standby."
+      - "Дополнительно проверены сценарии массовой вставки, временного отключения реплики и promote standby в новый master."
+
+  - type: table
+    caption: "Команды и подтверждённые результаты репликации"
+    headers:
+      - "Этап"
+      - "Команда"
+      - "Результат"
+    rows:
+      - ["Проверка состояния репликации", "docker exec -e PGPASSWORD=shop_password_2026 postgres_master psql -U shop_admin -d shop_db -c \"SELECT application_name, state, pg_size_pretty(pg_wal_lsn_diff(pg_current_wal_lsn(), replay_lsn)) AS replication_lag, sync_state FROM pg_stat_replication;\"", "Master отобразил подключение walreceiver в состоянии streaming; lag составил 0 bytes, режим синхронизации async."]
+      - ["Проверка доставки данных на slave", "docker exec -e PGPASSWORD=shop_password_2026 postgres_master psql ... INSERT ...; затем SELECT на postgres_slave", "После вставки производителя Test Vendor на master запись появилась на slave, что подтвердило реальную передачу WAL и применение изменений на реплике."]
+      - ["Проверка read-only режима", "docker exec -e PGPASSWORD=shop_password_2026 postgres_slave psql -U shop_admin -d shop_db -c \"INSERT INTO shop.manufacturers(manufacturer_name) VALUES ('Fail Vendor');\"", "PostgreSQL вернул ошибку cannot execute INSERT in a read-only transaction, что подтвердило корректное поведение standby-узла."]
+      - ["Массовая вставка данных", "docker exec -e PGPASSWORD=shop_password_2026 postgres_master psql -U shop_admin -d shop_db -c \"INSERT INTO ... SELECT ... generate_series(1,10000);\"", "После загрузки total_products на slave составило 10000, а проверка lag показала 0 bytes и replay_lag около 00:00:00.027628."]
+      - ["Отключение и возврат реплики", "остановка slave, вставка новых строк на master, повторный запуск slave", "Replication slot удержал WAL; в проверке отображалось active = f и retained_wal = 233 kB, после возврата replica догнала master и lag снова стал равен 0 bytes."]
+      - ["Promote реплики", "docker exec -e PGPASSWORD=shop_password_2026 postgres_slave psql -U shop_admin -d shop_db -c \"SELECT pg_promote(); SELECT pg_is_in_recovery();\"", "Функция pg_promote() вернула t, pg_is_in_recovery() вернул f, после чего бывшая реплика приняла запись Promoted Master Vendor."]
+
+  - type: heading
+    text: "Контрольные проверки"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      Проверка представления pg_stat_replication на мастер-узле показала строку: application_name | state | replication_lag | sync_state;
+      walreceiver | streaming | 0 bytes | async. Этот ответ подтвердил, что standby подключён и получает WAL в обычном асинхронном режиме.
+
+  - type: paragraph
+    text: >
+      После вставки записи на мастер-узле выборка на реплике вернула производителя Test Vendor. Это доказало, что изменения действительно доезжают до standby,
+      а реплика не ограничивается только наличием сетевого соединения. Попытка прямой записи на slave завершилась сообщением cannot execute INSERT in a read-only transaction,
+      что соответствует ожидаемому поведению горячего резерва.
+
+  - type: paragraph
+    text: >
+      В самостоятельной части работы выполнена массовая вставка 10000 строк в products. Контрольная проверка на реплике показала total_products = 10000,
+      а лаг по данным мастер-узла остался минимальным: replication_lag = 0 bytes, replay_lag = 00:00:00.027628. Это демонстрирует,
+      что при локальном Docker-соединении и умеренном объёме WAL репликация отрабатывает практически в реальном времени.
+
+  - type: paragraph
+    text: >
+      При остановке реплики и последующей вставке новых строк на master replication slot продолжил удерживать необходимые WAL-записи.
+      Контрольная проверка показала состояние slot: active = f, retained_wal = 233 kB. После повторного запуска slave новые строки появились на standby,
+      а состояние репликации снова стало streaming с lag = 0 bytes.
+
+  - type: paragraph
+    text: >
+      После выполнения pg_promote() резервный узел вышел из режима recovery: функция pg_is_in_recovery() вернула f. Затем на этом узле была успешно выполнена запись,
+      и в выборке появился производитель Promoted Master Vendor. Это подтвердило успешное переключение роли standby в новый master.
+
+  - type: heading
+    text: "Заключение"
+    level: 1
+    structural: true
+
+  - type: paragraph
+    text: >
+      В ходе лабораторной работы была настроена и проверена физическая репликация PostgreSQL в конфигурации master-slave.
+      Эксперимент подтвердил корректное подключение standby, доставку изменений, режим только для чтения на реплике, удержание WAL во время простоя standby
+      и возможность переключения резервного узла в новый master через pg_promote(). Цель работы достигнута полностью.
+
+
+

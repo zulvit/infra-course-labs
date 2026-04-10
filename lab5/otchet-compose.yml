@@ -1,0 +1,209 @@
+﻿version: 1
+
+document:
+  output: "./build/lab5-report.docx"
+  toc: true
+  title_page:
+    template: rut
+    params:
+      discipline: "РЅС„СЂР°СЃС‚СЂСѓРєС‚СѓСЂРЅРѕРµ РїСЂРѕРіСЂР°РјРјРЅРѕРµ РѕР±РµСЃРїРµС‡РµРЅРёРµ"
+      work_number: "в„– 5"
+      work_title: "Docker Volume Рё Docker Network"
+      student: "Купленик С. С."
+      group: "УВП-171"
+      teacher: "Старший преподаватель кафедры ЦТУТП Заманов Е. А."
+      year: "2026"
+
+content:
+  - type: heading
+    text: "Р¦РµР»СЊ СЂР°Р±РѕС‚С‹"
+    level: 1
+    structural: true
+
+  - type: paragraph
+    text: >
+      Р¦РµР»СЊ СЂР°Р±РѕС‚С‹ - РёР·СѓС‡РёС‚СЊ Docker volume (bind mount, named volume) Рё СЃРµС‚Рё: РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєР°СЏ
+      bridge Рё СЂРµР¶РёРј host.
+
+  - type: paragraph
+    text: >
+      Р Р°Р±РѕС‚Р° РІС‹РїРѕР»РЅСЏР»Р°СЃСЊ РЅР° Р»РѕРєР°Р»СЊРЅРѕРј Docker. РџРѕСЂС‚С‹ 18088 Рё 18089 РёСЃРїРѕР»СЊР·РѕРІР°РЅС‹ РІРјРµСЃС‚Рѕ 8888/8889,
+      С‡С‚РѕР±С‹ РёР·Р±РµР¶Р°С‚СЊ РєРѕРЅС„Р»РёРєС‚РѕРІ РЅР° С…РѕСЃС‚Рµ.
+
+  - type: heading
+    text: "РҐРѕРґ СЂР°Р±РѕС‚С‹"
+    level: 1
+    structural: true
+
+  - type: heading
+    text: "РЎСЂРµРґР° РІС‹РїРѕР»РЅРµРЅРёСЏ Рё СЂР°СЃРїРѕР»РѕР¶РµРЅРёРµ С„Р°Р№Р»РѕРІ"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РЈСЃС‚Р°РЅРѕРІР»РµРЅ Docker Engine РЅР° С…РѕСЃС‚Рµ Windows. Р¤Р°Р№Р»С‹ РґР»СЏ bind mount Р»РµР¶Р°С‚ РІ lab5/work (index.html, data).
+      Р§С‚РѕР±С‹ РЅРµ РїРµСЂРµСЃРµРєР°С‚СЊСЃСЏ СЃ РґСЂСѓРіРёРјРё СЃРµСЂРІРёСЃР°РјРё, РґР»СЏ РїСѓР±Р»РёРєР°С†РёРё РїРѕСЂС‚РѕРІ РёСЃРїРѕР»СЊР·РѕРІР°РЅС‹ 18088, 18089 Рё 18891.
+
+  - type: heading
+    text: "РџРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ РґРµР№СЃС‚РІРёР№ Рё РєРѕРјР°РЅРґС‹"
+    level: 2
+    structural: false
+
+  - type: list
+    style: numeric
+    items:
+      - "Bind mount: docker run -d СЃ -v РЅР° РєР°С‚Р°Р»РѕРі lab5/work (РёР»Рё work/data), РїСѓР±Р»РёРєР°С†РёСЏ -p 18088:80, РѕР±СЂР°Р· nginx:alpine, РёРјСЏ РєРѕРЅС‚РµР№РЅРµСЂР° РїРѕ РІС‹Р±РѕСЂСѓ; РїСЂРѕРІРµСЂРєР° curl РёР»Рё Р±СЂР°СѓР·РµСЂРѕРј http://127.0.0.1:18088."
+      - "Named volume: docker volume create, docker run -v РёРјСЏ_С‚РѕРјР°:/usr/share/nginx/html -p 18089:80 вЂ¦; Р·Р°Р»РёС‚СЊ HTML РІ С‚РѕРј С‡РµСЂРµР· РїСЂРѕРјРµР¶СѓС‚РѕС‡РЅС‹Р№ РєРѕРЅС‚РµР№РЅРµСЂ РёР»Рё cp; РїСЂРѕРІРµСЂРєР° http://127.0.0.1:18089."
+      - "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєР°СЏ СЃРµС‚СЊ: docker network create lab5-br --subnet 10.0.0.0/24; РґРІР° РєРѕРЅС‚РµР№РЅРµСЂР° РІ СЌС‚РѕР№ СЃРµС‚Рё; docker exec вЂ¦ ping -c 1 lab5-second."
+      - "Р РµР¶РёРј host: docker run -d --network host вЂ¦ python -m http.server 18891; Р·Р°РїСЂРѕСЃ Рє http://127.0.0.1:18891/."
+
+  - type: heading
+    text: "Bind mount"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РљРѕРЅС‚РµР№РЅРµСЂ nginx:alpine СЃ РјРѕРЅС‚РёСЂРѕРІР°РЅРёРµРј РєР°С‚Р°Р»РѕРіР° С…РѕСЃС‚Р° РІ /usr/share/nginx/html, РїСѓР±Р»РёРєР°С†РёСЏ 18088:80.
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ (HTTP)"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      <html>
+
+        <body>
+
+          <h1>lab5 bind mount</h1>
+
+        </body>
+
+      </html>
+
+  - type: heading
+    text: "Named volume"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РЎРѕР·РґР°РЅРёРµ С‚РѕРјР°, РјРѕРЅС‚РёСЂРѕРІР°РЅРёРµ РІ /usr/share/nginx/html, РїРѕСЂС‚ 18089:80.
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ (HTTP)"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      <html><body><h1>lab5 named volume</h1></body></html>
+
+  - type: heading
+    text: "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєР°СЏ bridge-СЃРµС‚СЊ"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      docker network create СЃ РїРѕРґСЃРµС‚СЊСЋ 10.0.0.0/24; РґРІР° РєРѕРЅС‚РµР№РЅРµСЂР° РІ СЃРµС‚Рё; ping РїРѕ РёРјРµРЅРё lab5-second.
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      PING lab5-second (10.0.0.3): 56 data bytes
+
+      64 bytes from 10.0.0.3: seq=0 ttl=64 time=0.050 ms
+
+      --- lab5-second ping statistics ---
+
+      1 packets transmitted, 1 packets received, 0% packet loss
+
+      round-trip min/avg/max = 0.050/0.050/0.050 ms
+
+  - type: heading
+    text: "Р РµР¶РёРј host"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РљРѕРЅС‚РµР№РЅРµСЂ СЃ --network host, python -m http.server РЅР° РїРѕСЂС‚Сѓ С…РѕСЃС‚Р°. Р¤СЂР°РіРјРµРЅС‚ РѕС‚РІРµС‚Р° Р±СЂР°СѓР·РµСЂР°/wget.
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ (С„СЂР°РіРјРµРЅС‚ HTML)"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      <!DOCTYPE HTML>
+
+      <html lang="en">
+
+      <head>
+
+      <meta charset="utf-8">
+
+      <title>Directory listing for /</title>
+
+      </head>
+
+      <body>
+
+      <h1>Directory listing for /</h1>
+
+      <hr>
+
+      <ul>
+
+      <li><a href=".dockerenv">.dockerenv</a></li>
+
+      <li><a href="bin/">bin/</a></li>
+
+      <li><a href="etc/">etc/</a></li>
+
+      (СЃРїРёСЃРѕРє РєР°С‚Р°Р»РѕРіРѕРІ РєРѕСЂРЅСЏ РєРѕРЅС‚РµР№РЅРµСЂР° РїСЂРѕРґРѕР»Р¶Р°РµС‚СЃСЏ Р°РЅР°Р»РѕРіРёС‡РЅРѕ.)
+
+      </ul>
+
+      </body>
+
+      </html>
+
+  - type: heading
+    text: "РЎРІРѕРґРЅР°СЏ С‚Р°Р±Р»РёС†Р° РєРѕРјР°РЅРґ"
+    level: 2
+    structural: false
+
+  - type: table
+    caption: "Р­С‚Р°РїС‹ Рё СЂР°Р·РјРµС‰РµРЅРёРµ РІС‹РІРѕРґР° РІ РѕС‚С‡С‘С‚Рµ"
+    headers:
+      - "Р­С‚Р°Рї"
+      - "РљРѕРјР°РЅРґР°"
+      - "Р’С‹РІРѕРґ РІ РѕС‚С‡С‘С‚Рµ"
+    rows:
+      - ["Bind mount", "docker run вЂ¦ -v вЂ¦ -p 18088:80 вЂ¦ nginx:alpine", "РџРѕРґСЂР°Р·РґРµР» В«Bind mountВ»"]
+      - ["Named volume", "docker volume create вЂ¦; docker run вЂ¦ -v вЂ¦ -p 18089:80 вЂ¦", "РџРѕРґСЂР°Р·РґРµР» В«Named volumeВ»"]
+      - ["Custom bridge", "docker network create вЂ¦; docker exec вЂ¦ ping вЂ¦", "РџРѕРґСЂР°Р·РґРµР» В«РџРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєР°СЏ bridge-СЃРµС‚СЊВ»"]
+      - ["Host network", "docker run --network host вЂ¦", "РџРѕРґСЂР°Р·РґРµР» В«Р РµР¶РёРј hostВ»"]
+
+  - type: heading
+    text: "Р—Р°РєР»СЋС‡РµРЅРёРµ"
+    level: 1
+    structural: true
+
+  - type: paragraph
+    text: >
+      РџСЂРѕРІРµСЂРµРЅС‹ bind mount, named volume, СЂР°Р·СЂРµС€РµРЅРёРµ РёРјС‘РЅ Рё ping РІ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕР№ bridge-СЃРµС‚Рё,
+      РґРѕСЃС‚СѓРї Рє СЃРµСЂРІРёСЃСѓ РІ СЂРµР¶РёРјРµ host. Р Р°Р·РґРµР»С‹ multi-host Рё ipvlan РїРѕ РјРµС‚РѕРґРёС‡РєРµ РЅРµ РІС‹РїРѕР»РЅСЏР»РёСЃСЊ
+      РёР·-Р·Р° РѕС‚СЃСѓС‚СЃС‚РІРёСЏ СѓС‡РµР±РЅРѕР№ С‚РѕРїРѕР»РѕРіРёРё. Р¦РµР»СЊ СЂР°Р±РѕС‚С‹ РїРѕ Р»РѕРєР°Р»СЊРЅС‹Рј СЃС†РµРЅР°СЂРёСЏРј РґРѕСЃС‚РёРіРЅСѓС‚Р°.
+
+

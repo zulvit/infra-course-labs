@@ -1,0 +1,54 @@
+---
+- hosts: nodes
+  become: true
+  gather_facts: false
+  vars:
+    html_dir: /var/www/html
+  handlers:
+    - name: nginx restart
+      ansible.builtin.systemd:
+        name: nginx
+        state: restarted
+  tasks:
+    - name: nginx package
+      ansible.builtin.package:
+        name: nginx
+        state: present
+
+    - name: nginx config
+      ansible.builtin.copy:
+        src: files/default
+        dest: /etc/nginx/sites-enabled/default
+        owner: root
+        group: root
+        mode: "0644"
+      notify: nginx restart
+
+    - name: index.html template
+      ansible.builtin.template:
+        src: templates/index.html.j2
+        dest: "{{ html_dir }}/index.html"
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: node1 only file
+      ansible.builtin.copy:
+        content: "node1 only\n"
+        dest: "{{ html_dir }}/node1only"
+        owner: root
+        group: root
+        mode: "0644"
+      when: ansible_host == "node1.local"
+
+    - name: loop demo files
+      ansible.builtin.copy:
+        content: "{{ item }}\n"
+        dest: "{{ html_dir }}/{{ item }}"
+        owner: root
+        group: root
+        mode: "0644"
+      loop:
+        - test1
+        - test2
+        - test3

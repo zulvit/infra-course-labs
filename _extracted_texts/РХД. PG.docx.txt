@@ -1,0 +1,679 @@
+
+Лабораторная работа №1. DDL-скрипт
+В данной работе необходимо подготовить DDL-скрипт для создания структуры базы данных, к примеру - интернет-магазина (но можно взять свое любое ).
+Структура проекта
+Создайте папку lab1 и внутри неё следующие файлы:
+lab1/
+├── docker-compose.yml
+├── .env
+└── init/
+    └── 01_schema.sql
+Откройте .env и вставьте:
+POSTGRES_DB=shop_db
+POSTGRES_USER=shop_admin
+POSTGRES_PASSWORD=shop_password_2026
+
+Файл docker-compose.yml
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: shop_postgres
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "127.0.0.1:5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  pgdata:
+
+Файл init/01_schema.sql
+Скрипты из папки init/ выполняются автоматически при первом старте контейнера и в алфавитном порядке. Нумерация в именах файлов гарантирует правильный порядок если их будет несколько.
+Сначала создаём схему. Схема в PostgreSQL это пространство имён внутри базы данных. Для нашего примера со схемой для интернет-магазина все объекты кладём в схему shop, а не в public (это позволяет не смешивать объекты разных приложений и удобно управлять правами). Итак, в файле:
+CREATE SCHEMA IF NOT EXISTS shop;
+SET search_path TO shop, public;
+Оборачиваем весь скрипт в транзакцию. Если что-то упадёт в рамках лабы будет неприятно, поэтому так откатится всё целиком, а не половина таблиц будет висеть мертвым грузом.
+BEGIN;
+Справочник производителей:
+CREATE TABLE IF NOT EXISTS shop.manufacturers (
+    manufacturer_id  BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    manufacturer_name VARCHAR(100) NOT NULL,
+    CONSTRAINT uq_manufacturer_name UNIQUE (manufacturer_name)
+);
+Справочник категорий:
+CREATE TABLE IF NOT EXISTS shop.categories (
+    category_id   BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    category_name VARCHAR(100) NOT NULL,
+    CONSTRAINT uq_category_name UNIQUE (category_name)
+);
+Товары:
+CREATE TABLE IF NOT EXISTS shop.products (
+    product_id      BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    category_id     BIGINT NOT NULL,
+    manufacturer_id BIGINT NOT NULL,
+    product_name    VARCHAR(255) NOT NULL,
+
+    CONSTRAINT fk_product_category
+        FOREIGN KEY (category_id)
+        REFERENCES shop.categories(category_id)
+        ON DELETE RESTRICT,
+
+    CONSTRAINT fk_product_manufacturer
+        FOREIGN KEY (manufacturer_id)
+        REFERENCES shop.manufacturers(manufacturer_id)
+        ON DELETE RESTRICT
+);
+
+CREATE INDEX IF NOT EXISTS idx_products_category
+    ON shop.products(category_id);
+CREATE INDEX IF NOT EXISTS idx_products_manufacturer
+    ON shop.products(manufacturer_id);
+Кому интересно - ON DELETE RESTRICT не даст удалить категорию, пока в ней есть товары. ON DELETE CASCADE удалил бы товары вместе с категорией и так не носят, опасно в рабочей системе. Именованные ограничения (fk_product_category) позволяют понять из ошибки, какое именно ограничение в итоге нарушено.
+История изменения цен:
+CREATE TABLE IF NOT EXISTS shop.price_change (
+    product_id      BIGINT NOT NULL,
+    price_change_ts TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    new_price       NUMERIC(18, 2) NOT NULL,
+    CHECK (new_price &gt;= 0),
+
+    CONSTRAINT pk_price_change
+        PRIMARY KEY (product_id, price_change_ts),
+
+    CONSTRAINT fk_price_change_product
+        FOREIGN KEY (product_id)
+        REFERENCES shop.products(product_id)
+        ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_price_change_product_ts
+    ON shop.price_change(product_id, price_change_ts DESC);
+Магазины:
+CREATE TABLE IF NOT EXISTS shop.stores (
+    store_id   BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    store_name VARCHAR(255) NOT NULL,
+    CONSTRAINT uq_store_name UNIQUE (store_name)
+);
+Покупатели:
+CREATE TABLE IF NOT EXISTS shop.customers (
+    customer_id    BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    customer_fname VARCHAR(100) NOT NULL,
+    customer_lname VARCHAR(100) NOT NULL
+);
+Доставки:
+CREATE TABLE IF NOT EXISTS shop.deliveries (
+    store_id       BIGINT  NOT NULL,
+    product_id     BIGINT  NOT NULL,
+    delivery_date  DATE    NOT NULL,
+    product_count  INTEGER NOT NULL,
+    CHECK (product_count &gt; 0),
+
+    CONSTRAINT pk_deliveries
+        PRIMARY KEY (store_id, product_id, delivery_date),
+
+    CONSTRAINT fk_delivery_store
+        FOREIGN KEY (store_id)
+        REFERENCES shop.stores(store_id)
+        ON DELETE RESTRICT,
+
+    CONSTRAINT fk_delivery_product
+        FOREIGN KEY (product_id)
+        REFERENCES shop.products(product_id)
+        ON DELETE RESTRICT
+);
+Покупки:
+CREATE TABLE IF NOT EXISTS shop.purchases (
+    purchase_id   BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    store_id      BIGINT      NOT NULL,
+    customer_id   BIGINT      NOT NULL,
+    purchase_date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT fk_purchase_store
+        FOREIGN KEY (store_id)
+        REFERENCES shop.stores(store_id)
+        ON DELETE RESTRICT,
+
+    CONSTRAINT fk_purchase_customer
+        FOREIGN KEY (customer_id)
+        REFERENCES shop.customers(customer_id)
+        ON DELETE RESTRICT
+);
+
+CREATE INDEX IF NOT EXISTS idx_purchases_customer
+    ON shop.purchases(customer_id);
+CREATE INDEX IF NOT EXISTS idx_purchases_date
+    ON shop.purchases(purchase_date DESC);
+Позиции чека:
+CREATE TABLE IF NOT EXISTS shop.purchase_items (
+    purchase_id   BIGINT         NOT NULL,
+    product_id    BIGINT         NOT NULL,
+    product_count BIGINT         NOT NULL,
+    product_price NUMERIC(18, 2) NOT NULL,
+    CHECK (product_count &gt; 0),
+    CHECK (product_price &gt;= 0),
+
+    CONSTRAINT pk_purchase_items
+        PRIMARY KEY (purchase_id, product_id),
+
+    CONSTRAINT fk_item_purchase
+        FOREIGN KEY (purchase_id)
+        REFERENCES shop.purchases(purchase_id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_item_product
+        FOREIGN KEY (product_id)
+        REFERENCES shop.products(product_id)
+        ON DELETE RESTRICT
+);
+Кому интересно - цена фиксируется на момент покупки в product_price и не ссылается на таблицу цен.
+Завершаем транзакцию:
+COMMIT;
+Запуск
+Откройте терминал в папке lab1 и выполните:
+docker-compose up -d
+Docker скачает образ postgres:17-alpine и запустит контейнер. При первом запуске PostgreSQL выполнит все скрипты из папки init/.
+Следите за процессом инициализации:
+docker-compose logs -f postgres
+В выводе вы должны увидеть строки:
+/docker-entrypoint-initdb.d/01_schema.sql
+...
+database system is ready to accept connections
+Нажмите Ctrl+C чтобы выйти из режима просмотра логов. Контейнер продолжит работать.
+Проверка через psql внутри контейнера
+Войдите в psql прямо внутри контейнера:
+docker exec -it shop_postgres psql -U shop_admin -d shop_db
+Вы увидите приглашение shop_db=#. Выполните проверки:
+
+-- Переключиться в нашу схему
+SET search_path TO shop;
+
+-- Список всех таблиц
+\dt
+Должно быть ок, таблицы видны!
+Лабораторная работа №2. Логическое резервирование
+В данной работе в уже развёрнутую базу из работы №1 загружаются данные из CSV-файлов.
+Что такое COPY и зачем он нужен?
+Обычный INSERT передаёт каждую строку отдельным сообщением по протоколу PostgreSQL. COPY читает файл целиком и передаёт данные одним потоком - без overhead на разбор отдельных запросов и без промежуточных commit на каждую строку. На больших объёмах разница в скорости реально ощутима 
+COPY выполняется на стороне сервера и читает файл с диска сервера. Именно поэтому CSV-файлы нужно передать внутрь контейнера через volume.
+Часть 1. Обновление структуры проекта
+Возьмите папку lab1 из предыдущей работы. Добавьте папку data/ и новый скрипт:
+Lab2/
+├── docker-compose.yml
+├── .env
+├── init/
+│   ├── 01_schema.sql      
+│   └── 02_load_csv.sql    
+└── data/                  
+    ├── manufacturers.csv
+    ├── categories.csv
+    ├── stores.csv
+    └── customers.csv
+
+Обновление docker-compose.yml
+Добавьте одну строку в volumes postgres - монтируем папку data/ внутрь контейнера:
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d:ro
+      - ./data:/var/lib/postgresql/import:ro   
+CSV-файлы
+Сохраняйте файлы именно в UTF-8 (в VS Code — правый нижний угол, кликнуть на кодировку).
+data/manufacturers.csv:
+
+manufacturer_name
+"Apple Inc."
+"Samsung Electronics"
+"Sony Group Corporation"
+"Lenovo Group"
+
+data/categories.csv:
+category_name
+"Смартфоны"
+"Ноутбуки"
+"Телевизоры"
+"Планшеты"
+
+data/stores.csv:
+store_name
+"Москва — Арбат"
+"Санкт-Петербург — Невский"
+"Казань — Баумана"
+
+data/customers.csv:
+customer_fname,customer_lname
+"Иван","Петров"
+"Мария","Сидорова"
+"Алексей","Козлов"
+
+Скрипт загрузки init/02_load_csv.sql
+SET search_path TO shop, public;
+
+-- Загружаем в порядке зависимостей! Это важно!
+-- Сначала справочники без FK, потом всё что на них ссылается.
+-- Нарушение порядка даст очевидно даст ошибку foreign key violation.
+
+COPY shop.manufacturers(manufacturer_name)
+FROM '/var/lib/postgresql/import/manufacturers.csv'
+WITH (
+    FORMAT CSV,
+    HEADER TRUE,
+    DELIMITER ',',
+    ENCODING 'UTF8',
+    NULL ''
+    -- NULL '' - пустая строка в CSV будет интерпретирована как NULL
+);
+
+COPY shop.categories(category_name)
+FROM '/var/lib/postgresql/import/categories.csv'
+WITH (FORMAT CSV, HEADER TRUE, DELIMITER ',', ENCODING 'UTF8', NULL '');
+
+COPY shop.stores(store_name)
+FROM '/var/lib/postgresql/import/stores.csv'
+WITH (FORMAT CSV, HEADER TRUE, DELIMITER ',', ENCODING 'UTF8', NULL '');
+
+COPY shop.customers(customer_fname, customer_lname)
+FROM '/var/lib/postgresql/import/customers.csv'
+WITH (FORMAT CSV, HEADER TRUE, DELIMITER ',', ENCODING 'UTF8', NULL '');
+
+-- ANALYZE обновляет статистику для планировщика запросов.
+-- После bulk-загрузки статистика уже устарела планировщик уже не знает
+
+ANALYZE shop.manufacturers;
+ANALYZE shop.categories;
+ANALYZE shop.stores;
+ANALYZE shop.customers;
+
+Пересоздание и запуск
+Так как скрипты инициализации выполняются только при первом старте, нужно пересоздать контейнер с нуля:
+docker-compose down -v
+docker-compose up -d
+Следите за логами - должны выполниться оба скрипта:
+docker-compose logs -f postgres
+
+/docker-entrypoint-initdb.d/01_schema.sql
+/docker-entrypoint-initdb.d/02_load_csv.sql
+...
+database system is ready to accept connections
+
+Проверка
+docker exec -it shop_postgres psql -U shop_admin -d shop_db
+
+SET search_path TO shop;
+
+-- Проверяем что данные загрузились
+SELECT * FROM manufacturers;
+SELECT * FROM categories;
+SELECT * FROM stores;
+SELECT * FROM customers;
+
+-- Смотрим статистику – планировщик уже знает о строках
+SELECT
+    relname        AS table_name,
+    n_live_tup     AS row_count,
+    last_analyze
+FROM pg_stat_user_tables
+WHERE schemaname = 'shop'
+ORDER BY relname;
+
+В колонке last_analyze должно стоять время - значит ANALYZE отработал и планировщик знает актуальную статистику.
+Попробуйте намеренно нарушить порядок загрузки - закомментируйте загрузку manufacturers в скрипте, пересоздайте контейнер и посмотрите на ошибку:
+
+ERROR: insert or update on table "products" violates foreign key constraint
+Так работает защита на уровне базы данных с внешними ключами 
+Лабораторная работа №3. Логическое резервирование
+В данной работе производится логическое резервное копирование базы данных из работы №2, изучаются форматы дампа и восстановление в новую БД.
+Как устроен pg_dump изнутри
+pg_dump не блокирует таблицы для записи. Он открывает транзакцию с уровнем изоляции REPEATABLE READ - это даёт консистентный снимок данных на момент старта дампа. Пока дамп идёт, приложение продолжает писать в базу, но в дамп попадёт состояние на момент его начала.
+На таблицы берётся лёгкий лок ACCESS SHARE - он только запрещает DROP TABLE во время дампа, но не мешает INSERT/UPDATE/SELECT.
+Форматы дампа
+Формат
+Флаг
+Особенность
+Plain SQL
+нет
+Читаемый текст, восстанавливается через psql
+Custom
+--format=c
+Бинарный, сжатый, поддерживает выборочное восстановление
+Directory
+--format=d
+Директория файлов, параллельный dump и restore через -j N
+Для большинства задач используйте custom. Plain SQL удобен когда нужно посмотреть содержимое в редакторе или перенести данные между разными major-версиями PostgreSQL с ручной правкой.
+Подготовка - папка для бэкапов внутри контейнера
+Все операции в этой работе выполняются внутри контейнера через docker exec - утилиты pg_dump, pg_restore, psql уже есть в образе postgres:17-alpine.
+Создайте папку для бэкапов внутри контейнера:
+docker exec shop_postgres mkdir -p /var/lib/postgresql/backups
+Чтобы файлы бэкапов были доступны на хосте (Windows), добавьте volume postgres в docker-compose.yml:
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d:ro
+      - ./data:/var/lib/postgresql/import:ro
+      - ./backups:/var/lib/postgresql/backups  
+Создайте папку backups рядом с docker-compose.yml.
+Перезапустите контейнер чтобы применить новый volume (данные не теряются - volume pgdata остаётся):
+docker-compose down
+docker-compose up -d
+Создание резервной копии
+Custom-формат
+docker exec shop_postgres pg_dump `
+  --username=shop_admin `
+  --dbname=shop_db `
+  --schema=shop `
+  --format=custom `
+  --compress=9 `
+  --file=/var/lib/postgresql/backups/shop_backup.dump `
+  --verbose
+Флаги:
+--schema=shop - дампим только нашу схему, не системные объекты pg_catalog и information_schema
+--compress=9 - максимальное сжатие, файл меньше, но чуть дольше
+--verbose - выводит список объектов по мере дампа
+После выполнения файл появится в папке backups на вашем хосте.
+Plain SQL (бекапимся с sql)
+docker exec shop_postgres pg_dump `
+  --username=shop_admin `
+  --dbname=shop_db `
+  --schema=shop `
+  --file=/var/lib/postgresql/backups/shop_backup.sql
+Откройте backups\shop_backup.sql и изучите структуру. Обратите внимание на порядок секций:
+SET - настройки сессии восстановления
+CREATE TABLE - сначала структура без ограничений
+COPY - данные
+ALTER TABLE ... ADD CONSTRAINT — ограничения добавляются в конце
+CREATE INDEX - индексы тоже в конце
+Ограничения и индексы идут после данных намеренно: строить индекс по уже загруженным данным быстрее чем обновлять его при каждой вставке строки. Та же логика по которой мы вызывали ANALYZE после COPY.
+Просмотр содержимого дампа без восстановления
+docker exec shop_postgres pg_restore `
+  --list /var/lib/postgresql/backups/shop_backup.dump
+Вы увидите список всех объектов в дампе - таблицы, ограничения, индексы, последовательности. Это удобно чтобы убедиться что дамп полный перед восстановлением, или чтобы восстановить только один конкретный объект.
+Восстановление в новую БД
+Создайте новую базу данных:
+docker exec shop_postgres createdb `
+  --username=shop_admin `
+  shop_db_restored
+Восстановите из custom-дампа:
+docker exec shop_postgres pg_restore `
+  --username=shop_admin `
+  --dbname=shop_db_restored `
+  --no-owner `
+  --verbose `
+  /var/lib/postgresql/backups/shop_backup.dump
+Кому интересно --no-owner - не восстанавливать владельцев объектов. Если дамп делал один пользователь, а восстанавливает другой - без этого флага pg_restore попытается выдать ALTER TABLE ... OWNER TO &lt;исходный_пользователь&gt; и упадёт с ошибкой прав.
+Проверьте что данные восстановились:
+docker exec -it shop_postgres psql -U shop_admin -d shop_db_restored
+SET search_path TO shop;
+
+-- Сравниваем количество строк с оригиналом
+SELECT 'manufacturers' AS tbl, count(*) FROM manufacturers
+UNION ALL
+SELECT 'categories', count(*) FROM categories
+UNION ALL
+SELECT 'stores', count(*) FROM stores
+UNION ALL
+SELECT 'customers', count(*) FROM customers;
+
+-- Проверяем что ограничения восстановились
+SELECT constraint_name, constraint_type
+FROM information_schema.table_constraints
+WHERE table_schema = 'shop'
+ORDER BY table_name, constraint_type;
+
+Удалить восстановленную БД
+Удаляем командой:
+docker exec shop_postgres dropdb --username=shop_admin shop_db_restored
+
+Лабораторная работа №4. Физическая репликация
+В данной работе поднимается streaming replication. Мастер принимает запись, реплика получает WAL-поток и применяет изменения в реальном времени.
+PostgreSQL записывает каждое изменение в WAL (Write-Ahead Log) - журнал операций в $PGDATA/pg_wal/. Реплика подключается к мастеру как обычный клиент, получает WAL-поток и применяет его к своим данным. Это и есть streaming replication.
+Слот репликации гарантирует что мастер не удалит WAL-сегменты, пока реплика их не получила. Если реплика надолго отключится - WAL на мастере будет накапливаться и может заполнить диск. В работе мы это проверим.
+Структура проекта
+
+lab4/
+├── docker-compose.yml
+├── .env
+├── config/
+│   ├── master/
+│   │   ├── pg_hba.conf
+│   │   └── postgresql.conf
+│   └── slave/
+│       ├── entrypoint.sh
+│       ├── pg_hba.conf
+│       └── postgresql.conf
+└── init/
+    ├── 01_schema.sql
+    ├── 02_load_csv.sql
+    └── 03_setup_replication.sh
+Файлы окружения
+.env:
+POSTGRES_DB=shop_db
+POSTGRES_USER=shop_admin
+POSTGRES_PASSWORD=shop_password_2026
+На slave .env передаёт переменные окружения внутрь контейнера. Сама БД на slave не создаётся через initdb — данные приходят через pg_basebackup.
+Этот же файл автоматически читается Docker Compose для подстановки ${POSTGRES_USER} и ${POSTGRES_DB} в docker-compose.yml (например, в healthcheck).
+Конфигурация мастера
+config/master/pg_hba.conf:
+
+# Локальный суперпользователь
+local all postgres peer
+# Локальный доступ для shop_admin (Unix socket — init-скрипты, healthcheck)
+local all shop_admin md5
+# Приложения — только по паролю, только localhost
+host shop_db shop_admin 127.0.0.1/32 scram-sha-256
+host shop_db shop_admin 172.28.0.0/24 scram-sha-256
+# Репликация — только пользователь replicator, только из подсети контейнеров
+host replication replicator 127.0.0.1/32 scram-sha-256
+host replication replicator 172.28.0.0/24 scram-sha-256
+
+config/master/postgresql.conf:
+
+# WAL
+wal_level = replica
+# replica достаточно для физической репликации.
+# logical нужен только для логической репликации (Debezium, pglogical).
+
+listen_addresses = '*'
+# Принимать подключения от других контейнеров в Docker-сети.
+# Доступ ограничивается через pg_hba.conf.
+
+# Репликация
+max_wal_senders = 5
+max_replication_slots = 5
+wal_keep_size = 512MB
+# Хранить 512MB WAL дополнительно — страховка на случай кратковременного
+# отключения реплики без риска заполнить диск.
+
+# Реплика может отвечать на SELECT
+hot_standby = on
+hot_standby_feedback = on
+# Реплика сообщает мастеру о длинных запросах — мастер не удалит строки,
+# которые ещё читает реплика.
+
+# Защита от заполнения диска слотами
+max_slot_wal_keep_size = 2GB
+# Если реплика не забирает WAL и накопилось &gt;2GB — слот инвалидируется.
+# Реплике потребуется повторная синхронизация, но диск не заполнится.
+Конфигурация слэйва
+config/slave/pg_hba.conf:
+# Локальный суперпользователь
+local   all             postgres                          peer
+
+# Локальный доступ для shop_admin (Unix socket)
+local   all             shop_admin                        md5
+
+# Подключения приложений — по паролю
+host    all             shop_admin      127.0.0.1/32      scram-sha-256
+host    all             shop_admin      172.28.0.0/24     scram-sha-256
+config/slave/postgresql.conf:
+# Куда подключаться для получения WAL
+primary_conninfo = 'host=postgres_master port=5432 user=replicator password=rut_replicator_password application_name=slave1'
+
+# Слот на мастере
+primary_slot_name = 'replication_slot_slave1'
+
+hot_standby = on
+hot_standby_feedback = on
+Для ручного промоута реплики в мастер используйте pg_ctl promote или SQL-функцию SELECT pg_promote();. Параметр promote_trigger_file удалён начиная с PostgreSQL 16.
+Init-скрипты
+init/03_setup_replication.sh — создаёт пользователя для репликации и слот (выполняется автоматически при первой инициализации мастера):
+#!/bin/bash
+set -e
+
+psql -v ON_ERROR_STOP=1 \
+    --username "$POSTGRES_USER" \
+    --dbname "$POSTGRES_DB" &lt;&lt;-EOSQL
+    DO \$\$
+    BEGIN
+        IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'replicator') THEN
+            CREATE USER replicator
+                WITH REPLICATION
+                ENCRYPTED PASSWORD 'rut_replicator_password';
+        END IF;
+    END \$\$;
+
+    SELECT pg_create_physical_replication_slot('replication_slot_slave1', true)
+    WHERE NOT EXISTS (
+        SELECT FROM pg_replication_slots
+        WHERE slot_name = 'replication_slot_slave1'
+    );
+EOSQL
+Скрипт идемпотентный - безопасно запускать повторно. Проверяет существование роли и слота перед созданием.
+Entrypoint реплики
+config/slave/entrypoint.sh - кастомный entrypoint для контейнера реплики. При первом запуске автоматически выполняет pg_basebackup с мастера:
+#!/bin/bash
+set -e
+
+# Если data-директория пуста — нужен pg_basebackup с мастера
+if [ -z "$(ls -A /var/lib/postgresql/data)" ]; then
+    echo "&gt;&gt;&gt; Data directory is empty. Running pg_basebackup from master..."
+
+    PGPASSWORD=rut_replicator_password pg_basebackup \
+        --host=postgres_master \
+        --port=5432 \
+        --username=replicator \
+        --pgdata=/var/lib/postgresql/data \
+        --slot=replication_slot_slave1 \
+        --wal-method=stream \
+        --checkpoint=fast \
+        --write-recovery-conf \
+        --progress
+
+    echo "&gt;&gt;&gt; pg_basebackup complete."
+
+    chmod 0700 /var/lib/postgresql/data
+fi
+
+# Запускаем postgres с нашим конфигом
+exec postgres \
+    -c config_file=/etc/postgresql/postgresql.conf \
+    -c hba_file=/etc/postgresql/pg_hba.conf
+pg_basebackup запускается со стороны реплики и подключается к мастеру по имени postgres_master (через Docker-сеть). Благодаря этому --write-recovery-conf записывает правильный host=postgres_master в postgresql.auto.conf.
+--wal-method=stream - WAL передаётся параллельно с данными. Бэкап сразу готов к использованию, не нужно ждать конца копирования.
+--write-recovery-conf - автоматически создаёт файл standby.signal и записывает primary_conninfo в postgresql.auto.conf.
+docker-compose.yml
+services:
+  postgres_master:
+    image: postgres:17-alpine
+    container_name: postgres_master
+    env_file: .env
+    volumes:
+      - pgdata_master:/var/lib/postgresql/data
+      - ./config/master/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
+      - ./config/master/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+      - ./init:/docker-entrypoint-initdb.d:ro
+      - ./data:/var/lib/postgresql/import:ro
+    command: &gt;
+      postgres
+        -c config_file=/etc/postgresql/postgresql.conf
+        -c hba_file=/etc/postgresql/pg_hba.conf
+    ports:
+      - "127.0.0.1:5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    networks:
+      pg_network:
+        ipv4_address: 172.28.0.2
+
+  postgres_slave:
+    image: postgres:17-alpine
+    container_name: postgres_slave
+    env_file: .env
+    user: postgres
+    volumes:
+      - pgdata_slave:/var/lib/postgresql/data
+      - ./config/slave/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+      - ./config/slave/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
+      - ./config/slave/entrypoint.sh:/entrypoint.sh:ro
+    entrypoint: ["sh", "/entrypoint.sh"]
+    ports:
+      - "127.0.0.1:5434:5432"
+    depends_on:
+      postgres_master:
+        condition: service_healthy
+    networks:
+      pg_network:
+        ipv4_address: 172.28.0.3
+
+volumes:
+  pgdata_master:
+  pgdata_slave:
+
+networks:
+  pg_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/24
+Ключевые моменты:
+Мастер использует стандартный entrypoint PostgreSQL. При первой инициализации автоматически выполняются init-скрипты из ./init/, включая создание пользователя replicator и слота репликации.
+Реплика использует кастомный entrypoint.sh. При пустой data-директории выполняет pg_basebackup с мастера, затем запускает postgres.
+depends_on: condition: service_healthy гарантирует что реплика стартует только после полной инициализации мастера.
+user: postgres нужен для реплики, чтобы pg_basebackup мог записать данные в /var/lib/postgresql/data.
+Запуск
+Запустите оба контейнера одной командой:
+docker-compose up -d
+Docker Compose сначала дождётся пока мастер станет healthy (init-скрипты выполнятся, БД будет готова), затем запустит реплику. Реплика автоматически выполнит pg_basebackup и начнёт получать WAL-поток.
+Проверка репликации
+Проверьте состояние на мастере:
+docker exec -it postgres_master psql -U shop_admin -d shop_db
+SELECT application_name, state, pg_size_pretty(pg_wal_lsn_diff(pg_current_wal_lsn(), replay_lsn)) AS replication_lag, replay_lag, sync_state FROM pg_stat_replication;
+Вы должны увидеть строку с application_name = slave1 и state = streaming.
+Проверьте на реплике:
+docker exec -it postgres_slave psql -U shop_admin -d shop_db
+SELECT
+    pg_is_in_recovery()              AS is_replica,
+    pg_last_wal_replay_lsn()         AS replayed_lsn,
+    NOW() - pg_last_xact_replay_timestamp() AS lag;
+Проверка синхронизации
+На мастере вставьте строку:
+SET search_path TO shop;
+INSERT INTO manufacturers(manufacturer_name) VALUES ('Test Vendor');
+SELECT * FROM manufacturers ORDER BY manufacturer_id DESC LIMIT 3;
+На реплике проверьте что она появилась:
+SET search_path TO shop;
+SELECT * FROM manufacturers ORDER BY manufacturer_id DESC LIMIT 3;
+Попробуйте на реплике сделать INSERT:
+INSERT INTO manufacturers(manufacturer_name) VALUES ('Should fail');
+Вы получите ошибку cannot execute INSERT in a read-only transaction - реплика только для чтения.
+Остановка мастера и наблюдение
+Остановите контейнер мастера:
+docker-compose stop postgres_master
+Откройте логи реплики:
+docker-compose logs -f postgres_slave
+Вы увидите попытки переподключения к мастеру. Реплика продолжает отвечать на SELECT - это и есть hot_standby = on.
+Запустите мастер обратно:
+docker-compose start postgres_master
+Репликация восстановится автоматически.
+Задания для самостоятельной работы
+Задание 1. Вставьте на мастере 10 000 строк в таблицу products одной командой INSERT ... SELECT. Сразу после вставки выполните запрос к pg_stat_replication и зафиксируйте replication_lag. Проверьте на реплике что все строки появились. Какой лаг вы наблюдаете и от чего он зависит?
+Задание 2. Остановите реплику на 2 минуты (docker-compose stop postgres_slave). За это время вставьте несколько строк на мастере. Посмотрите pg_replication_slots на мастере — сколько WAL накопилось (pg_wal_lsn_diff)? Запустите реплику и убедитесь, что данные доехали и лаг вернулся к нулю.
+Задание 3. Выполните промоут реплики в мастер с помощью SELECT pg_promote(); на реплике. Убедитесь что pg_is_in_recovery() вернул false и INSERT работает. Ответьте на вопрос: почему после промоута старый мастер нельзя просто подключить как реплику - нужно пересоздать его через pg_basebackup с нового мастера?

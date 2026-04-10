@@ -1,0 +1,6 @@
+﻿ application_name |   state   | replication_lag 
+------------------+-----------+-----------------
+ walreceiver      | streaming | 0 bytes
+(1 row)
+
+

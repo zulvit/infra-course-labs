@@ -1,0 +1,11 @@
+﻿ pg_promote 
+------------
+ t
+(1 row)
+
+ pg_is_in_recovery 
+-------------------
+ f
+(1 row)
+
+

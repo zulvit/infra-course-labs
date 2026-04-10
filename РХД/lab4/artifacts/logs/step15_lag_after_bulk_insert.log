@@ -1,0 +1,6 @@
+﻿ application_name |   state   | replication_lag |   replay_lag    | sync_state 
+------------------+-----------+-----------------+-----------------+------------
+ walreceiver      | streaming | 0 bytes         | 00:00:00.027628 | async
+(1 row)
+
+

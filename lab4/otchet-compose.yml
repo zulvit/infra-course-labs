@@ -1,0 +1,163 @@
+﻿version: 1
+
+document:
+  output: "./build/lab4-report.docx"
+  toc: true
+  title_page:
+    template: rut
+    params:
+      discipline: "Инфраструктурное программное обеспечение"
+      work_number: "№ 4"
+      work_title: "Docker Images и локальный registry"
+      student: "Купленик С. С."
+      group: "УВП-171"
+      teacher: "Старший преподаватель кафедры ЦТУТП Заманов Е. А."
+      year: "2026"
+
+content:
+  - type: heading
+    text: "Цель работы"
+    level: 1
+    structural: true
+
+  - type: paragraph
+    text: >
+      Цель работы - изучить сборку Docker-образов по Dockerfile, запуск контейнеров,
+      основные директивы Dockerfile, multi-stage сборку и публикацию образов в локальный registry.
+
+  - type: heading
+    text: "Ход работы"
+    level: 1
+    structural: true
+
+  - type: heading
+    text: "Подготовка файлов и среды"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      Для лабораторной использован локальный Docker daemon. Подготовлены три примера:
+      hello (минимальный образ), main (FastAPI приложение с директивами Dockerfile)
+      и multi (multi-stage образ на Go).
+
+  - type: heading
+    text: "Последовательность действий"
+    level: 2
+    structural: false
+
+  - type: list
+    style: numeric
+    items:
+      - "Собрать и запустить hello: docker build -t lab4/hello:0.1 ./lab4/work/hello, затем docker run --rm lab4/hello:0.1."
+      - "Собрать main: docker build --build-arg FILE=/example.html -t lab4/main:0.1 ./lab4/work/main."
+      - "Проверить main через docker image inspect и docker run -d -p 8888:8888 --name lab4-main lab4/main:0.1."
+      - "Выполнить curl к http://127.0.0.1:8888/ и убедиться, что вернулась страница Example Domain."
+      - "Собрать multi-stage образ: docker build -t lab4/multi:0.1 ./lab4/work/multi, затем docker run --rm lab4/multi:0.1."
+      - "Поднять registry: docker run -d -p 5000:5000 --name lab4-registry registry:2."
+      - "Опубликовать hello в registry и проверить API: /v2/, /_catalog, /hello/tags/list, /hello/manifests/0.1."
+
+  - type: heading
+    text: "Проверка образа hello"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      Минимальный образ успешно собран и запущен.
+
+  - type: heading
+    text: "Вывод"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      Hello from hello image
+
+  - type: heading
+    text: "Проверка образа main"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      Образ main собран с использованием ARG, ENV, RUN, COPY, ADD, EXPOSE, LABEL,
+      ENTRYPOINT и CMD. После запуска контейнера на порту 8888 HTTP-запрос вернул страницу Example Domain.
+
+  - type: heading
+    text: "Проверочные данные"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      ExposedPorts: {"8888/tcp":{}}
+
+      Labels: {"version":"0.1"}
+
+      Entrypoint/Cmd: ["uvicorn","main:app"] ["--host=0.0.0.0","--port=8888"]
+
+  - type: heading
+    text: "Проверка multi-stage образа"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      Multi-stage образ успешно собран и запущен. Команда docker run --rm lab4/multi:0.1
+      вернула строку Hello from multi-stage image. Итоговый размер образа составил 1.12MB.
+
+  - type: heading
+    text: "Локальный registry"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      Локальный registry поднят на порту 5000. Образ hello опубликован как 127.0.0.1:5000/hello:0.1,
+      после чего проверены catalog, tags и manifest.
+
+  - type: heading
+    text: "Вывод"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      {"repositories":["hello"]}
+
+      {"name":"hello","tags":["0.1"]}
+
+      digest: sha256:8788245b202d9478967d9c25d7f17978c04d81e2e330e470851465e746b53320
+
+  - type: heading
+    text: "Сводная таблица"
+    level: 2
+    structural: false
+
+  - type: table
+    caption: "Ключевые результаты лабораторной работы"
+    headers:
+      - "Объект"
+      - "Проверка"
+      - "Результат"
+    rows:
+      - ["hello", "docker run --rm lab4/hello:0.1", "Hello from hello image"]
+      - ["main", "curl http://127.0.0.1:8888/", "Example Domain"]
+      - ["multi", "docker run --rm lab4/multi:0.1", "Hello from multi-stage image"]
+      - ["registry", "GET /v2/_catalog", "{\"repositories\":[\"hello\"]}"]
+      - ["registry", "GET /v2/hello/tags/list", "{\"name\":\"hello\",\"tags\":[\"0.1\"]}"]
+
+  - type: heading
+    text: "Заключение"
+    level: 1
+    structural: true
+
+  - type: paragraph
+    text: >
+      Лабораторная работа выполнена полностью. Собраны и проверены образы hello, main и multi-stage,
+      подтверждена работа директив Dockerfile, выполнена публикация образа в локальный registry
+      и проверен Registry HTTP API.
+
+

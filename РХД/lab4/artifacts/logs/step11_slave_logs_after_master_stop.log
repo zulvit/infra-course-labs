@@ -1,0 +1,30 @@
+>>> Data directory is empty. Running pg_basebackup from master...
+waiting for checkpoint
+31087/31087 kB (100%), 0/1 tablespace
+31087/31087 kB (100%), 1/1 tablespace
+>>> pg_basebackup complete.
+2026-04-10 11:27:32.291 GMT [1] LOG:  starting PostgreSQL 17.9 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+2026-04-10 11:27:32.291 GMT [1] LOG:  listening on IPv6 address "::1", port 5432
+2026-04-10 11:27:32.291 GMT [1] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2026-04-10 11:27:32.296 GMT [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-04-10 11:27:32.302 GMT [13] LOG:  database system was interrupted; last known up at 2026-04-10 11:27:29 GMT
+2026-04-10 11:27:32.624 GMT [13] LOG:  starting backup recovery with redo LSN 0/2000028, checkpoint LSN 0/2000080, on timeline ID 1
+2026-04-10 11:27:32.624 GMT [13] LOG:  entering standby mode
+2026-04-10 11:27:32.629 GMT [13] LOG:  redo starts at 0/2000028
+2026-04-10 11:27:32.631 GMT [13] LOG:  completed backup recovery with redo LSN 0/2000028 and end LSN 0/2000120
+2026-04-10 11:27:32.631 GMT [13] LOG:  consistent recovery state reached at 0/2000120
+2026-04-10 11:27:32.631 GMT [1] LOG:  database system is ready to accept read-only connections
+2026-04-10 11:27:32.641 GMT [14] LOG:  started streaming WAL from primary at 0/3000000 on timeline 1
+2026-04-10 11:28:24.923 GMT [35] ERROR:  cannot execute INSERT in a read-only transaction
+2026-04-10 11:28:24.923 GMT [35] STATEMENT:  SET search_path TO shop; INSERT INTO manufacturers(manufacturer_name) VALUES ('Should fail');
+2026-04-10 11:28:25.146 GMT [14] LOG:  replication terminated by primary server
+2026-04-10 11:28:25.146 GMT [14] DETAIL:  End of WAL reached on timeline 1 at 0/302DCA8.
+2026-04-10 11:28:25.146 GMT [14] FATAL:  could not send end-of-streaming message to primary: server closed the connection unexpectedly
+		This probably means the server terminated abnormally
+		before or while processing the request.
+	no COPY in progress
+2026-04-10 11:28:25.146 GMT [13] LOG:  invalid record length at 0/302DCA8: expected at least 24, got 0
+2026-04-10 11:28:25.150 GMT [36] FATAL:  could not connect to the primary server: connection to server at "postgres_master" (172.28.0.2), port 5432 failed: server closed the connection unexpectedly
+		This probably means the server terminated abnormally
+		before or while processing the request.
+2026-04-10 11:28:25.150 GMT [13] LOG:  waiting for WAL to become available at 0/302DCC0

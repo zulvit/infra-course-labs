@@ -1,0 +1,6 @@
+﻿ application_name |   state   | sync_state 
+------------------+-----------+------------
+ walreceiver      | streaming | async
+(1 row)
+
+

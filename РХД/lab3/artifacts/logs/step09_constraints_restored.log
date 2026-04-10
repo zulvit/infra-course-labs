@@ -1,0 +1,58 @@
+﻿          constraint_name           | constraint_type 
+------------------------------------+-----------------
+ 16500_16501_2_not_null             | CHECK
+ 16500_16501_1_not_null             | CHECK
+ categories_pkey                    | PRIMARY KEY
+ uq_category_name                   | UNIQUE
+ 16500_16505_2_not_null             | CHECK
+ 16500_16505_1_not_null             | CHECK
+ 16500_16505_3_not_null             | CHECK
+ customers_pkey                     | PRIMARY KEY
+ 16500_16509_4_not_null             | CHECK
+ deliveries_product_count_check     | CHECK
+ 16500_16509_1_not_null             | CHECK
+ 16500_16509_2_not_null             | CHECK
+ 16500_16509_3_not_null             | CHECK
+ fk_delivery_store                  | FOREIGN KEY
+ fk_delivery_product                | FOREIGN KEY
+ pk_deliveries                      | PRIMARY KEY
+ 16500_16513_2_not_null             | CHECK
+ 16500_16513_1_not_null             | CHECK
+ manufacturers_pkey                 | PRIMARY KEY
+ uq_manufacturer_name               | UNIQUE
+ 16500_16517_2_not_null             | CHECK
+ 16500_16517_1_not_null             | CHECK
+ price_change_new_price_check       | CHECK
+ 16500_16517_3_not_null             | CHECK
+ fk_price_change_product            | FOREIGN KEY
+ pk_price_change                    | PRIMARY KEY
+ 16500_16522_1_not_null             | CHECK
+ 16500_16522_2_not_null             | CHECK
+ 16500_16522_3_not_null             | CHECK
+ 16500_16522_4_not_null             | CHECK
+ fk_product_category                | FOREIGN KEY
+ fk_product_manufacturer            | FOREIGN KEY
+ products_pkey                      | PRIMARY KEY
+ 16500_16526_3_not_null             | CHECK
+ 16500_16526_2_not_null             | CHECK
+ purchase_items_product_count_check | CHECK
+ purchase_items_product_price_check | CHECK
+ 16500_16526_4_not_null             | CHECK
+ 16500_16526_1_not_null             | CHECK
+ fk_item_purchase                   | FOREIGN KEY
+ fk_item_product                    | FOREIGN KEY
+ pk_purchase_items                  | PRIMARY KEY
+ 16500_16531_3_not_null             | CHECK
+ 16500_16531_1_not_null             | CHECK
+ 16500_16531_2_not_null             | CHECK
+ 16500_16531_4_not_null             | CHECK
+ fk_purchase_customer               | FOREIGN KEY
+ fk_purchase_store                  | FOREIGN KEY
+ purchases_pkey                     | PRIMARY KEY
+ 16500_16536_1_not_null             | CHECK
+ 16500_16536_2_not_null             | CHECK
+ stores_pkey                        | PRIMARY KEY
+ uq_store_name                      | UNIQUE
+(53 rows)
+
+

@@ -1,0 +1,238 @@
+﻿version: 1
+
+document:
+  output: "./build/lab8-report.docx"
+  toc: true
+  title_page:
+    template: rut
+    params:
+      discipline: "РЅС„СЂР°СЃС‚СЂСѓРєС‚СѓСЂРЅРѕРµ РїСЂРѕРіСЂР°РјРјРЅРѕРµ РѕР±РµСЃРїРµС‡РµРЅРёРµ"
+      work_number: "в„– 8"
+      work_title: "Ansible Roles Рё Collections"
+      student: "Купленик С. С."
+      group: "УВП-171"
+      teacher: "Старший преподаватель кафедры ЦТУТП Заманов Е. А."
+      year: "2026"
+
+content:
+  - type: heading
+    text: "Р¦РµР»СЊ СЂР°Р±РѕС‚С‹"
+    level: 1
+    structural: true
+
+  - type: paragraph
+    text: >
+      Р¦РµР»СЊ СЂР°Р±РѕС‚С‹ - РѕСЃРІРѕРёС‚СЊ СЃРѕР±СЃС‚РІРµРЅРЅСѓСЋ СЂРѕР»СЊ nginx, РїРµСЂРµРѕРїСЂРµРґРµР»РµРЅРёРµ РїРµСЂРµРјРµРЅРЅС‹С… Рё РїСЂРёРјРµРЅРµРЅРёРµ РєРѕР»Р»РµРєС†РёРё
+      nginxinc.nginx_core СЃ РїСЂРѕРІРµСЂРєРѕР№ РїРѕ HTTP РЅР° node1 Рё node2.
+
+  - type: paragraph
+    text: >
+      СЃРїРѕР»СЊР·РѕРІР°РЅ СЃС‚РµРЅРґ Р»Р°Р±РѕСЂР°С‚РѕСЂРЅРѕР№ СЂР°Р±РѕС‚С‹ 7. РљР°С‚Р°Р»РѕРі lab8 СЂР°Р·РјРµС‰Р°Р»СЃСЏ РЅР° bastion, РѕС‚РєСѓРґР° Р·Р°РїСѓСЃРєР°Р»РёСЃСЊ playbook.
+
+  - type: heading
+    text: "РҐРѕРґ СЂР°Р±РѕС‚С‹"
+    level: 1
+    structural: true
+
+  - type: heading
+    text: "РЎСЂРµРґР° РІС‹РїРѕР»РЅРµРЅРёСЏ Рё СЂР°СЃРїРѕР»РѕР¶РµРЅРёРµ С„Р°Р№Р»РѕРІ"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      СЃРїРѕР»СЊР·РѕРІР°РЅ СЃС‚РµРЅРґ Р»Р°Р±РѕСЂР°С‚РѕСЂРЅРѕР№ СЂР°Р±РѕС‚С‹ 7 (bastion, node1, node2). РљР°С‚Р°Р»РѕРі lab8 СЃРєРѕРїРёСЂРѕРІР°РЅ РЅР° bastion
+      (РЅР°РїСЂРёРјРµСЂ РІ /home/vagrant/lab8). Playbook Рё СЂРѕР»СЊ nginx РІС‹Р·С‹РІР°СЋС‚СЃСЏ СЃ bastion; inventory РІ РєРѕСЂРѕС‚РєРѕР№ С„РѕСЂРјРµ
+      node1.local,node2.local РёР»Рё С„Р°Р№Р»Рµ hosts_comma.txt РІ РєР°С‚Р°Р»РѕРіРµ lab8.
+
+  - type: heading
+    text: "РџРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ РґРµР№СЃС‚РІРёР№ Рё РєРѕРјР°РЅРґС‹"
+    level: 2
+    structural: false
+
+  - type: list
+    style: numeric
+    items:
+      - "vagrant ssh bastion; РїРµСЂРµР№С‚Рё РІ РєР°С‚Р°Р»РѕРі СЃ lab8 РЅР° РіРѕСЃС‚Рµ."
+      - "Р‘Р°Р·РѕРІС‹Р№ СЃС†РµРЅР°СЂРёР№ СЂРѕР»Рё: ansible-playbook -i node1.local,node2.local playbook.yaml (РїСЂРё РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚Рё СЃРєРѕСЂСЂРµРєС‚РёСЂРѕРІР°С‚СЊ РїСѓС‚СЊ Рє inventory)."
+      - "РџРµСЂРµРѕРїСЂРµРґРµР»РµРЅРёРµ РїРµСЂРµРјРµРЅРЅС‹С… Рё С€Р°Р±Р»РѕРЅРѕРІ: ansible-playbook -i node1.local,node2.local playbook_override.yaml; РїСЂРѕРІРµСЂРєР° curl -s node1.local:8080."
+      - "РЈСЃС‚Р°РЅРѕРІРєР° РєРѕР»Р»РµРєС†РёРё: ansible-galaxy collection install nginxinc.nginx_core."
+      - "РџР»РµР№Р±СѓРє РєРѕР»Р»РµРєС†РёРё: ansible-playbook -i node1.local,node2.local playbook_collection.yaml; РїСЂРѕРІРµСЂРєР° Р·Р°РіРѕР»РѕРІРєР° СЃС‚СЂР°РЅРёС†С‹ nginx РЅР° node1."
+      - "Р”РµРјРѕ С€Р°Р±Р»РѕРЅР° РєРѕР»Р»РµРєС†РёРё: ansible-playbook -i node1.local,node2.local playbook_collection_demo.yaml; curl -s node1.local."
+
+  - type: heading
+    text: "Playbook СЃ РїРµСЂРµРѕРїСЂРµРґРµР»РµРЅРёРµРј СЂРѕР»Рё (override)"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      ansible-playbook -i node1.local,node2.local playbook_override.yaml
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ (PLAY RECAP)"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      PLAY [all] *********************************************************************
+
+      TASK [Gathering Facts] *********************************************************
+
+      ok: [node1.local]
+
+      ok: [node2.local]
+
+      TASK [nginx : nginx package] ***************************************************
+
+      ok: [node1.local]
+
+      ok: [node2.local]
+
+      TASK [nginx : nginx config] ****************************************************
+
+      changed: [node2.local]
+
+      changed: [node1.local]
+
+      TASK [nginx : index.html to /var/www/html] *************************************
+
+      changed: [node1.local]
+
+      changed: [node2.local]
+
+      RUNNING HANDLER [nginx : nginx restart] ****************************************
+
+      changed: [node1.local]
+
+      changed: [node2.local]
+
+      PLAY RECAP *********************************************************************
+
+      node1.local                : ok=5    changed=3    unreachable=0    failed=0    skipped=0
+
+      node2.local                : ok=5    changed=3    unreachable=0    failed=0    skipped=0
+
+  - type: heading
+    text: "РџСЂРѕРІРµСЂРєР° РїРѕСЂС‚Р° 8080 РїРѕСЃР»Рµ override"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РљРѕРјР°РЅРґР°: curl -s node1.local:8080
+
+  - type: heading
+    text: "РўРµР»Рѕ РѕС‚РІРµС‚Р°"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      ### overrided hello from node1.local !
+
+  - type: heading
+    text: "РЈСЃС‚Р°РЅРѕРІРєР° РєРѕР»Р»РµРєС†РёРё ansible-galaxy"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      ansible-galaxy collection install nginxinc.nginx_core (РЅР° bastion, СЃ Р·Р°РІРёСЃРёРјРѕСЃС‚СЏРјРё).
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ (С„СЂР°РіРјРµРЅС‚)"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      Starting galaxy collection install process
+
+      Process install dependency map
+
+      Starting collection install process
+
+      Installing 'nginxinc.nginx_core:0.8.0' to '/home/vagrant/.ansible/collections/ansible_collections/nginxinc/nginx_core'
+
+      nginxinc.nginx_core (0.8.0) was installed successfully
+
+      Installing 'ansible.posix:2.1.0' to '/home/vagrant/.ansible/collections/ansible_collections/ansible/posix'
+
+      ansible.posix (2.1.0) was installed successfully
+
+      Installing 'community.crypto:3.1.1' to '/home/vagrant/.ansible/collections/ansible_collections/community/crypto'
+
+      community.crypto (3.1.1) was installed successfully
+
+      Installing 'community.general:12.5.0' to '/home/vagrant/.ansible/collections/ansible_collections/community/general'
+
+      community.general (12.5.0) was installed successfully
+
+  - type: heading
+    text: "РљРѕР»Р»РµРєС†РёСЏ: СЃС‚Р°РЅРґР°СЂС‚РЅР°СЏ СЃС‚СЂР°РЅРёС†Р° nginx"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РџРѕСЃР»Рµ playbook_collection.yaml РїСЂРѕРІРµСЂРєР° Р·Р°РіРѕР»РѕРІРєР° СЃС‚СЂР°РЅРёС†С‹ РЅР° node1.
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ (С„СЂР°РіРјРµРЅС‚ HTML)"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      <title>Welcome to nginx!</title>
+
+  - type: heading
+    text: "РљРѕР»Р»РµРєС†РёСЏ: РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРёР№ С€Р°Р±Р»РѕРЅ (demo)"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РџРѕСЃР»Рµ playbook_collection_demo.yaml: curl -s node1.local
+
+  - type: heading
+    text: "РўРµР»Рѕ РѕС‚РІРµС‚Р°"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      hello from node1.local
+
+  - type: heading
+    text: "РЎРІРѕРґРЅР°СЏ С‚Р°Р±Р»РёС†Р° РєРѕРјР°РЅРґ"
+    level: 2
+    structural: false
+
+  - type: table
+    caption: "Р­С‚Р°РїС‹ Рё СЂР°Р·РјРµС‰РµРЅРёРµ РІС‹РІРѕРґР° РІ РѕС‚С‡С‘С‚Рµ"
+    headers:
+      - "Р­С‚Р°Рї"
+      - "РљРѕРјР°РЅРґР°"
+      - "Р’С‹РІРѕРґ РІ РѕС‚С‡С‘С‚Рµ"
+    rows:
+      - ["Override СЂРѕР»Рё", "ansible-playbook вЂ¦ playbook_override.yaml", "РџРѕРґСЂР°Р·РґРµР» В«Playbook СЃ РїРµСЂРµРѕРїСЂРµРґРµР»РµРЅРёРµРјВ»"]
+      - ["HTTP 8080", "curl -s node1.local:8080", "РџРѕРґСЂР°Р·РґРµР» В«РџСЂРѕРІРµСЂРєР° РїРѕСЂС‚Р° 8080В»"]
+      - ["Galaxy install", "ansible-galaxy collection install nginxinc.nginx_core", "РџРѕРґСЂР°Р·РґРµР» В«РЈСЃС‚Р°РЅРѕРІРєР° РєРѕР»Р»РµРєС†РёРёВ»"]
+      - ["РЎС‚СЂР°РЅРёС†Р° РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ", "playbook_collection.yaml; grep/curl title", "РџРѕРґСЂР°Р·РґРµР» В«РЎС‚Р°РЅРґР°СЂС‚РЅР°СЏ СЃС‚СЂР°РЅРёС†Р° nginxВ»"]
+      - ["Demo С€Р°Р±Р»РѕРЅ", "playbook_collection_demo.yaml; curl node1.local", "РџРѕРґСЂР°Р·РґРµР» В«РџРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРёР№ С€Р°Р±Р»РѕРЅВ»"]
+
+  - type: heading
+    text: "Р—Р°РєР»СЋС‡РµРЅРёРµ"
+    level: 1
+    structural: true
+
+  - type: paragraph
+    text: >
+      РЎРѕР±СЃС‚РІРµРЅРЅР°СЏ СЂРѕР»СЊ nginx РѕС‚СЂР°Р±РѕС‚Р°Р»Р° СЃ РїРµСЂРµРѕРїСЂРµРґРµР»РµРЅРёРµРј РїРµСЂРµРјРµРЅРЅС‹С… Рё РїРµСЂРµР·Р°РїСѓСЃРєРѕРј СЃРµСЂРІРёСЃР°.
+      РљРѕР»Р»РµРєС†РёСЏ nginxinc.nginx_core СѓСЃС‚Р°РЅРѕРІР»РµРЅР° Рё РїСЂРёРјРµРЅРµРЅР°; РїРѕРґС‚РІРµСЂР¶РґРµРЅС‹ СЃС‚Р°РЅРґР°СЂС‚РЅР°СЏ Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєР°СЏ РІС‹РґР°С‡Р°.
+      Р¦РµР»СЊ СЂР°Р±РѕС‚С‹ РґРѕСЃС‚РёРіРЅСѓС‚Р°.
+
+

@@ -1,0 +1,204 @@
+﻿version: 1
+
+document:
+  output: "./build/lab6-report.docx"
+  toc: true
+  title_page:
+    template: rut
+    params:
+      discipline: "РЅС„СЂР°СЃС‚СЂСѓРєС‚СѓСЂРЅРѕРµ РїСЂРѕРіСЂР°РјРјРЅРѕРµ РѕР±РµСЃРїРµС‡РµРЅРёРµ"
+      work_number: "в„– 6"
+      work_title: "Docker Compose РґР»СЏ РјРЅРѕРіРѕСЃРµСЂРІРёСЃРЅРѕРіРѕ РїСЂРёР»РѕР¶РµРЅРёСЏ"
+      student: "Купленик С. С."
+      group: "УВП-171"
+      teacher: "Старший преподаватель кафедры ЦТУТП Заманов Е. А."
+      year: "2026"
+
+content:
+  - type: heading
+    text: "Р¦РµР»СЊ СЂР°Р±РѕС‚С‹"
+    level: 1
+    structural: true
+
+  - type: paragraph
+    text: >
+      Р¦РµР»СЊ СЂР°Р±РѕС‚С‹ - СЂР°Р·РІРµСЂРЅСѓС‚СЊ РјРЅРѕРіРѕСЃРµСЂРІРёСЃРЅРѕРµ РїСЂРёР»РѕР¶РµРЅРёРµ (front, back, db) С‡РµСЂРµР· Docker Compose,
+      РїСЂРѕРІРµСЂРёС‚СЊ РІС‹РґР°С‡Сѓ РґР°РЅРЅС‹С… РЅР° frontend Рё СЃРѕС…СЂР°РЅРЅРѕСЃС‚СЊ РґР°РЅРЅС‹С… РІ С‚РѕРјРµ Р‘Р” РїРѕСЃР»Рµ РїРµСЂРµСЃРѕР·РґР°РЅРёСЏ РєРѕРЅС‚РµР№РЅРµСЂРѕРІ.
+
+  - type: paragraph
+    text: >
+      СЃРїРѕР»СЊР·РѕРІР°РЅ Docker Compose v2 РЅР° С…РѕСЃС‚Рµ. РџРѕСЂС‚ РїСЂРёР»РѕР¶РµРЅРёСЏ РЅР° С…РѕСЃС‚Рµ 18888 РІРјРµСЃС‚Рѕ 8888 РёР·-Р·Р° Р·Р°РЅСЏС‚РѕСЃС‚Рё РїРѕСЂС‚Р°.
+
+  - type: heading
+    text: "РҐРѕРґ СЂР°Р±РѕС‚С‹"
+    level: 1
+    structural: true
+
+  - type: heading
+    text: "РЎСЂРµРґР° РІС‹РїРѕР»РЅРµРЅРёСЏ Рё СЂР°СЃРїРѕР»РѕР¶РµРЅРёРµ С„Р°Р№Р»РѕРІ"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      Docker Compose v2 РЅР° С…РѕСЃС‚Рµ Windows. РћРїРёСЃР°РЅРёРµ СЃС‚РµРєР°: lab6/work/compose.yaml (СЃРµСЂРІРёСЃС‹ front, back, db).
+      РџРѕСЂС‚ РїСѓР±Р»РёРєР°С†РёРё РЅР° С…РѕСЃС‚Рµ РґР»СЏ РІРµР±-РёРЅС‚РµСЂС„РµР№СЃР°: 18888 (РІРјРµСЃС‚Рѕ 8888 РїСЂРё Р·Р°РЅСЏС‚РѕСЃС‚Рё РїРѕСЂС‚Р°).
+
+  - type: heading
+    text: "РџРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ РґРµР№СЃС‚РІРёР№ Рё РєРѕРјР°РЅРґС‹"
+    level: 2
+    structural: false
+
+  - type: list
+    style: numeric
+    items:
+      - "РџРµСЂРµР№С‚Рё РІ lab6/work."
+      - "Р—Р°РїСѓСЃС‚РёС‚СЊ СЃС‚РµРє: docker compose up -d (РёР»Рё docker-compose up -d РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ СѓСЃС‚Р°РЅРѕРІРєРё)."
+      - "РџСЂРѕРІРµСЂРёС‚СЊ РіР»Р°РІРЅСѓСЋ СЃС‚СЂР°РЅРёС†Сѓ: wget -qO- http://127.0.0.1:18888."
+      - "РџСЂРѕРІРµСЂРёС‚СЊ API С‡РµСЂРµР· РїСЂРѕРєСЃРё front: wget -qO- http://127.0.0.1:18888/back."
+      - "Р”РѕР±Р°РІРёС‚СЊ Р·Р°РїРёСЃСЊ РІ Р‘Р”: docker exec РІ РєРѕРЅС‚РµР№РЅРµСЂРµ postgres СЃ psql -c \"INSERT INTO users вЂ¦\"."
+      - "РџРµСЂРµСЃРѕР·РґР°С‚СЊ РєРѕРЅС‚РµР№РЅРµСЂС‹ РїСЂРёР»РѕР¶РµРЅРёСЏ: docker compose rm -sf Рё СЃРЅРѕРІР° docker compose up -d; РїРѕРІС‚РѕСЂРёС‚СЊ Р·Р°РїСЂРѕСЃ Рє /back Рё СѓР±РµРґРёС‚СЊСЃСЏ, С‡С‚Рѕ РґР°РЅРЅС‹Рµ РІ С‚РѕРјРµ СЃРѕС…СЂР°РЅРёР»РёСЃСЊ."
+      - "РџСЂРѕРІРµСЂРёС‚СЊ РёР·РѕР»СЏС†РёСЋ: docker exec РІ РєРѕРЅС‚РµР№РЅРµСЂРµ front, wget Рє http://db:5432 (РѕР¶РёРґР°РµС‚СЃСЏ РѕС€РёР±РєР° СЂР°Р·СЂРµС€РµРЅРёСЏ РёР»Рё РїРѕРґРєР»СЋС‡РµРЅРёСЏ)."
+
+  - type: heading
+    text: "Р“Р»Р°РІРЅР°СЏ СЃС‚СЂР°РЅРёС†Р° frontend"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РљРѕРјР°РЅРґР°: wget -qO- http://127.0.0.1:18888
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      <!doctype html>
+
+      <html lang="en">
+
+      <head>
+
+        <meta charset="utf-8">
+
+        <title>Lab6 Compose</title>
+
+      </head>
+
+      <body>
+
+        <h2>Users</h2>
+
+        <pre id="users">loading...</pre>
+
+        <script>
+
+          fetch('/back')
+
+            .then((response) => response.json())
+
+            .then((data) => {
+
+              document.getElementById('users').textContent = JSON.stringify(data, null, 2);
+
+            })
+
+            .catch((error) => {
+
+              document.getElementById('users').textContent = String(error);
+
+            });
+
+        </script>
+
+      </body>
+
+      </html>
+
+  - type: heading
+    text: "Backend API РїРѕСЃР»Рµ РїРµСЂРІРѕРіРѕ Р·Р°РїСѓСЃРєР°"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РљРѕРјР°РЅРґР°: wget -qO- http://127.0.0.1:18888/back
+
+  - type: heading
+    text: "РўРµР»Рѕ РѕС‚РІРµС‚Р°"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      [{"id":1,"name":"john","email":"john@example.com"},{"id":2,"name":"mary","email":"mary@example.com"}]
+
+  - type: heading
+    text: "РџРѕСЃР»Рµ РІСЃС‚Р°РІРєРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ Рё РїРµСЂРµСЃРѕР·РґР°РЅРёСЏ РєРѕРЅС‚РµР№РЅРµСЂРѕРІ"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      Р’С‹РїРѕР»РЅРµРЅ INSERT РІ С‚Р°Р±Р»РёС†Сѓ users С‡РµСЂРµР· docker exec РІ РєРѕРЅС‚РµР№РЅРµСЂРµ Р‘Р”, Р·Р°С‚РµРј docker compose rm -sf
+      Рё docker compose up -d. РџРѕРІС‚РѕСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ Рє /back.
+
+  - type: heading
+    text: "РўРµР»Рѕ РѕС‚РІРµС‚Р°"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      [{"id":1,"name":"john","email":"john@example.com"},{"id":2,"name":"mary","email":"mary@example.com"},{"id":3,"name":"alex","email":"alex@mail.ru"}]
+
+  - type: heading
+    text: "РџСЂРѕРІРµСЂРєР° РёР·РѕР»СЏС†РёРё: front Рє СѓР·Р»Сѓ db"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РљРѕРјР°РЅРґР° РёР· РєРѕРЅС‚РµР№РЅРµСЂР° front: wget Рє http://db:5432 (РѕР¶РёРґР°РµРјР°СЏ РЅРµСѓРґР°С‡Р° СЂР°Р·СЂРµС€РµРЅРёСЏ/РїРѕРґРєР»СЋС‡РµРЅРёСЏ).
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ (stderr)"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      wget: bad address 'db:5432'
+
+  - type: heading
+    text: "РЎРІРѕРґРЅР°СЏ С‚Р°Р±Р»РёС†Р° РєРѕРјР°РЅРґ"
+    level: 2
+    structural: false
+
+  - type: table
+    caption: "Р­С‚Р°РїС‹ Рё СЂР°Р·РјРµС‰РµРЅРёРµ РІС‹РІРѕРґР° РІ РѕС‚С‡С‘С‚Рµ"
+    headers:
+      - "Р­С‚Р°Рї"
+      - "РљРѕРјР°РЅРґР°"
+      - "Р’С‹РІРѕРґ РІ РѕС‚С‡С‘С‚Рµ"
+    rows:
+      - ["Frontend", "wget -qO- http://127.0.0.1:18888", "РџРѕРґСЂР°Р·РґРµР» В«Р“Р»Р°РІРЅР°СЏ СЃС‚СЂР°РЅРёС†Р° frontendВ»"]
+      - ["Backend", "wget -qO- http://127.0.0.1:18888/back", "РџРѕРґСЂР°Р·РґРµР» В«Backend API РїРѕСЃР»Рµ РїРµСЂРІРѕРіРѕ Р·Р°РїСѓСЃРєР°В»"]
+      - ["Р”Р°РЅРЅС‹Рµ РїРѕСЃР»Рµ recreate", "insert; compose rm/up; wget вЂ¦/back", "РџРѕРґСЂР°Р·РґРµР» В«РџРѕСЃР»Рµ РІСЃС‚Р°РІРєРёвЂ¦В»"]
+      - ["Р·РѕР»СЏС†РёСЏ", "docker exec front вЂ¦ wget вЂ¦ db:5432", "РџРѕРґСЂР°Р·РґРµР» В«РџСЂРѕРІРµСЂРєР° РёР·РѕР»СЏС†РёРёВ»"]
+
+  - type: heading
+    text: "Р—Р°РєР»СЋС‡РµРЅРёРµ"
+    level: 1
+    structural: true
+
+  - type: paragraph
+    text: >
+      Compose-СЃС‚РµРє front, back Рё db РїРѕРґРЅСЏС‚; frontend Рё API РѕС‚СЂР°Р±РѕС‚Р°Р»Рё; РґР°РЅРЅС‹Рµ СЃРѕС…СЂР°РЅРёР»РёСЃСЊ РІ РёРјРµРЅРѕРІР°РЅРЅРѕРј С‚РѕРјРµ
+      РїРѕСЃР»Рµ РїРµСЂРµСЃРѕР·РґР°РЅРёСЏ РєРѕРЅС‚РµР№РЅРµСЂРѕРІ. РџСЂСЏРјРѕР№ РґРѕСЃС‚СѓРї front Рє db РїРѕ РёРјРµРЅРё С…РѕСЃС‚Р° РІ С‚Р°РєРѕРј РІРёРґРµ РЅРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ
+      (РїСЂРѕРІРµСЂРєР° РїРѕРєР°Р·Р°Р»Р° РѕР¶РёРґР°РµРјСѓСЋ РѕС€РёР±РєСѓ wget). Р¦РµР»СЊ СЂР°Р±РѕС‚С‹ РґРѕСЃС‚РёРіРЅСѓС‚Р°.
+
+

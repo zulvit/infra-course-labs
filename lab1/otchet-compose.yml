@@ -1,0 +1,358 @@
+﻿version: 1
+
+document:
+  output: "./build/lab1-report.docx"
+  toc: true
+  title_page:
+    template: rut
+    params:
+      discipline: "РЅС„СЂР°СЃС‚СЂСѓРєС‚СѓСЂРЅРѕРµ РїСЂРѕРіСЂР°РјРјРЅРѕРµ РѕР±РµСЃРїРµС‡РµРЅРёРµ"
+      work_number: "в„– 1"
+      work_title: "Р‘Р°Р·РѕРІРѕРµ РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Vagrant (VirtualBox, provision, HTTP)"
+      student: "Купленик С. С."
+      group: "УВП-171"
+      teacher: "Старший преподаватель кафедры ЦТУТП Заманов Е. А."
+      year: "2026"
+
+content:
+  - type: heading
+    text: "Р¦РµР»СЊ СЂР°Р±РѕС‚С‹"
+    level: 1
+    structural: true
+
+  - type: paragraph
+    text: >
+      Р¦РµР»СЊ СЂР°Р±РѕС‚С‹ - РѕСЃРІРѕРёС‚СЊ Р±Р°Р·РѕРІС‹Р№ С†РёРєР» РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ Vagrant СЃ РїСЂРѕРІР°Р№РґРµСЂРѕРј VirtualBox:
+      РѕРїРёСЃР°С‚СЊ РІРёСЂС‚СѓР°Р»СЊРЅСѓСЋ РјР°С€РёРЅСѓ РІ Vagrantfile, РїСЂРѕРІРµСЂРёС‚СЊ РєРѕРЅС„РёРіСѓСЂР°С†РёСЋ, РІС‹РїРѕР»РЅРёС‚СЊ Р·Р°РїСѓСЃРє
+      (vagrant up), СѓР±РµРґРёС‚СЊСЃСЏ РІ РїСЂРѕР±СЂРѕСЃРµ РїРѕСЂС‚РѕРІ Рё РІ СЂР°Р±РѕС‚Рµ РїСЂРѕРІРёР¶РёРЅРёРЅРіР°, РїРѕРґРЅСЏС‚СЊ РїСЂРѕСЃС‚РѕРµ
+      HTTP-РїСЂРёР»РѕР¶РµРЅРёРµ Рё РїРѕР»СѓС‡РёС‚СЊ РѕС‚РІРµС‚ СЃ С…РѕСЃС‚Р° РїРѕ РїСЂРѕР±СЂРѕС€РµРЅРЅРѕРјСѓ РїРѕСЂС‚Сѓ (РІ Р·Р°РґР°РЅРёРё РєСѓСЂСЃР°
+      РїРѕСЂС‚ 80 РіРѕСЃС‚СЏ РЅР° 8080 С…РѕСЃС‚Р°, РїСЂРѕРІРµСЂРєР° curl localhost:8080).
+
+  - type: paragraph
+    text: >
+      РџСЂР°РєС‚РёС‡РµСЃРєР°СЏ С‡Р°СЃС‚СЊ РІС‹РїРѕР»РЅСЏР»Р°СЃСЊ РЅР° Windows СЃ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅС‹РјРё VirtualBox Рё Vagrant.
+      Р’ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРё СЃ Р°РєС‚СѓР°Р»РёР·Р°С†РёРµР№ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ РјРµС‚РѕРґРёС‡РєРё РёСЃРїРѕР»СЊР·РѕРІР°РЅ box ubuntu/jammy64
+      (LTS) РІРјРµСЃС‚Рѕ СѓСЃС‚Р°СЂРµРІС€РµРіРѕ ubuntu/lunar64. Р’РјРµСЃС‚Рѕ С„РѕРЅРѕРІРѕРіРѕ go run РІ provision РїСЂРёРјРµРЅРµРЅР°
+      СЃР±РѕСЂРєР° Р±РёРЅР°СЂРЅРёРєР° Рё Р·Р°РїСѓСЃРє С‡РµСЂРµР· unit systemd (hello-vagrant.service) РґР»СЏ СѓСЃС‚РѕР№С‡РёРІРѕРіРѕ
+      Р°РІС‚РѕР·Р°РїСѓСЃРєР° РїРѕСЃР»Рµ Р·Р°РІРµСЂС€РµРЅРёСЏ СЃС†РµРЅР°СЂРёСЏ shell provisioner.
+
+  - type: heading
+    text: "РҐРѕРґ СЂР°Р±РѕС‚С‹"
+    level: 1
+    structural: true
+
+  - type: heading
+    text: "РЎСЂРµРґР° РІС‹РїРѕР»РЅРµРЅРёСЏ Рё СЂР°СЃРїРѕР»РѕР¶РµРЅРёРµ С„Р°Р№Р»РѕРІ"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РћРЎ С…РѕСЃС‚Р°: Windows. РЈСЃС‚Р°РЅРѕРІР»РµРЅС‹ Oracle VirtualBox Рё HashiCorp Vagrant. Р РµРїРѕР·РёС‚РѕСЂРёР№ РєСѓСЂСЃР°
+      (РєР°С‚Р°Р»РѕРі devops), Р»Р°Р±РѕСЂР°С‚РѕСЂРЅР°СЏ СЂР°Р±РѕС‚Р° 1: РїРѕРґРєР°С‚Р°Р»РѕРі lab1. РљРѕРЅС„РёРіСѓСЂР°С†РёСЏ СЃС‚РµРЅРґР° Рё РёСЃС…РѕРґРЅРёРєРё
+      РїСЂРёР»РѕР¶РµРЅРёСЏ Р»РµР¶Р°С‚ РІ lab1/vagrant (Vagrantfile, main.go). РџРѕСЃР»Рµ vagrant up СЌС‚РѕС‚ РєР°С‚Р°Р»РѕРі
+      РґРѕСЃС‚СѓРїРµРЅ РІ РіРѕСЃС‚Рµ РєР°Рє /vagrant.
+
+  - type: heading
+    text: "РџРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ РґРµР№СЃС‚РІРёР№ Рё РєРѕРјР°РЅРґС‹"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РќРёР¶Рµ РїРµСЂРµС‡РёСЃР»РµРЅ СЂРµР°Р»СЊРЅС‹Р№ РїРѕСЂСЏРґРѕРє СЂР°Р±РѕС‚С‹ СЃ СѓРєР°Р·Р°РЅРёРµРј СЂР°Р±РѕС‡РµРіРѕ РєР°С‚Р°Р»РѕРіР° РЅР° С…РѕСЃС‚Рµ.
+
+  - type: list
+    style: numeric
+    items:
+      - "РџРµСЂРµР№С‚Рё РІ РєР°С‚Р°Р»РѕРі СЃС‚РµРЅРґР°: cd lab1/vagrant (РёР· РєРѕСЂРЅСЏ СЂРµРїРѕР·РёС‚РѕСЂРёСЏ)."
+      - "РџСЂРѕРІРµСЂРёС‚СЊ СЃРёРЅС‚Р°РєСЃРёСЃ РѕРїРёСЃР°РЅРёСЏ Р’Рњ: vagrant validate."
+      - "РЎРѕР·РґР°С‚СЊ Р’Рњ Рё РІС‹РїРѕР»РЅРёС‚СЊ provision: vagrant up (РїСЂРѕРІР°Р№РґРµСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ virtualbox)."
+      - "РџСЂРѕРІРµСЂРёС‚СЊ РіРѕСЃС‚РµРІСѓСЋ РћРЎ Рё СЃРµСЂРІРёСЃ: vagrant ssh -c \"uname -a && systemctl status hello-vagrant.service --no-pager && curl -s http://127.0.0.1\"."
+      - "Р’С‹РІРµСЃС‚Рё С„Р°РєС‚РёС‡РµСЃРєРёРµ РїСЂРѕР±СЂРѕСЃС‹ РїРѕСЂС‚РѕРІ: vagrant port."
+      - "РЎ С…РѕСЃС‚Р° Windows РїСЂРѕРІРµСЂРёС‚СЊ HTTP: curl.exe -s http://127.0.0.1:8080."
+      - "РћСЃРІРѕР±РѕРґРёС‚СЊ СЂРµСЃСѓСЂСЃС‹: vagrant destroy -f."
+
+  - type: heading
+    text: "РџРѕРґРіРѕС‚РѕРІРєР° С„Р°Р№Р»РѕРІ vagrant/Vagrantfile Рё vagrant/main.go"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      Р Р°Р±РѕС‡РёР№ РєР°С‚Р°Р»РѕРі СЃС‚РµРЅРґР°: lab1/vagrant. Р’ РЅС‘Рј СЂР°Р·РјРµС‰РµРЅС‹ Vagrantfile Рё РёСЃС…РѕРґРЅС‹Р№ РєРѕРґ
+      РїСЂРёР»РѕР¶РµРЅРёСЏ main.go. РљР°С‚Р°Р»РѕРі СЃРёРЅС…СЂРѕРЅРёР·РёСЂСѓРµС‚СЃСЏ СЃ РіРѕСЃС‚РµРІРѕР№ РћРЎ РІ С‚РѕС‡РєСѓ РјРѕРЅС‚РёСЂРѕРІР°РЅРёСЏ /vagrant.
+
+  - type: paragraph
+    text: >
+      РЎРѕРґРµСЂР¶РёРјРѕРµ Vagrantfile (СЃРјС‹СЃР» Р±Р»РѕРєРѕРІ): РѕР±СЉСЏРІР»РµРЅ box ubuntu/jammy64, РЅР°СЃС‚СЂРѕРµРЅ
+      forwarded_port СЃ РіРѕСЃС‚СЏ 80 РЅР° С…РѕСЃС‚ 8080. Shell provisioner СЃ set -eux РІС‹РїРѕР»РЅСЏРµС‚
+      apt-get update, СѓСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ golang-go, РєРѕРјРїРёР»РёСЂСѓРµС‚ /vagrant/main.go РІ
+      /usr/local/bin/hello-vagrant, СЃРѕР·РґР°С‘С‚ unit /etc/systemd/system/hello-vagrant.service
+      СЃ ExecStart РЅР° СЌС‚РѕС‚ Р±РёРЅР°СЂРЅРёРє, Р·Р°С‚РµРј systemctl daemon-reload Рё systemctl enable --now
+      hello-vagrant.service.
+
+  - type: paragraph
+    text: >
+      РџСЂРёР»РѕР¶РµРЅРёРµ main.go РЅР° Go СЃР»СѓС€Р°РµС‚ 0.0.0.0:80 Рё РЅР° РјР°СЂС€СЂСѓС‚Рµ "/" РѕС‚РІРµС‡Р°РµС‚ С‚РµР»РѕРј Hello!
+      (СЃ РїРµСЂРµРІРѕРґРѕРј СЃС‚СЂРѕРєРё). СЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ РїР°РєРµС‚С‹ log Рё net/http.
+
+  - type: heading
+    text: "РџСЂРѕРІРµСЂРєР° СЃРёРЅС‚Р°РєСЃРёСЃР° Vagrantfile"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      Р Р°Р±РѕС‡РёР№ РєР°С‚Р°Р»РѕРі: lab1/vagrant. Р’С‹РїРѕР»РЅРµРЅР° РєРѕРјР°РЅРґР° vagrant validate.
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      Vagrantfile validated successfully.
+
+  - type: heading
+    text: "Р—Р°РїСѓСЃРє РІРёСЂС‚СѓР°Р»СЊРЅРѕР№ РјР°С€РёРЅС‹ Рё РїСЂРѕРІРёР¶РёРЅРёРЅРі"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РљРѕРјР°РЅРґР° vagrant up (РїСЂРѕРІР°Р№РґРµСЂ virtualbox): РёРјРїРѕСЂС‚ box, РЅР°СЃС‚СЂРѕР№РєР° NAT Рё РїСЂРѕР±СЂРѕСЃР° РїРѕСЂС‚РѕРІ,
+      РјРѕРЅС‚РёСЂРѕРІР°РЅРёРµ РѕР±С‰РµР№ РїР°РїРєРё С…РѕСЃС‚Р° РІ /vagrant, РІС‹РїРѕР»РЅРµРЅРёРµ inline shell provisioner.
+      РќРёР¶Рµ РїСЂРёРІРµРґС‘РЅ РЅР°С‡Р°Р»Рѕ РІС‹РІРѕРґР°: РёРјСЏ Р’Рњ, СЃРѕРіР»Р°СЃРѕРІР°РЅРёРµ РїРѕСЂС‚Р° SSH (РёР·-Р·Р° РєРѕР»Р»РёР·РёРё РѕР¶РёРґР°РµРјРѕРіРѕ
+      С…РѕСЃС‚-РїРѕСЂС‚Р° 2222 РЅР°Р·РЅР°С‡РµРЅ 2202), РїСЂРѕР±СЂРѕСЃ РїРѕСЂС‚РѕРІ РїСЂРёР»РѕР¶РµРЅРёСЏ Рё SSH, Р·Р°РіСЂСѓР·РєР° РіРѕСЃС‚СЏ,
+      РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ Рѕ РІРµСЂСЃРёРё Guest Additions, РїСѓС‚СЊ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё РєР°С‚Р°Р»РѕРіР°.
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ (РЅР°С‡Р°Р»Рѕ)"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      Bringing machine 'default' up with 'virtualbox' provider...
+
+      default: Importing base box 'ubuntu/jammy64'...
+
+      default: Matching MAC address for NAT networking...
+
+      default: Checking if box 'ubuntu/jammy64' version '20241002.0.0' is up to date...
+
+      default: Setting the name of the VM: vagrant_default_1775780309039_65592
+
+      default: Fixed port collision for 22 (РѕР¶РёРґР°Р»СЃСЏ С…РѕСЃС‚-РїРѕСЂС‚ 2222). РќР°Р·РЅР°С‡РµРЅ РїРѕСЂС‚ 2202.
+
+      default: Clearing any previously set network interfaces...
+
+      default: Preparing network interfaces based on configuration...
+
+          default: Adapter 1: nat
+
+      default: Forwarding ports...
+
+          default: 80 СЃ РіРѕСЃС‚СЏ РЅР° РїРѕСЂС‚ С…РѕСЃС‚Р° 8080 (adapter 1)
+
+          default: 22 СЃ РіРѕСЃС‚СЏ РЅР° РїРѕСЂС‚ С…РѕСЃС‚Р° 2202 (adapter 1)
+
+      default: Running 'pre-boot' VM customizations...
+
+      default: Booting VM...
+
+      default: Waiting for machine to boot. This may take a few minutes...
+
+          default: SSH address: 127.0.0.1:2202
+
+          default: SSH username: vagrant
+
+          default: SSH auth method: private key
+
+      default: Machine booted and ready!
+
+      default: Checking for guest additions in VM...
+
+          default: The guest additions on this VM do not match the installed version of
+
+          default: VirtualBox! In most cases this is fine, but in rare cases it can
+
+          default: prevent things such as shared folders from working properly.
+
+          default: Guest Additions Version: 6.0.0 r127566
+
+          default: VirtualBox Version: 7.2
+
+      default: Mounting shared folders...
+
+          default: C:/Users/savva/OneDrive/Documents/Go Projects/devops/lab1/vagrant to /vagrant
+
+      default: Running provisioner: shell...
+
+  - type: paragraph
+    text: >
+      Р”Р°Р»РµРµ provisioner РІС‹РїРѕР»РЅСЏРµС‚ apt-get update Рё apt-get install -y golang-go. Р’С‹РІРѕРґ
+      СѓСЃС‚Р°РЅРѕРІРєРё РїР°РєРµС‚РѕРІ РѕС‡РµРЅСЊ РґР»РёРЅРЅС‹Р№ (СЃРѕС‚РЅРё СЃС‚СЂРѕРє). РџРѕ СЃРјС‹СЃР»Сѓ: СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ 48 РЅРѕРІС‹С… РїР°РєРµС‚РѕРІ,
+      РѕС‚СЂР°Р±РѕС‚Р°Р»Рё С‚СЂРёРіРіРµСЂС‹ man-db Рё libc-bin. РќРёР¶Рµ РїРѕРєР°Р·Р°РЅ Р·Р°РІРµСЂС€Р°СЋС‰РёР№ С„СЂР°РіРјРµРЅС‚ С‚РѕРіРѕ Р¶Рµ Р·Р°РїСѓСЃРєР°:
+      СЃР±РѕСЂРєР° Go-Р±РёРЅР°СЂРЅРёРєР°, Р·Р°РїРёСЃСЊ unit systemd Рё РІРєР»СЋС‡РµРЅРёРµ СЃРµСЂРІРёСЃР°.
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ (Р·Р°РІРµСЂС€РµРЅРёРµ provision)"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      default: ++ /usr/bin/go build -o /usr/local/bin/hello-vagrant /vagrant/main.go
+
+      default: ++ printf '%s\n' '[Unit]' 'Description=Simple HTTP app for infra-course lab1' 'After=network.target' '' '[Service]' 'ExecStart=/usr/local/bin/hello-vagrant' 'Restart=always' 'RestartSec=3' '' '[Install]' 'WantedBy=multi-user.target'
+
+      default: ++ systemctl daemon-reload
+
+      default: ++ systemctl enable --now hello-vagrant.service
+
+      default: Created symlink /etc/systemd/system/multi-user.target.wants/hello-vagrant.service to /etc/systemd/system/hello-vagrant.service.
+
+  - type: heading
+    text: "РџСЂРѕРІРµСЂРєР° РІРЅСѓС‚СЂРё РіРѕСЃС‚РµРІРѕР№ РћРЎ"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      Р’С‹РїРѕР»РЅРµРЅР° СѓРґР°Р»С‘РЅРЅР°СЏ РєРѕРјР°РЅРґР° С‡РµСЂРµР· vagrant ssh (РѕРґРЅРѕР№ СЃС‚СЂРѕРєРѕР№ РЅР° С…РѕСЃС‚Рµ), РѕР±СЉРµРґРёРЅСЏСЋС‰Р°СЏ
+      РІС‹РІРѕРґ uname -a, РєСЂР°С‚РєРёР№ СЃС‚Р°С‚СѓСЃ systemd-СЃРµСЂРІРёСЃР° Рё HTTP-Р·Р°РїСЂРѕСЃ РЅР° 127.0.0.1 РІРЅСѓС‚СЂРё Р’Рњ.
+      РЈРїСЂР°РІР»СЏСЋС‰РёРµ ANSI-РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚Рё РІ С‚РµРєСЃС‚Рµ РЅРёР¶Рµ РѕРїСѓС‰РµРЅС‹, СЃРјС‹СЃР» СЃС‚СЂРѕРє СЃРѕС…СЂР°РЅС‘РЅ.
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      Linux ubuntu-jammy 5.15.0-173-generic #183-Ubuntu SMP Fri Mar 6 13:29:34 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+
+      в—Џ hello-vagrant.service - Simple HTTP app for infra-course lab1
+
+           Loaded: loaded (/etc/systemd/system/hello-vagrant.service; enabled; vendor preset: enabled)
+
+           Active: active (running) since Fri 2026-04-10 00:19:38 UTC; 3s ago
+
+         Main PID: 3014 (hello-vagrant)
+
+      Hello!
+
+  - type: heading
+    text: "РџСЂРѕР±СЂРѕСЃ РїРѕСЂС‚РѕРІ"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РљРѕРјР°РЅРґР° vagrant port РІС‹РІРѕРґРёС‚ С„Р°РєС‚РёС‡РµСЃРєСѓСЋ С‚Р°Р±Р»РёС†Сѓ РїСЂРѕР±СЂРѕСЃР° СЃ СѓС‡С‘С‚РѕРј СЂР°Р·СЂРµС€РµРЅРёСЏ РєРѕР»Р»РёР·РёР№
+      Сѓ РїСЂРѕРІР°Р№РґРµСЂР°.
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      The forwarded ports for the machine are listed below. Please note that
+
+      these values may differ from values configured in the Vagrantfile if the
+
+      provider supports automatic port collision detection and resolution.
+
+          22 СЃ РіРѕСЃС‚СЏ РЅР° РїРѕСЂС‚ С…РѕСЃС‚Р° 2202
+
+          80 СЃ РіРѕСЃС‚СЏ РЅР° РїРѕСЂС‚ С…РѕСЃС‚Р° 8080
+
+  - type: heading
+    text: "РџСЂРѕРІРµСЂРєР° HTTP СЃ С…РѕСЃС‚Р° Windows"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РЎ С…РѕСЃС‚Р° РІС‹РїРѕР»РЅРµРЅР° РїСЂРѕРІРµСЂРєР° РґРѕСЃС‚СѓРїР° Рє РїСЂРёР»РѕР¶РµРЅРёСЋ РїРѕ РїСЂРѕР±СЂРѕС€РµРЅРЅРѕРјСѓ РїРѕСЂС‚Сѓ 8080.
+      РљРѕРјР°РЅРґР°: curl.exe -s http://127.0.0.1:8080
+
+  - type: heading
+    text: "РўРµР»Рѕ РѕС‚РІРµС‚Р°"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      Hello!
+
+  - type: heading
+    text: "РЎРІРѕРґРЅР°СЏ С‚Р°Р±Р»РёС†Р° РєРѕРјР°РЅРґ"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РќРёР¶Рµ СЃРІРµРґРµРЅС‹ СЌС‚Р°РїС‹, РёСЃРїРѕР»СЊР·РѕРІР°РЅРЅС‹Рµ РєРѕРјР°РЅРґС‹ Рё С‚Рѕ, РіРґРµ РІ РѕС‚С‡С‘С‚Рµ РїСЂРёРІРµРґС‘РЅ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёР№
+      РІС‹РІРѕРґ (С‚РѕС‚ Р¶Рµ С‚РµРєСЃС‚, С‡С‚Рѕ РїРѕСЏРІРёР»СЃСЏ РІ РєРѕРЅСЃРѕР»Рё РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё).
+
+  - type: table
+    caption: "РљРѕРјР°РЅРґС‹ Рё СЂР°Р·РјРµС‰РµРЅРёРµ РІС‹РІРѕРґР° РІ РѕС‚С‡С‘С‚Рµ"
+    headers:
+      - "Р­С‚Р°Рї"
+      - "РљРѕРјР°РЅРґР° (РєР°С‚Р°Р»РѕРі lab1/vagrant, РµСЃР»Рё РЅРµ СѓРєР°Р·Р°РЅРѕ РёРЅРѕРµ)"
+      - "Р’С‹РІРѕРґ РІ РѕС‚С‡С‘С‚Рµ"
+    rows:
+      - ["РџСЂРѕРІРµСЂРєР° РѕРїРёСЃР°РЅРёСЏ СЃС‚РµРЅРґР°", "vagrant validate", "РџРѕРґСЂР°Р·РґРµР» В«РџСЂРѕРІРµСЂРєР° СЃРёРЅС‚Р°РєСЃРёСЃР°В», Р±Р»РѕРє В«Р’С‹РІРѕРґВ»"]
+      - ["РЎРѕР·РґР°РЅРёРµ Р’Рњ Рё provision", "vagrant up", "РџРѕРґСЂР°Р·РґРµР» В«Р—Р°РїСѓСЃРє РІРёСЂС‚СѓР°Р»СЊРЅРѕР№ РјР°С€РёРЅС‹В»: В«Р’С‹РІРѕРґ (РЅР°С‡Р°Р»Рѕ)В» Рё В«Р’С‹РІРѕРґ (Р·Р°РІРµСЂС€РµРЅРёРµ provision)В»"]
+      - ["РџСЂРѕРІРµСЂРєР° РћРЎ Рё СЃРµСЂРІРёСЃР°", "vagrant ssh -c \"uname -a && systemctl status hello-vagrant.service --no-pager && curl -s http://127.0.0.1\"", "РџРѕРґСЂР°Р·РґРµР» В«РџСЂРѕРІРµСЂРєР° РІРЅСѓС‚СЂРё РіРѕСЃС‚РµРІРѕР№ РћРЎВ», Р±Р»РѕРє В«Р’С‹РІРѕРґВ»"]
+      - ["РЎРїРёСЃРѕРє РїСЂРѕР±СЂРѕСЃРѕРІ", "vagrant port", "РџРѕРґСЂР°Р·РґРµР» В«РџСЂРѕР±СЂРѕСЃ РїРѕСЂС‚РѕРІВ», Р±Р»РѕРє В«Р’С‹РІРѕРґВ»"]
+      - ["РџСЂРѕРІРµСЂРєР° СЃ С…РѕСЃС‚Р°", "curl.exe -s http://127.0.0.1:8080", "РџРѕРґСЂР°Р·РґРµР» В«РџСЂРѕРІРµСЂРєР° HTTP СЃ С…РѕСЃС‚Р° WindowsВ», Р±Р»РѕРє В«РўРµР»Рѕ РѕС‚РІРµС‚Р°В»"]
+      - ["РћСЃРІРѕР±РѕР¶РґРµРЅРёРµ СЂРµСЃСѓСЂСЃРѕРІ", "vagrant destroy -f", "РџРѕРґСЂР°Р·РґРµР» В«Р—Р°РІРµСЂС€РµРЅРёРµ СЂР°Р±РѕС‚С‹ СЃРѕ СЃС‚РµРЅРґРѕРјВ», Р±Р»РѕРє В«Р’С‹РІРѕРґВ»"]
+
+  - type: heading
+    text: "Р—Р°РІРµСЂС€РµРЅРёРµ СЂР°Р±РѕС‚С‹ СЃРѕ СЃС‚РµРЅРґРѕРј"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      РџРѕСЃР»Рµ РїСЂРѕРІРµСЂРѕРє РІРёСЂС‚СѓР°Р»СЊРЅР°СЏ РјР°С€РёРЅР° СѓРЅРёС‡С‚РѕР¶РµРЅР°, С‡С‚РѕР±С‹ РЅРµ Р·Р°РЅРёРјР°С‚СЊ СЂРµСЃСѓСЂСЃС‹. РљРѕРјР°РЅРґР°:
+      vagrant destroy -f
+
+  - type: heading
+    text: "Р’С‹РІРѕРґ"
+    level: 3
+    structural: false
+
+  - type: paragraph
+    text: >
+      default: Destroying VM and associated drives...
+
+  - type: heading
+    text: "Р—Р°РєР»СЋС‡РµРЅРёРµ"
+    level: 1
+    structural: true
+
+  - type: paragraph
+    text: >
+      РџРѕСЃС‚Р°РІР»РµРЅРЅС‹Рµ С†РµР»Рё Р»Р°Р±РѕСЂР°С‚РѕСЂРЅРѕР№ СЂР°Р±РѕС‚С‹ РґРѕСЃС‚РёРіРЅСѓС‚С‹: РєРѕРЅС„РёРіСѓСЂР°С†РёСЏ Vagrantfile СѓСЃРїРµС€РЅРѕ
+      РїСЂРѕС€Р»Р° РІР°Р»РёРґР°С†РёСЋ; РІРёСЂС‚СѓР°Р»СЊРЅР°СЏ РјР°С€РёРЅР° РЅР° Р±Р°Р·Рµ ubuntu/jammy64 Р±С‹Р»Р° РїРѕРґРЅСЏС‚Р°, РІС‹РїРѕР»РЅРµРЅ
+      provision СЃ СѓСЃС‚Р°РЅРѕРІРєРѕР№ Go Рё Р°РІС‚РѕР·Р°РїСѓСЃРєРѕРј HTTP-РїСЂРёР»РѕР¶РµРЅРёСЏ С‡РµСЂРµР· systemd; СЃРµСЂРІРёСЃ
+      РЅР°С…РѕРґРёР»СЃСЏ РІ СЃРѕСЃС‚РѕСЏРЅРёРё active (running); РїСЂРѕР±СЂРѕСЃ РїРѕСЂС‚Р° 80 РіРѕСЃС‚СЏ РЅР° 8080 С…РѕСЃС‚Р° РїРѕРґС‚РІРµСЂР¶РґС‘РЅ
+      РєРѕРјР°РЅРґРѕР№ vagrant port; СЃ С…РѕСЃС‚Р° РїРѕР»СѓС‡РµРЅ РѕС‚РІРµС‚ Hello! РїРѕ HTTP. Р—Р°С„РёРєСЃРёСЂРѕРІР°РЅРѕ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРѕРµ
+      РёР·РјРµРЅРµРЅРёРµ С…РѕСЃС‚-РїРѕСЂС‚Р° SSH СЃ РѕР¶РёРґР°РµРјРѕРіРѕ 2222 РЅР° 2202 РёР·-Р·Р° РєРѕР»Р»РёР·РёРё: СЌС‚Рѕ РЅРѕСЂРјР°Р»СЊРЅРѕРµ
+      РїРѕРІРµРґРµРЅРёРµ VirtualBox Рё Vagrant.
+
+  - type: paragraph
+    text: >
+      РћС‚Р»РёС‡РёСЏ РѕС‚ С‚РµРєСЃС‚Р° РїРµСЂРІРѕРёСЃС‚РѕС‡РЅРёРєР° (РєСѓСЂСЃ): РёСЃРїРѕР»СЊР·РѕРІР°РЅ Р°РєС‚СѓР°Р»СЊРЅС‹Р№ LTS box Рё systemd РІРјРµСЃС‚Рѕ
+      С„РѕРЅРѕРІРѕРіРѕ go run; С„РѕСЂРјСѓР»РёСЂРѕРІРєРё Рё РїРѕСЂСЏРґРѕРє С€Р°РіРѕРІ РјРµС‚РѕРґРёС‡РєРё РїРѕ СЃРјС‹СЃР»Сѓ СЃРѕС…СЂР°РЅРµРЅС‹ (init/up,
+      РїРѕСЂС‚С‹, provision, РїСЂРѕРІРµСЂРєР° curl СЃ С…РѕСЃС‚Р°).
+
+

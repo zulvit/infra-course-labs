@@ -9,21 +9,21 @@ Vagrant.configure("2") do |config|
     export DEBIAN_FRONTEND=noninteractive
     apt-get update
     apt-get install -y golang-go
+    /usr/bin/go build -o /usr/local/bin/hello-vagrant /vagrant/main.go
 
-    cat >/etc/systemd/system/hello-vagrant.service <<'EOF'
-    [Unit]
-    Description=Simple HTTP app for infra-course lab1
-    After=network.target
-
-    [Service]
-    WorkingDirectory=/vagrant
-    ExecStart=/usr/bin/env go run /vagrant/main.go
-    Restart=always
-    RestartSec=3
-
-    [Install]
-    WantedBy=multi-user.target
-    EOF
+    printf '%s\n' \
+      '[Unit]' \
+      'Description=Simple HTTP app for infra-course lab1' \
+      'After=network.target' \
+      '' \
+      '[Service]' \
+      'ExecStart=/usr/local/bin/hello-vagrant' \
+      'Restart=always' \
+      'RestartSec=3' \
+      '' \
+      '[Install]' \
+      'WantedBy=multi-user.target' \
+      >/etc/systemd/system/hello-vagrant.service
 
     systemctl daemon-reload
     systemctl enable --now hello-vagrant.service

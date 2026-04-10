@@ -1,0 +1,194 @@
+
+Задачи ч.1
+Задача 1. Обращение к полям
+package main
+
+import "fmt"
+
+type User struct {
+    Name string
+}
+
+func main() {
+    var u1 User
+    var u2 *User
+
+    fmt.Println("u1 Name:", u1.Name)
+    fmt.Println("u2 Name:", u2.Name)
+}
+Что выведет этот код? Одинаково ли ведут себя переменные u1 и u2 при обращении к их полям?
+Задача 2. Сравнение структур
+package main
+
+import "fmt"
+
+type A struct { ID int; Flags [2]bool }
+type B struct { ID int; Flags []bool }
+
+func main() {
+    a1, a2 := A{1, [2]bool{true}}, A{1, [2]bool{true}}
+    b1, b2 := B{1, []bool{true}}, B{1, []bool{true}}
+
+    fmt.Println(a1 == a2)
+    fmt.Println(b1 == b2)
+}
+Какой будет результат сравнения переменных? Возникнут ли ошибки компиляции?
+Задача 3. Выравнивание памяти (Memory align &amp; padding)
+package main
+
+import (
+    "fmt"
+    "unsafe"
+)
+
+type S1 struct {
+    a bool
+    b int64
+    c bool
+}
+
+type S2 struct {
+    a bool
+    c bool
+    b int64
+}
+
+func main() {
+    fmt.Println("Size of S1:", unsafe.Sizeof(S1{}))
+    fmt.Println("Size of S2:", unsafe.Sizeof(S2{}))
+}
+Одинаковый ли размер у структур S1 и S2, учитывая, что в них лежат одни и те же типы данных? Объясните результат.
+Задача 4. Структуры и JSON
+package main
+
+import (
+    "encoding/json"
+    "fmt"
+)
+
+type User struct {
+    Name     string `json:"name"`
+    password string `json:"pass"`
+}
+
+func main() {
+    u := User{Name: "Alice", password: "123"}
+    data, err := json.Marshal(u)
+    if err != nil {
+        panic(err)
+    }
+    fmt.Println(string(data))
+}
+Что окажется выведено на экран в переменной data? Почему не все данные попадут в JSON?
+Задача 5. Методы 
+package main
+
+import "fmt"
+
+type User struct { Name string }
+
+func (u User) SetNameVal(n string)  { u.Name = n }
+func (u *User) SetNamePtr(n string) { u.Name = n }
+
+func main() {
+    usr := User{Name: "Bob"}
+    
+    usr.SetNameVal("Alice")
+    fmt.Println("После SetNameVal:", usr.Name)
+    
+    usr.SetNamePtr("Eve")
+    fmt.Println("После SetNamePtr:", usr.Name)
+}
+Изменится ли имя пользователя в обоих случаях? Объясните разницу в подходах.
+Задача 6. Вызов метода у nil
+package main
+
+import "fmt"
+
+type Node struct { Value int }
+
+func (n *Node) Print() {
+    if n == nil {
+        fmt.Println("I am nil!")
+        return
+    }
+    fmt.Println(n.Value)
+}
+
+func main() {
+    var n *Node
+    n.Print()
+}
+Упадёт ли приложение с ошибкой (panic) при вызове n.Print(), ведь указатель n равен nil?
+Задача 7. Мутация при обходе (Range)
+package main
+
+import "fmt"
+
+type User struct { Name string; Active bool }
+
+func main() {
+    users := []User{{Name: "Bob", Active: false}}
+
+    for _, u := range users {
+        u.Active = true
+    }
+
+    fmt.Println(users[0].Active)
+}
+Почему после завершения цикла статус юзера Bob всё ещё false? Как изменить код, чтобы флаг обновился?
+Задача 8. Пустая структура
+package main
+
+import (
+    "fmt"
+    "unsafe"
+)
+
+func main() {
+    a := make([]struct{}, 1_000_000)
+    fmt.Println("Size of slice 'a':", unsafe.Sizeof(a))
+    
+    x, y := struct{}{}, struct{}{}
+    fmt.Printf("%p == %p ?\n", &amp;x, &amp;y)
+}
+Сколько байт памяти выделяется под данные слайса, состоящего из миллиона пустых структур? Равны ли адреса в памяти независимых структур x и y?
+Задача 9. Встраивание (Embedding) и сокрытие
+package main
+
+import "fmt"
+
+type Engine struct { Color string }
+type Car struct {
+    Engine
+    Color string
+}
+
+func main() {
+    c := Car{
+        Color: "Red",
+        Engine: Engine{Color: "Blue"},
+    }
+    fmt.Println(c.Color)
+}
+Какого цвета машина будет выведена на экран? И как получить доступ ко второму цвету без изменения структуры?
+Задача 10. Копирование структур (Shallow copy)
+package main
+
+import "fmt"
+
+type Worker struct {
+    ID   int
+    Tags []string
+}
+
+func main() {
+    w1 := Worker{ID: 1, Tags: []string{"go", "backend"}}
+    w2 := w1
+    
+    w2.ID = 2
+    w2.Tags[0] = "rust"
+    
+    fmt.Println("w1:", w1.ID, w1.Tags)
+    fmt.Println("w2:", w2.ID, w2.Tags)
+}

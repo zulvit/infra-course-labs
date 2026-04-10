@@ -1,0 +1,9 @@
+﻿ssh.exe : Warning: Permanently added '[127.0.0.1]:2202' (ED25519) to the list of known hosts.
+At line:2 char:11
++ $output = ssh.exe -i key -o StrictHostKeyChecking=no -o UserKnownHost ...
++           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Warning: Perman...of known hosts.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+could not change directory to "/home/vagrant": Permission denied
+INSERT 0 2

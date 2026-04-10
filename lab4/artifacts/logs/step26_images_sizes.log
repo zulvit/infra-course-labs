@@ -1,0 +1,9 @@
+WARNING: This output is designed for human readability. For machine-readable output, please use --format.
+IMAGE                            ID             DISK USAGE   CONTENT SIZE   EXTRA
+127.0.0.1:5000/hello:0.1         8788245b202d       6.76MB         2.21MB        
+lab4/hello:0.1                   8788245b202d       6.76MB         2.21MB        
+lab4/main:0.1                    596edfeadc41        148MB           36MB        
+lab4/multi:0.1                   1d19882c571f       2.93MB         1.12MB        
+marketplaces-server-web:latest   bbdd03f0fb01       34.2MB         10.4MB   U    
+registry:2                       a3d8aaa63ed8       37.4MB         10.3MB        
+zulvit/stivalli-temp:latest      c497f3aa94be       34.2MB         10.4MB        

@@ -1,0 +1,94 @@
+﻿version: 1
+
+document:
+  output: "./build/lab2-report.docx"
+  toc: true
+  title_page:
+    template: rut
+    params:
+      discipline: "Инфраструктурное программное обеспечение"
+      work_number: "№ 2"
+      work_title: "РХД. Загрузка CSV в PostgreSQL и обновление статистики"
+      student: "Купленик С. С."
+      group: "УВП-171"
+      teacher: "Старший преподаватель кафедры ЦТУТП Заманов Е. А."
+      year: "2026"
+
+content:
+  - type: heading
+    text: "Цель работы"
+    level: 1
+    structural: true
+
+  - type: paragraph
+    text: >
+      Цель лабораторной работы состояла в загрузке справочных данных в PostgreSQL из CSV-файлов и проверке обновления статистики таблиц после выполнения ANALYZE.
+      Требовалось автоматически развернуть схему магазина, импортировать данные командой COPY и убедиться, что записи доступны для чтения и анализа.
+
+  - type: paragraph
+    text: >
+      Практическая часть выполнялась в Docker-окружении с PostgreSQL 16. CSV-файлы были смонтированы в контейнер в виде каталога /data,
+      после чего загрузка произведена SQL-скриптом инициализации, содержащим команды COPY для справочников manufacturers, categories, stores и customers.
+
+  - type: heading
+    text: "Ход работы"
+    level: 1
+    structural: true
+
+  - type: heading
+    text: "Импорт данных из CSV"
+    level: 2
+    structural: false
+
+  - type: list
+    style: numeric
+    items:
+      - "Подготовлены CSV-файлы со справочными данными."
+      - "Создан SQL-скрипт загрузки с командами COPY FROM для каждой таблицы."
+      - "Контейнер PostgreSQL запущен, после инициализации данные автоматически импортированы в схему shop."
+      - "Проверено содержимое таблицы manufacturers."
+      - "После загрузки выполнена проверка статистики таблиц через pg_stat_user_tables."
+
+  - type: table
+    caption: "Команды и подтверждённые результаты"
+    headers:
+      - "Этап"
+      - "Команда"
+      - "Результат"
+    rows:
+      - ["Запуск стенда", "docker compose up -d", "Контейнер PostgreSQL запущен, схема и справочные таблицы подготовлены автоматически."]
+      - ["Проверка загруженных производителей", "docker exec postgres_lab2 psql -U shop_admin -d shop_db -c \"SET search_path TO shop; TABLE manufacturers;\"", "Запрос вернул строки с производителями: 1 | Apple Inc.; 2 | Samsung Electronics; 3 | Sony Group Corporation; 4 | Lenovo Group."]
+      - ["Проверка статистики", "docker exec postgres_lab2 psql -U shop_admin -d shop_db -c \"SELECT relname AS table_name, n_live_tup AS row_count, last_analyze FROM pg_stat_user_tables ORDER BY relname;\"", "Для таблиц categories, customers, manufacturers и stores появились значения last_analyze; это подтвердило выполнение ANALYZE после загрузки данных."]
+      - ["Остановка стенда", "docker compose down -v", "Контейнер и связанные тома удалены после завершения проверки."]
+
+  - type: heading
+    text: "Анализ результатов загрузки"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      Выборка из таблицы manufacturers показала, что импорт из CSV прошёл корректно. PostgreSQL вернул записи с идентификаторами и названиями производителей:
+      1 | Apple Inc.; 2 | Samsung Electronics; 3 | Sony Group Corporation; 4 | Lenovo Group. Это означает, что файл был успешно прочитан,
+      а данные были преобразованы в строки таблицы без потерь структуры.
+
+  - type: paragraph
+    text: >
+      После выполнения ANALYZE была проверена статистика пользовательских таблиц. В ответе присутствовали строки вида categories | 8 | 2026-04-10 ...,
+      customers | 6 | 2026-04-10 ..., manufacturers | 8 | 2026-04-10 ..., stores | 6 | 2026-04-10 .... Появление last_analyze подтверждает,
+      что статистика была пересчитана. Значение row_count в этом представлении является оценочным и используется планировщиком запросов,
+      поэтому оно может отличаться от точного COUNT(*).
+
+  - type: heading
+    text: "Заключение"
+    level: 1
+    structural: true
+
+  - type: paragraph
+    text: >
+      В ходе лабораторной работы были загружены справочные данные в PostgreSQL из CSV-файлов и проверено обновление статистики таблиц.
+      Импорт через COPY прошёл успешно, а последующий ANALYZE сформировал актуальные статистические сведения для планировщика запросов.
+      Цель работы достигнута: данные импортированы, доступны для чтения и готовы к дальнейшему использованию.
+
+
+

@@ -1,0 +1,95 @@
+﻿version: 1
+
+document:
+  output: "./build/lab3-report.docx"
+  toc: true
+  title_page:
+    template: rut
+    params:
+      discipline: "Инфраструктурное программное обеспечение"
+      work_number: "№ 3"
+      work_title: "РХД. Логическое резервное копирование и восстановление PostgreSQL"
+      student: "Купленик С. С."
+      group: "УВП-171"
+      teacher: "Старший преподаватель кафедры ЦТУТП Заманов Е. А."
+      year: "2026"
+
+content:
+  - type: heading
+    text: "Цель работы"
+    level: 1
+    structural: true
+
+  - type: paragraph
+    text: >
+      Цель лабораторной работы состояла в освоении логического резервного копирования PostgreSQL и проверке корректного восстановления базы данных из резервной копии.
+      Требовалось сформировать дампы в custom и plain SQL форматах, восстановить базу в отдельный экземпляр и убедиться,
+      что после восстановления сохраняются и данные, и ограничения схемы.
+
+  - type: paragraph
+    text: >
+      Практическая часть выполнялась в Docker-окружении с PostgreSQL 16. Для эксперимента использована база магазина со схемой shop и заполненными справочниками.
+      Резервные копии создавались штатными средствами pg_dump, а восстановление проводилось в отдельную базу shop_db_restored.
+
+  - type: heading
+    text: "Ход работы"
+    level: 1
+    structural: true
+
+  - type: heading
+    text: "Создание и проверка резервной копии"
+    level: 2
+    structural: false
+
+  - type: list
+    style: numeric
+    items:
+      - "Развёрнут стенд PostgreSQL со схемой магазина и тестовыми справочниками."
+      - "Создан custom dump базы данных с помощью pg_dump --format=custom."
+      - "Дополнительно сформирован plain SQL dump для текстового представления структуры и данных."
+      - "Создана отдельная база shop_db_restored для проверки восстановления."
+      - "Выполнено восстановление из custom dump и проверены количество строк и ограничения."
+
+  - type: table
+    caption: "Команды и результаты резервного копирования"
+    headers:
+      - "Этап"
+      - "Команда"
+      - "Результат"
+    rows:
+      - ["Создание custom dump", "docker exec postgres_lab3 pg_dump -U shop_admin -d shop_db --format=custom -f /backups/shop_backup.dump", "Резервная копия базы данных создана в переносимом формате custom."]
+      - ["Создание SQL dump", "docker exec postgres_lab3 pg_dump -U shop_admin -d shop_db -f /backups/shop_backup.sql", "Получен текстовый SQL-дамп, пригодный для просмотра и ручного анализа."]
+      - ["Восстановление в отдельную БД", "docker exec postgres_lab3 pg_restore -U shop_admin -d shop_db_restored /backups/shop_backup.dump", "Структура и данные были развернуты в новой базе без ошибок выполнения."]
+      - ["Проверка данных", "docker exec postgres_lab3 psql -U shop_admin -d shop_db_restored -c \"SET search_path TO shop; SELECT ... COUNT(*) ...\"", "Проверка показала counts: manufacturers 4, categories 4, stores 3, customers 3."]
+      - ["Проверка ограничений", "docker exec postgres_lab3 psql -U shop_admin -d shop_db_restored -c \"SELECT constraint_name, constraint_type ...\"", "В ответе присутствовали ограничения PRIMARY KEY, UNIQUE, FOREIGN KEY и CHECK, что подтвердило полное восстановление схемы."]
+
+  - type: heading
+    text: "Подтверждение корректности восстановления"
+    level: 2
+    structural: false
+
+  - type: paragraph
+    text: >
+      После восстановления в базе shop_db_restored были проверены количества строк в ключевых таблицах. PostgreSQL вернул результат:
+      manufacturers | 4; categories | 4; stores | 3; customers | 3. Это означает, что пользовательские данные были перенесены в новую базу корректно,
+      а резервная копия сохранила содержимое справочников без потерь.
+
+  - type: paragraph
+    text: >
+      Дополнительная проверка ограничений показала наличие типов PRIMARY KEY, UNIQUE, FOREIGN KEY и CHECK. Следовательно, логическое резервное копирование
+      перенесло не только строки данных, но и структуру отношений, ключевые связи и проверки допустимости значений. Такой результат подтверждает пригодность
+      выбранного подхода для восстановления базы в рабочем или учебном сценарии.
+
+  - type: heading
+    text: "Заключение"
+    level: 1
+    structural: true
+
+  - type: paragraph
+    text: >
+      В ходе лабораторной работы были освоены операции логического резервного копирования и восстановления PostgreSQL.
+      Сформированные дампы успешно использованы для развёртывания базы в отдельный экземпляр, а проверка подтвердила сохранность данных и ограничений схемы.
+      Цель работы достигнута: механизм backup и restore проверен на практике и показал корректный результат.
+
+
+

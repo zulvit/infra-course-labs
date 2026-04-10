@@ -1,0 +1,57 @@
+services:
+  postgres_master:
+    image: postgres:17-alpine
+    container_name: postgres_master
+    env_file: .env
+    volumes:
+      - pgdata_master:/var/lib/postgresql/data
+      - ./config/master/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
+      - ./config/master/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+      - ./init:/docker-entrypoint-initdb.d:ro
+      - ./data:/var/lib/postgresql/import:ro
+    command: >
+      postgres
+        -c config_file=/etc/postgresql/postgresql.conf
+        -c hba_file=/etc/postgresql/pg_hba.conf
+    ports:
+      - "127.0.0.1:5544:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    networks:
+      pg_network:
+        ipv4_address: 172.28.0.2
+
+  postgres_slave:
+    image: postgres:17-alpine
+    container_name: postgres_slave
+    env_file: .env
+    user: postgres
+    volumes:
+      - pgdata_slave:/var/lib/postgresql/data
+      - ./config/slave/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+      - ./config/slave/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
+      - ./config/slave/entrypoint.sh:/entrypoint.sh:ro
+    entrypoint: ["sh", "/entrypoint.sh"]
+    ports:
+      - "127.0.0.1:5545:5432"
+    depends_on:
+      postgres_master:
+        condition: service_healthy
+    networks:
+      pg_network:
+        ipv4_address: 172.28.0.3
+
+volumes:
+  pgdata_master:
+  pgdata_slave:
+
+networks:
+  pg_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/24

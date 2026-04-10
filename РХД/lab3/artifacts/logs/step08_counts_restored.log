@@ -1,0 +1,10 @@
+﻿SET
+      tbl      | count 
+---------------+-------
+ manufacturers |     4
+ categories    |     4
+ stores        |     3
+ customers     |     3
+(4 rows)
+
+
